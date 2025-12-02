@@ -8,9 +8,7 @@ export default function MallaSection() {
   const [inputValues, setInputValues] = useState(defaultMallaValues);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const numericValue = parseFloat(value) || 0;
-    setInputValues(prev => ({ ...prev, [name]: numericValue }));
+    setInputValues(prev => ({ ...prev, [e.target.name]: parseFloat(e.target.value) || 0 }));
   };
 
   const resultados = useMemo(() => calcularMalla(inputValues), [inputValues]);

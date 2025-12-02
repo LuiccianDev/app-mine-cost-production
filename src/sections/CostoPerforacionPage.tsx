@@ -1,16 +1,14 @@
 "use client";
-import { useState, useMemo } from "react";
-import CostoPerforacionInputs from "../components/forms/CostoPerforacionInputs";
-import CostoPerforacionResults from "../components/results/CostoPerforacionResults";
-import { calcularCostoPerforacion, defaultCostoPerforacionValues } from "../scripts/costoPerforacionCalculations";
+import { useState, useMemo } from 'react';
+import CostoPerforacionInputs from '../components/forms/CostoPerforacionInputs';
+import CostoPerforacionResults from '../components/results/CostoPerforacionResults';
+import { calcularCostoPerforacion, defaultCostoPerforacionValues } from '../scripts/costoPerforacionCalculations';
 
 export default function CostoPerforacionPage() {
   const [inputValues, setInputValues] = useState(defaultCostoPerforacionValues);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const numericValue = parseFloat(value) || 0;
-    setInputValues(prev => ({ ...prev, [name]: numericValue }));
+    setInputValues(prev => ({ ...prev, [e.target.name]: parseFloat(e.target.value) || 0 }));
   };
 
   const resultados = useMemo(() => calcularCostoPerforacion(inputValues), [inputValues]);

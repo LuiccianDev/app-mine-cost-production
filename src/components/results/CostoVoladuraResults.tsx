@@ -1,12 +1,11 @@
 "use client";
-import React from 'react';
-import { CostoVoladuraResultsData } from '../../scripts/costoVoladuraCalculations';
+import type { CostoVoladuraResultsData } from '../../scripts/costoVoladuraCalculations';
 
 type CostoVoladuraResultsProps = {
-  results: CostoVoladuraResultsData;
+  resultados: CostoVoladuraResultsData;
 };
 
-export default function CostoVoladuraResults({ results }: CostoVoladuraResultsProps) {
+export default function CostoVoladuraResults({ resultados }: CostoVoladuraResultsProps) {
   const isValid = (value: number) => !isNaN(value) && isFinite(value);
 
   return (
@@ -18,7 +17,7 @@ export default function CostoVoladuraResults({ results }: CostoVoladuraResultsPr
       <div className="space-y-1">
         <div className="flex justify-between items-center py-4">
           <span className="text-gray-700 text-base">Costo de Voladura</span>
-          <span className="font-medium text-gray-900">{isValid(results.costoVoladuraPorTonelada) ? `${results.costoVoladuraPorTonelada.toFixed(3)} US$/Ton` : '- US$/Ton'}</span>
+          <span className="font-medium text-gray-900">{isValid(resultados.costoVoladuraPorTonelada) ? `${resultados.costoVoladuraPorTonelada.toFixed(3)} US$/Ton` : '- US$/Ton'}</span>
         </div>
       </div>
     </div>

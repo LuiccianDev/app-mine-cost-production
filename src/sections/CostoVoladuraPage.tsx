@@ -1,33 +1,26 @@
 "use client";
-import { useState, useMemo } from "react";
-import CostoVoladuraInputs from "../components/forms/CostoVoladuraInputs";
-import CostoVoladuraResults from "../components/results/CostoVoladuraResults";
-import { 
-  calculateCostoVoladura, 
-  defaultCostoVoladuraValues,
-  CostoVoladuraInputsData 
-} from "../scripts/costoVoladuraCalculations";
+import { useState, useMemo } from 'react';
+import CostoVoladuraInputs from '../components/forms/CostoVoladuraInputs';
+import CostoVoladuraResults from '../components/results/CostoVoladuraResults';
+import { calculateCostoVoladura, defaultCostoVoladuraValues } from '../scripts/costoVoladuraCalculations';
 
-export default function CostoVoladuraForm() {
-  const [values, setValues] = useState<CostoVoladuraInputsData>(defaultCostoVoladuraValues);
+export default function CostoVoladuraPage() {
+  const [inputValues, setInputValues] = useState(defaultCostoVoladuraValues);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const numericValue = parseFloat(value) || 0;
-    setValues(prev => ({ ...prev, [name]: numericValue }));
+    setInputValues(prev => ({ ...prev, [e.target.name]: parseFloat(e.target.value) || 0 }));
   };
 
-  const results = useMemo(() => calculateCostoVoladura(values), [values]);
+  const resultados = useMemo(() => calculateCostoVoladura(inputValues), [inputValues]);
 
   return (
     <div className="flex flex-col lg:flex-row w-full">
       <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
-        <CostoVoladuraInputs inputValues={values} onChange={handleChange} />
+        <CostoVoladuraInputs inputValues={inputValues} onChange={handleChange} />
       </div>
       <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
-        <CostoVoladuraResults results={results} />
+        <CostoVoladuraResults resultados={resultados} />
       </div>
-      
     </div>
   );
 }
