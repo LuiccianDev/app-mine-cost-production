@@ -1,4 +1,4 @@
-"use client";
+
 import type { CostoVoladuraResultsData } from '../../scripts/costoVoladuraCalculations';
 
 type CostoVoladuraResultsProps = {

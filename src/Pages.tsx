@@ -1,15 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import Pagination from "./components/ui/Pagination";
 import MallaForm from "./sections/MallaPage";
 import CostoPerforacionForm from "./sections/CostoPerforacionPage";
 import CostoVoladuraForm from "./sections/CostoVoladuraPage";
+import RequerimientoPerforadoraForm from "./sections/RequerimientoPerforadoraPage";
 
 
 const forms = [
   <MallaForm key="MallaForm" />,
   <CostoPerforacionForm key="CostoPerforacionForm" />,
   <CostoVoladuraForm key="CostoVoladuraForm" />,
+  <RequerimientoPerforadoraForm key='RequerimientoPerforadoraForm ' />
+
 ];
 
 export default function FormsSection() {

@@ -1,4 +1,4 @@
-"use client";
+
 import type { CostoPerforacionResultados } from '../../scripts/costoPerforacionCalculations';
 
 type CostoPerforacionResultsProps = {

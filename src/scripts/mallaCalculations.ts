@@ -37,7 +37,7 @@ export function calcularMalla(data: MallaFormData): MallaResultados {
   // Espaciamiento = 1.25 B
 
   // PASO 1: Cálculos iniciales en términos de B²
-  const Volumen = alturaBanco_m * 1.25; // Volumen = H × B × E = H × B × 1.25B = H × 1.25 × B² (m³)
+  const Volumen = alturaBanco_m * 1.25; // Volumen 
 
   const Tonelaje = Volumen * densidadMaterial; // Tonelaje = Volumen × Densidad (Ton)
 
@@ -67,7 +67,6 @@ export function calcularMalla(data: MallaFormData): MallaResultados {
 
   // PASO 4: Usar el Burden calculado para obtener valores finales
   const burden = B_positivo; // Este es el B que buscamos (m)
-  const subDrillingFinal = 0.3 * burden; // 0.3 × B (m)
   const espaciamientoFinal = 1.25 * burden; // 1.25 × B (m)
 
   // PASO 5: Recalcular todos los valores con el Burden final
@@ -77,7 +76,6 @@ export function calcularMalla(data: MallaFormData): MallaResultados {
   const alturaCargaFinal = librasAnfoFinal / CapacidadAnfoPorMetro; // Altura de carga final (m)
 
   return {
-
     burden: burden,
     espaciamiento: espaciamientoFinal,
     volumenRotaTaladro: volumenRotaTaladro,
