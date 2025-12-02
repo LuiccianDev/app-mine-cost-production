@@ -7,6 +7,7 @@ import CostoVoladura from "./sections/CostoVoladuraPage";
 import RequerimientoPerforadora from "./sections/RequerimientoPerforadoraPage";
 import Carguio from "./sections/CarguioPage";
 import Limpieza from "./sections/LimpiezaPage";
+import Transporte from "./sections/TransportePage";
 
 
 const forms = [
@@ -15,7 +16,8 @@ const forms = [
   <CostoVoladura key="CostoVoladura" />,
   <RequerimientoPerforadora key='RequerimientoPerforadora' />,
   <Carguio key='Carguio' />,
-  <Limpieza key='Limpieza' />
+  <Limpieza key='Limpieza' />,
+  <Transporte key='Transporte' />
 
 ];
 
