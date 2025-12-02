@@ -3,23 +3,12 @@ import React from 'react';
 
 type MallaResultadosProps = {
   resultados: {
-    burden: number;
-    subDrilling: number;
+    burden :number;
     espaciamiento: number;
-    volumenB2: number;
+    volumenRotaTaladro: number;
     tonelaje: number;
     librasAnfo: number;
-    volumenAnfoPorMetro: number;
-    capacidadAnfoPorMetro: number;
-    alturaCargaAnfo: number;
-    alturaCollar: number;
-    burdenCalculado: number;
-    burdenFinal: number;
-    espaciamientoFinal: number;
-    volumenRotaTaladro: number;
-    tonelajeFinal: number;
-    librasAnfoFinal: number;
-    alturaCargaFinal: number;
+    alturaCarga: number;
   };
 };
 
@@ -36,11 +25,11 @@ export default function MallaResultados({ resultados }: MallaResultadosProps) {
       <div className="space-y-1">
         <div className="flex justify-between items-center py-4">
           <span className="text-gray-700 text-base">Burde</span>
-          <span className="font-medium text-gray-900">{isValid(resultados.burdenFinal) ? `${resultados.burdenFinal.toFixed(2)} m` : '- m'}</span>
+          <span className="font-medium text-gray-900">{isValid(resultados.burden) ? `${resultados.burden.toFixed(2)} m` : '- m'}</span>
         </div>
         <div className="flex justify-between items-center py-4">
           <span className="text-gray-700 text-base">Espaciamiento</span>
-          <span className="font-medium text-gray-900">{isValid(resultados.espaciamientoFinal) ? `${resultados.espaciamientoFinal.toFixed(2)} m` : '- m'}</span>
+          <span className="font-medium text-gray-900">{isValid(resultados.espaciamiento) ? `${resultados.espaciamiento.toFixed(2)} m` : '- m'}</span>
         </div>
         <div className="flex justify-between items-center py-4">
           <span className="text-gray-700 text-base">Volumen (rotura x taladro)</span>
@@ -48,15 +37,15 @@ export default function MallaResultados({ resultados }: MallaResultadosProps) {
         </div>
         <div className="flex justify-between items-center py-4">
           <span className="text-gray-700 text-base">Tonelaje</span>
-          <span className="font-medium text-gray-900">{isValid(resultados.tonelajeFinal) ? `${resultados.tonelajeFinal.toFixed(2)} Ton/taladro` : '- Ton/taladro'}</span>
+          <span className="font-medium text-gray-900">{isValid(resultados.tonelaje) ? `${resultados.tonelaje.toFixed(2)} Ton/taladro` : '- Ton/taladro'}</span>
         </div>
         <div className="flex justify-between items-center py-4">
           <span className="text-gray-700 text-base">Libras de anfo</span>
-          <span className="font-medium text-gray-900">{isValid(resultados.librasAnfoFinal) ? `${resultados.librasAnfoFinal.toFixed(2)} lib anfo/taladro` : '- lib anfo/taladro'}</span>
+          <span className="font-medium text-gray-900">{isValid(resultados.librasAnfo) ? `${resultados.librasAnfo.toFixed(2)} lib anfo/taladro` : '- lib anfo/taladro'}</span>
         </div>
         <div className="flex justify-between items-center py-4">
           <span className="text-gray-700 text-base">Altura de Carga</span>
-          <span className="font-medium text-gray-900">{isValid(resultados.alturaCargaFinal) ? `${resultados.alturaCargaFinal.toFixed(2)} m` : '- m'}</span>
+          <span className="font-medium text-gray-900">{isValid(resultados.alturaCarga) ? `${resultados.alturaCarga.toFixed(2)} m` : '- m'}</span>
         </div>
       </div>
     </div>
