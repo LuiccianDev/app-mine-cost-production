@@ -4,23 +4,12 @@ import Pagination from "./components/ui/Pagination";
 import MallaForm from "./sections/MallaPage";
 import CostoPerforacionForm from "./sections/CostoPerforacionPage";
 import CostoVoladuraForm from "./sections/CostoVoladuraPage";
-import RequerimientoPerforadoraForm from "./sections/RequerimientoPerforadoraForm";
-import CarguioForm from "./sections/CarguioForm";
-import LimpiezaForm from "./sections/LimpiezaForm";
-import TransporteForm from "./sections/TransporteForm";
-import RellenoCementadoForm from "./sections/RellenoCementadoForm";
-import RellenoDetriticoForm from "./sections/RellenoDetriticoForm";
+
 
 const forms = [
   <MallaForm key="MallaForm" />,
   <CostoPerforacionForm key="CostoPerforacionForm" />,
   <CostoVoladuraForm key="CostoVoladuraForm" />,
-  <RequerimientoPerforadoraForm key="RequerimientoPerforadoraForm" />,
-  <CarguioForm key="CarguioForm" />,
-  <LimpiezaForm key="LimpiezaForm" />,
-  <TransporteForm key="TransporteForm" />,
-  <RellenoCementadoForm key="RellenoCementadoForm" />,
-  <RellenoDetriticoForm key="RellenoDetriticoForm" />,
 ];
 
 export default function FormsSection() {

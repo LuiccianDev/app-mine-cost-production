@@ -1,20 +1,26 @@
-// Datos obtenidos del formulario MallaForm.tsx
 type MallaFormData = {
-  alturaBanco: number;        // Pies 
-  densidadMaterial: number;   // Ton / m³
-  factorPotencia: number;     // Lib / Ton 
-  diametroTaladro: number;    // Pulg 
-  densidadAnfo: number;       // gr / cm³
+  alturaBanco: number;
+  densidadMaterial: number;
+  factorPotencia: number;
+  diametroTaladro: number;
+  densidadAnfo: number;
 };
 
-type MallaResultados = {
-  // REEMPLAZANDO
-  burden: number;               // B (en m)
-  espaciamiento: number;        // 1.25 B (en m)
-  volumenRotaTaladro: number;        // Rotura x Taladro (12.38 B2 = valor en m³)
-  tonelaje: number;             // 46.43 B2 = valor en Ton/Tal
-  librasAnfo: number;           // 18.57 B2 = valor en lib anfo/Talad
-  alturaCarga: number;          // 3.33 B2 = valor en m
+export type MallaResultados = {
+  burden: number;
+  espaciamiento: number;
+  volumenRotaTaladro: number;
+  tonelaje: number;
+  librasAnfo: number;
+  alturaCarga: number;
+};
+
+export const defaultMallaValues = {
+  alturaBanco: 32.5,
+  densidadMaterial: 3.75,
+  factorPotencia: 0.40,
+  diametroTaladro: 2.50,
+  densidadAnfo: 0.80,
 };
 
 // Función para calcular la malla usando los datos del formulario
@@ -69,7 +75,6 @@ export function calcularMalla(data: MallaFormData): MallaResultados {
   const tonelajeFinal = volumenRotaTaladro * densidadMaterial; // Tonelaje por taladro (Ton/Tal)
   const librasAnfoFinal = tonelajeFinal * factorPotencia; // Libras ANFO por taladro (lib/Tal)
   const alturaCargaFinal = librasAnfoFinal / CapacidadAnfoPorMetro; // Altura de carga final (m)
-  const alturaCollarFinal = alturaBanco_m + subDrillingFinal - alturaCargaFinal; // Altura de collar (≈ 0 m)
 
   return {
 

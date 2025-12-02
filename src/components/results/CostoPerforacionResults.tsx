@@ -1,11 +1,8 @@
 "use client";
-import React from 'react';
+import type { CostoPerforacionResultados } from '../../scripts/costoPerforacionCalculations';
 
 type CostoPerforacionResultsProps = {
-  resultados: {
-    costoPerforacionPorMetro: number;
-    costoPerforacionPorTon: number;
-  };
+  resultados: CostoPerforacionResultados;
 };
 
 export default function CostoPerforacionResults({ resultados }: CostoPerforacionResultsProps) {

@@ -1,29 +1,6 @@
 "use client";
 import React from 'react';
-
-export type CostoVoladuraResultsData = {
-  // Consumos
-  consumoAnfo: number;
-  consumoDinamita: number;
-  consumoRetardos: number;
-  consumoPentacord: number;
-  consumoCamion: number;
-  consumoChispeo: number;
-  consumoManoObra: number;
-  
-  // Totales por item
-  totalAnfo: number;
-  totalDinamita: number;
-  totalRetardos: number;
-  totalPentacord: number;
-  totalCamion: number;
-  totalChispeo: number;
-  totalManoObra: number;
-  
-  // Total general
-  costoTotalPorTaladro: number;
-  costoVoladuraPorTonelada: number;
-};
+import { CostoVoladuraResultsData } from '../../scripts/costoVoladuraCalculations';
 
 type CostoVoladuraResultsProps = {
   results: CostoVoladuraResultsData;

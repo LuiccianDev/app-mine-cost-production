@@ -1,15 +1,24 @@
 type CostoPerforacionFormData = {
-  costoBrocaAccesorios: number;    // US$ / Und
-  costoEquipoPerforacion: number;  // US$ / Hr
-  tiempoPerforacion: number;       // Hr
-  rendimientoBroca: number;        // m / broca
-  tonelaje: number;              // Ton / Taladro
-  alturaBanco: number;             // m
+  costoBrocaAccesorios: number;
+  costoEquipoPerforacion: number;
+  tiempoPerforacion: number;
+  rendimientoBroca: number;
+  tonelaje: number;
+  alturaBanco: number;
 };
 
-type CostoPerforacionResultados = {
-  costoPerforacionPorMetro: number;  // US$ / m
-  costoPerforacionPorTon: number;    // US$ / Ton
+export type CostoPerforacionResultados = {
+  costoPerforacionPorMetro: number;
+  costoPerforacionPorTon: number;
+};
+
+export const defaultCostoPerforacionValues = {
+  costoBrocaAccesorios: 215.22,
+  costoEquipoPerforacion: 12.50,
+  tiempoPerforacion: 80.00,
+  rendimientoBroca: 762.00,
+  tonelaje: 122.45,
+  alturaBanco: 9.91,
 };
 
 export function calcularCostoPerforacion(data: CostoPerforacionFormData): CostoPerforacionResultados {

@@ -1,15 +1,8 @@
 "use client";
-import React from 'react';
+import type { MallaResultados } from '../../scripts/mallaCalculations';
 
 type MallaResultadosProps = {
-  resultados: {
-    burden :number;
-    espaciamiento: number;
-    volumenRotaTaladro: number;
-    tonelaje: number;
-    librasAnfo: number;
-    alturaCarga: number;
-  };
+  resultados: MallaResultados;
 };
 
 export default function MallaResultados({ resultados }: MallaResultadosProps) {

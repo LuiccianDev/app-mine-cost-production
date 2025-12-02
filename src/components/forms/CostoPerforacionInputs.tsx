@@ -3,7 +3,7 @@ import React from 'react';
 import FormField from '../ui/FormField';
 
 type CostoPerforacionInputsProps = {
-  inputValues: Record<string, string>;
+  inputValues: Record<string, number>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
