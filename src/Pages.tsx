@@ -9,6 +9,7 @@ import Carguio from "./sections/CarguioPage";
 import Limpieza from "./sections/LimpiezaPage";
 import Transporte from "./sections/TransportePage";
 import RellenoCementado from "./sections/RellenoCementadoPage";
+import RellenoDetritico from "./sections/RellenoDetriticoPage";
 
 
 const forms = [
@@ -19,7 +20,8 @@ const forms = [
   <Carguio key='Carguio' />,
   <Limpieza key='Limpieza' />,
   <Transporte key='Transporte' />,
-  <RellenoCementado key='RellenoCementado' />
+  <RellenoCementado key='RellenoCementado' />,
+  <RellenoDetritico key='RellenoDetritico' />,
 
 ];
 
