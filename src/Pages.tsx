@@ -1,17 +1,19 @@
 "use client";
 import { useState } from "react";
 import Pagination from "./components/ui/Pagination";
-import MallaForm from "./sections/MallaPage";
-import CostoPerforacionForm from "./sections/CostoPerforacionPage";
-import CostoVoladuraForm from "./sections/CostoVoladuraPage";
-import RequerimientoPerforadoraForm from "./sections/RequerimientoPerforadoraPage";
+import Malla from "./sections/MallaPage";
+import CostoPerforacion from "./sections/CostoPerforacionPage";
+import CostoVoladura from "./sections/CostoVoladuraPage";
+import RequerimientoPerforadora from "./sections/RequerimientoPerforadoraPage";
+import Carguio from "./sections/CarguioPage";
 
 
 const forms = [
-  <MallaForm key="MallaForm" />,
-  <CostoPerforacionForm key="CostoPerforacionForm" />,
-  <CostoVoladuraForm key="CostoVoladuraForm" />,
-  <RequerimientoPerforadoraForm key='RequerimientoPerforadoraForm ' />
+  <Malla key="MallaForm" />,
+  <CostoPerforacion key="CostoPerforacion" />,
+  <CostoVoladura key="CostoVoladura" />,
+  <RequerimientoPerforadora key='RequerimientoPerforadora' />,
+  <Carguio key='Carguio' />
 
 ];
 
