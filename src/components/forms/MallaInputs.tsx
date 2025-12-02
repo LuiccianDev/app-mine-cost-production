@@ -20,7 +20,7 @@ export default function MallaForm({ inputValues, onChange }: MallaFormProps) {
           name="alturaBanco"
           value={inputValues.alturaBanco}
           onChange={onChange}
-          unit="m"
+          unit="pies"
         />
         <FormField
           label="Densidad del Material"

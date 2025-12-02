@@ -20,7 +20,7 @@ export default function CostoPerforacionInputs({ inputValues, onChange }: CostoP
           name="costoBrocaAccesorios"
           value={inputValues.costoBrocaAccesorios}
           onChange={onChange}
-          unit="$/m"
+          unit="$/und"
         />
         <FormField
           label="Costo equipo Perforacion"
@@ -34,21 +34,21 @@ export default function CostoPerforacionInputs({ inputValues, onChange }: CostoP
           name="tiempoPerforacion"
           value={inputValues.tiempoPerforacion}
           onChange={onChange}
-          unit="min"
+          unit="hr"
         />
         <FormField
           label="Rendimiento Broca"
           name="rendimientoBroca"
           value={inputValues.rendimientoBroca}
           onChange={onChange}
-          unit="m"
+          unit="m /broca"
         />
         <FormField
-          label="Ton / Taladro"
-          name="tonTaladro"
-          value={inputValues.tonTaladro}
+          label="Tonelaje"
+          name="tonelaje"
+          value={inputValues.tonelaje}
           onChange={onChange}
-          unit="ton"
+          unit="ton / taladro"
         />
         <FormField
           label="Altura de banco"

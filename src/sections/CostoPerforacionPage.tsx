@@ -10,7 +10,7 @@ const defaultValues = {
   costoEquipoPerforacion: "12.50",
   tiempoPerforacion: "80.00",
   rendimientoBroca: "762.00",
-  tonTaladro: "122.45",
+  tonelaje: "122.45",
   alturaBanco: "9.91",
 };
 
@@ -35,7 +35,7 @@ export default function CostoPerforacionPage() {
       costoEquipoPerforacion: parseFloat(inputValues.costoEquipoPerforacion) || 0,
       tiempoPerforacion: parseFloat(inputValues.tiempoPerforacion) || 0,
       rendimientoBroca: parseFloat(inputValues.rendimientoBroca) || 0,
-      tonTaladro: parseFloat(inputValues.tonTaladro) || 0,
+      tonelaje: parseFloat(inputValues.tonelaje) || 0,
       alturaBanco: parseFloat(inputValues.alturaBanco) || 0,
     };
 

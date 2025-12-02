@@ -20,7 +20,7 @@ export default function CostoPerforacionResults({ resultados }: CostoPerforacion
 
       <div className="space-y-1">
         <div className="flex justify-between items-center py-4">
-          <span className="text-gray-700 text-base">Costo Perforacion (US$/m)</span>
+          <span className="text-gray-700 text-base">Costo Perforacion</span>
           <span className="font-medium text-gray-900">
             {isValid(resultados.costoPerforacionPorMetro) 
               ? `${resultados.costoPerforacionPorMetro.toFixed(2)} US$/m` 
@@ -28,7 +28,7 @@ export default function CostoPerforacionResults({ resultados }: CostoPerforacion
           </span>
         </div>
         <div className="flex justify-between items-center py-4">
-          <span className="text-gray-700 text-base">Costo Perforacion (US$/Ton)</span>
+          <span className="text-gray-700 text-base">Costo Perforacion</span>
           <span className="font-medium text-gray-900">
             {isValid(resultados.costoPerforacionPorTon) 
               ? `${resultados.costoPerforacionPorTon.toFixed(2)} US$/Ton` 

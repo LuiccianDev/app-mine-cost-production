@@ -36,7 +36,7 @@ export default function MallaResultados({ resultados }: MallaResultadosProps) {
           <span className="font-medium text-gray-900">{isValid(resultados.volumenRotaTaladro) ? `${resultados.volumenRotaTaladro.toFixed(2)} m³` : '- m³'}</span>
         </div>
         <div className="flex justify-between items-center py-4">
-          <span className="text-gray-700 text-base">Tonelaje</span>
+          <span className="text-gray-700 text-base">Tonelaje / Taladro</span>
           <span className="font-medium text-gray-900">{isValid(resultados.tonelaje) ? `${resultados.tonelaje.toFixed(2)} Ton/taladro` : '- Ton/taladro'}</span>
         </div>
         <div className="flex justify-between items-center py-4">

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Pagination from "./components/ui/Pagination";
 import MallaForm from "./sections/MallaPage";
 import CostoPerforacionForm from "./sections/CostoPerforacionPage";
-import CostoVoladuraForm from "./sections/CostoVoladuraForm";
+import CostoVoladuraForm from "./sections/CostoVoladuraPage";
 import RequerimientoPerforadoraForm from "./sections/RequerimientoPerforadoraForm";
 import CarguioForm from "./sections/CarguioForm";
 import LimpiezaForm from "./sections/LimpiezaForm";

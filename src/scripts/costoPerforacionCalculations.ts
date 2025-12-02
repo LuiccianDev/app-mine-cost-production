@@ -3,7 +3,7 @@ type CostoPerforacionFormData = {
   costoEquipoPerforacion: number;  // US$ / Hr
   tiempoPerforacion: number;       // Hr
   rendimientoBroca: number;        // m / broca
-  tonTaladro: number;              // Ton / Taladro
+  tonelaje: number;              // Ton / Taladro
   alturaBanco: number;             // m
 };
 
@@ -18,7 +18,7 @@ export function calcularCostoPerforacion(data: CostoPerforacionFormData): CostoP
     costoEquipoPerforacion, 
     tiempoPerforacion, 
     rendimientoBroca, 
-    tonTaladro, 
+    tonelaje, 
     alturaBanco 
   } = data;
 
@@ -30,7 +30,7 @@ export function calcularCostoPerforacion(data: CostoPerforacionFormData): CostoP
   // Simplificado: (Costo Perforacion US$/m) x (Altura Banco + SubDrilling) / (Ton/Taladro)
   // Según la imagen: 1.59 / 12.36 = 0.13
   // donde 12.36 = Ton/Taladro / (Altura Banco + SubDrilling)
-  const costoPerforacionPorTon = costoPerforacionPorMetro / (tonTaladro / alturaBanco);
+  const costoPerforacionPorTon = costoPerforacionPorMetro / (tonelaje / alturaBanco);
 
   return {
     costoPerforacionPorMetro,
