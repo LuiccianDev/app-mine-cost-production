@@ -8,6 +8,7 @@ import RequerimientoPerforadora from "./sections/RequerimientoPerforadoraPage";
 import Carguio from "./sections/CarguioPage";
 import Limpieza from "./sections/LimpiezaPage";
 import Transporte from "./sections/TransportePage";
+import RellenoCementado from "./sections/RellenoCementadoPage";
 
 
 const forms = [
@@ -17,7 +18,8 @@ const forms = [
   <RequerimientoPerforadora key='RequerimientoPerforadora' />,
   <Carguio key='Carguio' />,
   <Limpieza key='Limpieza' />,
-  <Transporte key='Transporte' />
+  <Transporte key='Transporte' />,
+  <RellenoCementado key='RellenoCementado' />
 
 ];
 
