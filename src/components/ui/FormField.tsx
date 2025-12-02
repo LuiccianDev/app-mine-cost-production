@@ -8,11 +8,11 @@ type FormFieldProps = {
   unit?: string;
 };
 
-export default function FormField({ label, name, value, onChange }: FormFieldProps) {
+export default function FormField({ label, name, value, onChange, unit }: FormFieldProps) {
   return (
     <div className="flex flex-col gap-2 ">
       <label htmlFor={name} className="text-sm text-gray-600">
-        {label}
+        {label} {unit && <span className="text-gray-500">({unit})</span>}
       </label>
       <input
         type="text"

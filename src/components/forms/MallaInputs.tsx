@@ -20,30 +20,35 @@ export default function MallaForm({ inputValues, onChange }: MallaFormProps) {
           name="alturaBanco"
           value={inputValues.alturaBanco}
           onChange={onChange}
+          unit="m"
         />
         <FormField
           label="Densidad del Material"
           name="densidadMaterial"
           value={inputValues.densidadMaterial}
           onChange={onChange}
+          unit="ton/m³"
         />
         <FormField
           label="Factor de Potencia"
           name="factorPotencia"
           value={inputValues.factorPotencia}
           onChange={onChange}
+          unit="lib/ton"
         />
         <FormField
           label="Diametro Taladro"
           name="diametroTaladro"
           value={inputValues.diametroTaladro}
           onChange={onChange}
+          unit="pulg"
         />
         <FormField
           label="Densidad de Anfo"
           name="densidadAnfo"
           value={inputValues.densidadAnfo}
           onChange={onChange}
+          unit="g/cm³"
         />
       </div>
     </div>

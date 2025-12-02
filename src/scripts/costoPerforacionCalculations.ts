@@ -22,7 +22,7 @@ export function calcularCostoPerforacion(data: CostoPerforacionFormData): CostoP
     alturaBanco 
   } = data;
 
-  // COSTO PERFORACION (US$/m) = (Costo Broca + Costo Equipo Perforac. x Tiempo Perf.) / Rendimiento Broca
+  //* COSTO PERFORACION (US$/m) = (Costo Broca + Costo Equipo Perforac. x Tiempo Perf.) / Rendimiento Broca
   const costoPerforacionPorMetro = 
     (costoBrocaAccesorios + (costoEquipoPerforacion * tiempoPerforacion)) / rendimientoBroca;
 
@@ -30,8 +30,7 @@ export function calcularCostoPerforacion(data: CostoPerforacionFormData): CostoP
   // Simplificado: (Costo Perforacion US$/m) x (Altura Banco + SubDrilling) / (Ton/Taladro)
   // Según la imagen: 1.59 / 12.36 = 0.13
   // donde 12.36 = Ton/Taladro / (Altura Banco + SubDrilling)
-  const taladroMetros = alturaBanco + (alturaBanco * 0.3); // Altura + SubDrilling (30% de altura)
-  const costoPerforacionPorTon = costoPerforacionPorMetro / (tonTaladro / taladroMetros);
+  const costoPerforacionPorTon = costoPerforacionPorMetro / (tonTaladro / alturaBanco);
 
   return {
     costoPerforacionPorMetro,
