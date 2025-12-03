@@ -41,7 +41,7 @@ export function useClientOnly(): boolean {
 
   // This effect runs only once after the component mounts on the client
   // This is the correct pattern for detecting client-side hydration
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // The empty dependency array is intentional and configured in eslint.config.mjs
   useEffect(() => {
     setIsClient(true);
   }, []);

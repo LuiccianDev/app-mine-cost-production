@@ -18,7 +18,7 @@ export default function MallaSection() {
     defaultMallaValues
   );
 
-  const { dirtyFields, markDirty } = useDirtyFields(
+  const { markDirty } = useDirtyFields(
     STORAGE_KEYS.MALLA_DIRTY
   );
 
