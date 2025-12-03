@@ -18,9 +18,9 @@ export default function CostoVoladuraPage() {
       <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
         <CostoVoladuraInputs inputValues={inputValues} onChange={handleChange} />
       </div>
-      <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
+      {/* <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
         <CostoVoladuraResults resultados={resultados} />
-      </div>
+      </div> */}
     </div>
   );
 }

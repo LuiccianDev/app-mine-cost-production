@@ -18,9 +18,9 @@ export default function RellenoDetriticoPage() {
       <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
         <RellenoDetriticoInputs inputValues={inputValues} onChange={handleChange} />
       </div>
-      <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
+      {/* <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
         <RellenoDetriticoResults resultados={resultados} />
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -18,9 +18,9 @@ export default function MallaSection() {
       <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
         <MallaForm inputValues={inputValues} onChange={handleChange} />
       </div>
-      <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
+      {/* <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
         <MallaResultados resultados={resultados} />
-      </div>
+      </div> */}
     </div>
   );
 }

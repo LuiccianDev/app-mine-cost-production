@@ -18,9 +18,9 @@ export default function RellenoCementadoPage() {
       <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
         <RellenoCementadoInputs inputValues={inputValues} onChange={handleChange} />
       </div>
-      <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
+      {/* <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
         <RellenoCementadoResults resultados={resultados} />
-      </div>
+      </div> */}
     </div>
   );
 }
