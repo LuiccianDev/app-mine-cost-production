@@ -55,7 +55,7 @@ export default function Footer() {
 
                     <div className="flex flex-wrap items-center gap-6 pt-2">
                         <a
-                            href="#contact"
+                            href="/contact"
                             className="px-6 py-3 bg-white text-black text-sm font-normal hover:bg-gray-200 transition-colors rounded-sm"
                         >
                             Get in Touch

@@ -1,14 +1,32 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: Roboto-flex;
+  font-style: normal;
+  font-weight: 300 ;
+  src: url("/fonts/Roboto_flex/RobotoFlex.ttf") format("truetype");
+}
+@font-face {
+  font-family: Roboto-flex-title;
+  font-style: normal;
+  font-weight: 600 ;
+  src: url("/fonts/Roboto_flex/RobotoFlex.ttf") format("truetype");
+}
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
+@theme {
+  --font-Roboto-title : "Roboto-flex-title", sans-serif
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Roboto-flex, Arial, Helvetica, sans-serif;
 }
 
 /* Ocultar scrollbar en todos los navegadores */

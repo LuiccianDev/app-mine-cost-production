@@ -3,20 +3,23 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <section className="relative w-full h-[calc(100vh-5rem)]">
-      <div className="container mx-auto px-8 h-full flex flex-col justify-between py-20">
+      <div className="container mx-auto px-8 h-full flex flex-col justify-between pb-20 pt-10">
         {/* Parte superior - Título y foto */}
         <div className="flex items-start justify-between ">
           {/* Título izquierda arriba */}
-          <h1 className="text-8xl md:text-[12rem] font-bold text-slate-900 tracking-tight leading-none">
-            LUICCIAN
-            <br />
-            MINE
-          </h1>
+          <div className="font-Roboto-title text-[12rem] leading-none">
+            <h1 className="text-slate-900">
+              LUICCIAN
+            </h1>
+            <h1 className="text-slate-900 -mt-10">
+              MINE
+            </h1>
+          </div>
 
           {/* Imagen circular derecha arriba */}
           <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl">
             <Image 
-              src="/img/logo-mine.jpg" 
+              src="/img/logo.webp" 
               alt="Luiccian Mine"
               fill
               className="object-cover"
@@ -38,8 +41,8 @@ export default function Hero() {
           </div>
 
           {/* Descripción derecha abajo */}
-          <div className="max-w-xl text-right space-y-4">
-            <p className="text-xl md:text-2xl text-slate-900 leading-relaxed">
+          <div className="max-w-xl text-right space-y-4 ">
+            <p className="text-3xl text-slate-900 ">
               Hello, I&apos;m a specialist in mining cost and production calculation with detailed analysis — based in operations optimization, working remote. Let&apos;s create!
             </p>
             
