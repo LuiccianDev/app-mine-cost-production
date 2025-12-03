@@ -1,4 +1,4 @@
-import type { LimpiezaResultados } from '../../scripts/limpiezaCalculations';
+import type { LimpiezaResultados } from './limpiezaCalculations';
 
 type LimpiezaResultsProps = {
   resultados: LimpiezaResultados;

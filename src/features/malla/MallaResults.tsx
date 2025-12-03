@@ -1,5 +1,5 @@
 
-import type { MallaResultados } from '../../scripts/mallaCalculations';
+import type { MallaResultados } from './mallaCalculations';
 
 type MallaResultadosProps = {
   resultados: MallaResultados;

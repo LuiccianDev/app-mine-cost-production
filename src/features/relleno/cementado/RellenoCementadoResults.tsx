@@ -1,4 +1,4 @@
-import type { RellenoCementadoResultados } from '../../scripts/rellenoCementadoCalculations';
+import type { RellenoCementadoResultados } from './rellenoCementadoCalculations';
 
 type RellenoCementadoResultsProps = {
   resultados: RellenoCementadoResultados;

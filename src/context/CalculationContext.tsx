@@ -1,13 +1,13 @@
 "use client";
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { MallaResultados } from '../scripts/mallaCalculations';
-import { CostoPerforacionResultados } from '../scripts/costoPerforacionCalculations';
-import { CostoVoladuraResultsData } from '../scripts/costoVoladuraCalculations';
-import { LimpiezaResultados } from '../scripts/limpiezaCalculations';
-import { CarguioResultados } from '../scripts/carguioCalculations';
-import { TransporteResultados } from '../scripts/transporteCalculations';
-import { RellenoCementadoResultados } from '../scripts/rellenoCementadoCalculations';
-import { RellenoDetriticoResultados } from '../scripts/rellenoDetriticoCalculations';
+import { MallaResultados } from '@/src/features/malla/mallaCalculations';
+import { CostoPerforacionResultados } from '@/src/features/perforacion/costoPerforacionCalculations';
+import { CostoVoladuraResultsData } from '@/src/features/voladura/costoVoladuraCalculations';
+import { LimpiezaResultados } from '@/src/features/limpieza/limpiezaCalculations';
+import { CarguioResultados } from '@/src/features/carguio/carguioCalculations';
+import { TransporteResultados } from '@/src/features/transporte/transporteCalculations';
+import { RellenoCementadoResultados } from '@/src/features/relleno/cementado/rellenoCementadoCalculations';
+import { RellenoDetriticoResultados } from '@/src/features/relleno/detritico/rellenoDetriticoCalculations';
 
 type RequerimientoPerforadoraInputs = {
   produccionMina: number;

@@ -1,4 +1,4 @@
-import type { CostoPerforacionResultados } from '../../scripts/costoPerforacionCalculations';
+import type { CostoPerforacionResultados } from './costoPerforacionCalculations';
 
 type CostoPerforacionResultsProps = {
   resultados: CostoPerforacionResultados;

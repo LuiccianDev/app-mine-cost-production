@@ -1,4 +1,4 @@
-import type { CostoVoladuraResultsData } from '../../scripts/costoVoladuraCalculations';
+import type { CostoVoladuraResultsData } from './costoVoladuraCalculations';
 
 type CostoVoladuraResultsProps = {
   resultados: CostoVoladuraResultsData;
