@@ -4,10 +4,10 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="sticky bottom-0 w-full h-screen bg-black text-white flex flex-col justify-between py-8 px-8 md:px-16 lg:px-20 -z-10">
+        <footer className="relative w-full h-screen bg-black text-white flex flex-col py-12 px-8 md:px-16 lg:px-20">
             <div className="w-full h-full flex flex-col justify-between">
                 {/* Top Section - Social Links */}
-                <div className="flex justify-end gap-6 md:gap-8 pt-4">
+                <div className="flex justify-end gap-6 md:gap-8 pt-8">
                     <a
                         href="https://www.linkedin.com/in/william-guevara-lazaro-79274b2a3"
                         target="_blank"
@@ -32,10 +32,19 @@ export default function Footer() {
                     >
                         Github
                     </a>
+                    <a
+                        href="https://luiccian.blogspot.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-white hover:text-gray-400 transition-colors text-sm font-light"
+                    >
+                        Blog
+                    </a>
+        
                 </div>
 
                 {/* Middle Section - Main Text and CTA */}
-                <div className="flex-1 flex flex-col items-start justify-center max-w-5xl py-16">
+                <div className="flex-1 flex flex-col items-start justify-center max-w-5xl py-24">
                     <h2 className="text-4xl font-light leading-tight mb-8">
                         Curious about what we can create{" "}
                         <span className="text-gray-500">together?</span>
@@ -59,7 +68,7 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom Section - Footer Info */}
-                <div className="flex items-center justify-between md:grid-cols-3 gap-8 pb-4 text-sm font-light">
+                <div className="flex items-center justify-between md:grid-cols-3 gap-8 pb-8 text-sm font-light">
 
                     {/* Center - Credits */}
                     <div className="space-y-0.5">
