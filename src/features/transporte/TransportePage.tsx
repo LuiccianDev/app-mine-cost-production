@@ -17,8 +17,8 @@ export default function TransportePage() {
     }
     return defaultTransporteValues;
   });
-
-  const [_dirtyFields, setDirtyFields] = useState<Set<string>>(() => {
+  // se removio para no dar el error _dirtyFields 
+  const [, setDirtyFields] = useState<Set<string>>(() => {
     return loadDirtyFields(STORAGE_KEYS.TRANSPORTE_DIRTY);
   });
 
