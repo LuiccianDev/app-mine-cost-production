@@ -24,6 +24,12 @@ export default function CostoVoladuraPage() {
   });
 
   const [showResults, setShowResults] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Marcar como montado después de la hidratación
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Calcular el valor derivado del contexto (sin setState en effect)
   const derivedTonelajePorTaladro = useMemo(() => {
@@ -81,7 +87,7 @@ export default function CostoVoladuraPage() {
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}
           resultsComponent={<CostoVoladuraResults resultados={resultados} />}
-          isAutoFilled={!!mallaResults?.tonelaje}
+          isAutoFilled={isMounted && !!mallaResults?.tonelaje}
           dirtyFields={dirtyFields}
           onResetField={handleResetField}
         />

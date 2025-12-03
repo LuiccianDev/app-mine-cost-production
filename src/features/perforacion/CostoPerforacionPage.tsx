@@ -24,6 +24,12 @@ export default function CostoPerforacionPage() {
   });
 
   const [showResults, setShowResults] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Marcar como montado después de la hidratación
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Calcular valores derivados del contexto (sin setState en effect)
   const derivedTonelaje = useMemo(() => {
@@ -50,9 +56,9 @@ export default function CostoPerforacionPage() {
   // Guardar inputs en localStorage cuando cambien
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem(STORAGE_KEYS.COSTO_PERFORACION_INPUTS, JSON.stringify(inputValues));
+      localStorage.setItem(STORAGE_KEYS.COSTO_PERFORACION_INPUTS, JSON.stringify(finalInputValues));
     }
-  }, [inputValues]);
+  }, [finalInputValues]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
@@ -97,7 +103,7 @@ export default function CostoPerforacionPage() {
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}
           resultsComponent={<CostoPerforacionResults resultados={resultados} />}
-          isAutoFilled={!!(mallaResults?.tonelaje && mallaResults?.alturaBanco)}
+          isAutoFilled={isMounted && !!(mallaResults?.tonelaje && mallaResults?.alturaBanco)}
           dirtyFields={dirtyFields}
           onResetField={handleResetField}
         />

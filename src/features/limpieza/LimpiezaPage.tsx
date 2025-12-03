@@ -24,6 +24,12 @@ export default function LimpiezaPage() {
   });
 
   const [showResults, setShowResults] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Marcar como montado después de la hidratación
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Calcular valores derivados del contexto (sin setState en effect)
   const derivedDensidadRotaMaterial = useMemo(() => {
@@ -96,8 +102,8 @@ export default function LimpiezaPage() {
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}
           resultsComponent={<LimpiezaResults resultados={resultados} />}
-          isAutoFilledDensidad={!!carguioInputs?.densidadRotaMaterial}
-          isAutoFilledProduccion={!!requerimientoPerforadoraInputs?.produccionMina}
+          isAutoFilledDensidad={isMounted && !!carguioInputs?.densidadRotaMaterial}
+          isAutoFilledProduccion={isMounted && !!requerimientoPerforadoraInputs?.produccionMina}
           dirtyFields={dirtyFields}
           onResetField={handleResetField}
         />

@@ -24,6 +24,12 @@ export default function CarguioPage() {
   });
 
   const [showResults, setShowResults] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Marcar como montado después de la hidratación
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Calcular el valor derivado del contexto (sin setState en effect)
   const derivedProduccionMineral = useMemo(() => {
@@ -96,7 +102,7 @@ export default function CarguioPage() {
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}
           resultsComponent={<CarguioResults resultados={resultados} />}
-          isAutoFilled={!!requerimientoPerforadoraInputs?.produccionMina}
+          isAutoFilled={isMounted && !!requerimientoPerforadoraInputs?.produccionMina}
           dirtyFields={dirtyFields}
           onResetField={handleResetField}
         />

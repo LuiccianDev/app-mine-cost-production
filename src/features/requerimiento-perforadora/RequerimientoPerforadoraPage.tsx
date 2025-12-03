@@ -24,6 +24,12 @@ export default function RequerimientoPerforadoraPage() {
   });
 
   const [showResults, setShowResults] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Marcar como montado después de la hidratación
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Calcular valores derivados del contexto (sin setState en effect)
   const derivedAlturaBanco = useMemo(() => {
@@ -98,7 +104,7 @@ export default function RequerimientoPerforadoraPage() {
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}
           resultsComponent={<RequerimientoPerforadoraResults resultados={resultados} />}
-          isAutoFilled={!!(mallaResults?.alturaBanco && mallaResults?.tonelaje)}
+          isAutoFilled={isMounted && !!(mallaResults?.alturaBanco && mallaResults?.tonelaje)}
           dirtyFields={dirtyFields}
           onResetField={handleResetField}
         />
