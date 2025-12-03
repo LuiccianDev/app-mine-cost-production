@@ -58,7 +58,7 @@ export default function Faq() {
                   <span className="text-base text-gray-900 pr-4">
                     {faq.question}
                   </span>
-                  <span className="text-xl text-gray-400 flex-shrink-0">
+                  <span className="text-xl text-gray-400 shrink-0">
                     {openIndex === index ? "−" : "+"}
                   </span>
                 </button>

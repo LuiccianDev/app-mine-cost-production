@@ -73,7 +73,7 @@ export default function Footer() {
                     {/* Center - Credits */}
                     <div className="space-y-0.5">
                         <p>Designed & Developed</p>
-                        <p>by Luiccian</p>
+                        <p>by Luiccian {currentYear}</p>
                     </div>
                 </div>
             </div>

@@ -4,13 +4,13 @@
   font-family: Roboto-flex;
   font-style: normal;
   font-weight: 300 ;
-  src: url("/fonts/Roboto_flex/RobotoFlex.ttf") format("truetype");
+  src: url("/fonts/Roboto_flex/RobotoFlex.woff2") format("woff2");
 }
 @font-face {
   font-family: Roboto-flex-title;
   font-style: normal;
   font-weight: 600 ;
-  src: url("/fonts/Roboto_flex/RobotoFlex.ttf") format("truetype");
+  src: url("/fonts/Roboto_flex/RobotoFlex.woff2") format("woff2");
 }
 
 
