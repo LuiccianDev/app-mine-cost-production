@@ -7,9 +7,20 @@ type CarguioInputsProps = {
   onToggleResults: () => void;
   resultsComponent?: React.ReactNode;
   isAutoFilled?: boolean;
+  dirtyFields?: Set<string>;
+  onResetField?: (fieldName: string) => void;
 };
 
-export default function CarguioInputs({ inputValues, onChange, showResults, onToggleResults, resultsComponent, isAutoFilled = false }: CarguioInputsProps) {
+export default function CarguioInputs({ 
+  inputValues, 
+  onChange, 
+  showResults, 
+  onToggleResults, 
+  resultsComponent, 
+  isAutoFilled = false,
+  dirtyFields = new Set(),
+  onResetField
+}: CarguioInputsProps) {
   return (
     <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
       <div className="mb-5 flex items-center justify-between">
@@ -36,9 +47,10 @@ export default function CarguioInputs({ inputValues, onChange, showResults, onTo
           value={inputValues.produccionMineral}
           onChange={onChange}
           unit="TPD"
-          readOnly={isAutoFilled}
-          className={isAutoFilled ? "bg-blue-50" : ""}
           decimals={2}
+          isAutoFilled={isAutoFilled}
+          isDirty={dirtyFields.has('produccionMineral')}
+          onResetToCalculated={onResetField ? () => onResetField('produccionMineral') : undefined}
         />
         <FormField
           label="Ratio D / M"

@@ -4,51 +4,75 @@ import LimpiezaInputs from '../components/forms/LimpiezaInputs';
 import LimpiezaResults from '../components/results/LimpiezaResults';
 import { calcularLimpieza, defaultLimpiezaValues } from '../scripts/limpiezaCalculations';
 import { useCalculations } from '../context/CalculationContext';
+import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../constants/storageKeys';
 
 export default function LimpiezaPage() {
   const { carguioInputs, requerimientoPerforadoraInputs, setLimpiezaResults } = useCalculations();
   const [inputValues, setInputValues] = useState(defaultLimpiezaValues);
   const [showResults, setShowResults] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [dirtyFields, setDirtyFields] = useState<Set<string>>(new Set());
 
   // Cargar valores guardados desde localStorage al iniciar
   useEffect(() => {
-    const savedInputs = localStorage.getItem('limpiezaInputsValues');
+    const savedInputs = localStorage.getItem(STORAGE_KEYS.LIMPIEZA_INPUTS);
     if (savedInputs) {
       setInputValues(JSON.parse(savedInputs));
     }
+    const savedDirtyFields = loadDirtyFields(STORAGE_KEYS.LIMPIEZA_DIRTY);
+    setDirtyFields(savedDirtyFields);
     setIsInitialized(true);
   }, []);
 
   // Guardar inputs en localStorage cuando cambien (solo después de inicializar)
   useEffect(() => {
     if (isInitialized) {
-      localStorage.setItem('limpiezaInputsValues', JSON.stringify(inputValues));
+      localStorage.setItem(STORAGE_KEYS.LIMPIEZA_INPUTS, JSON.stringify(inputValues));
     }
   }, [inputValues, isInitialized]);
 
-  // Auto-actualizar solo densidadRotaMaterial cuando cambia en el contexto
+  // Auto-actualizar campos del contexto (CONSOLIDADO - un solo useEffect)
   useEffect(() => {
-    if (isInitialized && carguioInputs?.densidadRotaMaterial) {
-      setInputValues(prev => ({
-        ...prev,
-        densidadRotaMaterial: parseFloat(carguioInputs.densidadRotaMaterial.toFixed(2))
-      }));
+    if (isInitialized) {
+      const updates: Partial<typeof inputValues> = {};
+      
+      if (carguioInputs?.densidadRotaMaterial && !dirtyFields.has('densidadRotaMaterial')) {
+        updates.densidadRotaMaterial = parseFloat(carguioInputs.densidadRotaMaterial.toFixed(2));
+      }
+      if (requerimientoPerforadoraInputs?.produccionMina && !dirtyFields.has('produccionMineral')) {
+        updates.produccionMineral = parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2));
+      }
+      
+      if (Object.keys(updates).length > 0) {
+        setInputValues(prev => ({ ...prev, ...updates }));
+      }
     }
-  }, [carguioInputs?.densidadRotaMaterial, isInitialized]);
-
-  // Auto-actualizar solo produccionMineral cuando cambia en el contexto
-  useEffect(() => {
-    if (isInitialized && requerimientoPerforadoraInputs?.produccionMina) {
-      setInputValues(prev => ({
-        ...prev,
-        produccionMineral: parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2))
-      }));
-    }
-  }, [requerimientoPerforadoraInputs?.produccionMina, isInitialized]);
+  }, [carguioInputs?.densidadRotaMaterial, requerimientoPerforadoraInputs?.produccionMina, isInitialized, dirtyFields]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValues(prev => ({ ...prev, [e.target.name]: parseFloat(e.target.value) || 0 }));
+    const fieldName = e.target.name;
+    setDirtyFields(prev => {
+      const newSet = new Set(prev);
+      newSet.add(fieldName);
+      saveDirtyFields(STORAGE_KEYS.LIMPIEZA_DIRTY, newSet);
+      return newSet;
+    });
+    setInputValues(prev => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
+  };
+
+  const handleResetField = (fieldName: string) => {
+    setDirtyFields(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(fieldName);
+      saveDirtyFields(STORAGE_KEYS.LIMPIEZA_DIRTY, newSet);
+      return newSet;
+    });
+    
+    if (fieldName === 'densidadRotaMaterial' && carguioInputs?.densidadRotaMaterial) {
+      setInputValues(prev => ({ ...prev, densidadRotaMaterial: parseFloat(carguioInputs.densidadRotaMaterial.toFixed(2)) }));
+    } else if (fieldName === 'produccionMineral' && requerimientoPerforadoraInputs?.produccionMina) {
+      setInputValues(prev => ({ ...prev, produccionMineral: parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2)) }));
+    }
   };
 
   const resultados = useMemo(() => calcularLimpieza(inputValues), [inputValues]);
@@ -69,6 +93,8 @@ export default function LimpiezaPage() {
           resultsComponent={<LimpiezaResults resultados={resultados} />}
           isAutoFilledDensidad={!!carguioInputs?.densidadRotaMaterial}
           isAutoFilledProduccion={!!requerimientoPerforadoraInputs?.produccionMina}
+          dirtyFields={dirtyFields}
+          onResetField={handleResetField}
         />
       </div>
     </div>

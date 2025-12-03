@@ -7,9 +7,20 @@ type CostoPerforacionInputsProps = {
   onToggleResults: () => void;
   resultsComponent?: React.ReactNode;
   isAutoFilled?: boolean;
+  dirtyFields?: Set<string>;
+  onResetField?: (fieldName: string) => void;
 };
 
-export default function CostoPerforacionInputs({ inputValues, onChange, showResults, onToggleResults, resultsComponent, isAutoFilled = false }: CostoPerforacionInputsProps) {
+export default function CostoPerforacionInputs({ 
+  inputValues, 
+  onChange, 
+  showResults, 
+  onToggleResults, 
+  resultsComponent, 
+  isAutoFilled = false,
+  dirtyFields = new Set(),
+  onResetField
+}: CostoPerforacionInputsProps) {
   return (
     <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
       <div className="mb-5 flex items-center justify-between">
@@ -64,9 +75,10 @@ export default function CostoPerforacionInputs({ inputValues, onChange, showResu
           value={inputValues.tonelaje}
           onChange={onChange}
           unit="ton / taladro"
-          readOnly={isAutoFilled}
-          className={isAutoFilled ? "bg-blue-50" : ""}
           decimals={2}
+          isAutoFilled={isAutoFilled}
+          isDirty={dirtyFields.has('tonelaje')}
+          onResetToCalculated={onResetField ? () => onResetField('tonelaje') : undefined}
         />
         <FormField
           label="Altura de banco"
@@ -74,9 +86,10 @@ export default function CostoPerforacionInputs({ inputValues, onChange, showResu
           value={inputValues.alturaBanco}
           onChange={onChange}
           unit="m"
-          readOnly={isAutoFilled}
-          className={isAutoFilled ? "bg-blue-50" : ""}
           decimals={2}
+          isAutoFilled={isAutoFilled}
+          isDirty={dirtyFields.has('alturaBanco')}
+          onResetToCalculated={onResetField ? () => onResetField('alturaBanco') : undefined}
         />
       </div>
       

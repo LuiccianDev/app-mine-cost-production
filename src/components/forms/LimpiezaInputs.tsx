@@ -8,9 +8,21 @@ type LimpiezaInputsProps = {
   resultsComponent?: React.ReactNode;
   isAutoFilledDensidad?: boolean;
   isAutoFilledProduccion?: boolean;
+  dirtyFields?: Set<string>;
+  onResetField?: (fieldName: string) => void;
 };
 
-export default function LimpiezaInputs({ inputValues, onChange, showResults, onToggleResults, resultsComponent, isAutoFilledDensidad = false, isAutoFilledProduccion = false }: LimpiezaInputsProps) {
+export default function LimpiezaInputs({ 
+  inputValues, 
+  onChange, 
+  showResults, 
+  onToggleResults, 
+  resultsComponent, 
+  isAutoFilledDensidad = false, 
+  isAutoFilledProduccion = false,
+  dirtyFields = new Set(),
+  onResetField
+}: LimpiezaInputsProps) {
   return (
     <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
       <div className="mb-5 flex items-center justify-between">
@@ -37,9 +49,10 @@ export default function LimpiezaInputs({ inputValues, onChange, showResults, onT
           value={inputValues.produccionMineral}
           onChange={onChange}
           unit="TPD"
-          readOnly={isAutoFilledProduccion}
-          className={isAutoFilledProduccion ? "bg-blue-50" : ""}
           decimals={2}
+          isAutoFilled={isAutoFilledProduccion}
+          isDirty={dirtyFields.has('produccionMineral')}
+          onResetToCalculated={onResetField ? () => onResetField('produccionMineral') : undefined}
         />
         <FormField
           label="Producción Desmonte"
@@ -75,9 +88,10 @@ export default function LimpiezaInputs({ inputValues, onChange, showResults, onT
           value={inputValues.densidadRotaMaterial}
           onChange={onChange}
           unit="Ton/m3"
-          readOnly={isAutoFilledDensidad}
-          className={isAutoFilledDensidad ? "bg-blue-50" : ""}
           decimals={2}
+          isAutoFilled={isAutoFilledDensidad}
+          isDirty={dirtyFields.has('densidadRotaMaterial')}
+          onResetToCalculated={onResetField ? () => onResetField('densidadRotaMaterial') : undefined}
         />
         <FormField
           label="Tiempo De 1 Pase (viaje)"

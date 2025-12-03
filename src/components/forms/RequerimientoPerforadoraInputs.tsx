@@ -7,9 +7,20 @@ type RequerimientoPerforadoraInputsProps = {
   onToggleResults: () => void;
   resultsComponent?: React.ReactNode;
   isAutoFilled?: boolean;
+  dirtyFields?: Set<string>;
+  onResetField?: (fieldName: string) => void;
 };
 
-export default function RequerimientoPerforadoraInputs({ inputValues, onChange, showResults, onToggleResults, resultsComponent, isAutoFilled = false }: RequerimientoPerforadoraInputsProps) {
+export default function RequerimientoPerforadoraInputs({ 
+  inputValues, 
+  onChange, 
+  showResults, 
+  onToggleResults, 
+  resultsComponent, 
+  isAutoFilled = false,
+  dirtyFields = new Set(),
+  onResetField
+}: RequerimientoPerforadoraInputsProps) {
   return (
     <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
       <div className="mb-5 flex items-center justify-between">
@@ -43,9 +54,10 @@ export default function RequerimientoPerforadoraInputs({ inputValues, onChange, 
           value={inputValues.alturaBanco}
           onChange={onChange}
           unit="m"
-          readOnly={isAutoFilled}
-          className={isAutoFilled ? "bg-blue-50" : ""}
           decimals={2}
+          isAutoFilled={isAutoFilled}
+          isDirty={dirtyFields.has('alturaBanco')}
+          onResetToCalculated={onResetField ? () => onResetField('alturaBanco') : undefined}
         />
         <FormField
           label="Longitud de Taladro"
@@ -60,9 +72,10 @@ export default function RequerimientoPerforadoraInputs({ inputValues, onChange, 
           value={inputValues.tonelajePorTaladro}
           onChange={onChange}
           unit="Ton/taladro"
-          readOnly={isAutoFilled}
-          className={isAutoFilled ? "bg-blue-50" : ""}
           decimals={2}
+          isAutoFilled={isAutoFilled}
+          isDirty={dirtyFields.has('tonelajePorTaladro')}
+          onResetToCalculated={onResetField ? () => onResetField('tonelajePorTaladro') : undefined}
         />
         <FormField
           label="Rendimiento Broca"
