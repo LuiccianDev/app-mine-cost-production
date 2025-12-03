@@ -1,18 +1,18 @@
 "use client";
 import { useState } from "react";
-import { CalculationProvider } from "./context/CalculationContext";
-import Malla from "./sections/MallaPage";
-import CostoPerforacion from "./sections/CostoPerforacionPage";
-import CostoVoladura from "./sections/CostoVoladuraPage";
-import RequerimientoPerforadora from "./sections/RequerimientoPerforadoraPage";
-import Carguio from "./sections/CarguioPage";
-import Limpieza from "./sections/LimpiezaPage";
-import Transporte from "./sections/TransportePage";
-import RellenoCementado from "./sections/RellenoCementadoPage";
-import RellenoDetritico from "./sections/RellenoDetriticoPage";
-import Preview from "./Preview";
+import { CalculationProvider } from "../context/CalculationContext";
+import Malla from "../features/malla/MallaPage";
+import CostoPerforacion from "../features/perforacion/CostoPerforacionPage";
+import CostoVoladura from "../features/voladura/CostoVoladuraPage";
+import RequerimientoPerforadora from "../features/requerimiento-perforadora/RequerimientoPerforadoraPage";
+import Carguio from "../features/carguio/CarguioPage";
+import Limpieza from "../features/limpieza/LimpiezaPage";
+import Transporte from "../features/transporte/TransportePage";
+import RellenoCementado from "../features/relleno/cementado/RellenoCementadoPage";
+import RellenoDetritico from "../features/relleno/detritico/RellenoDetriticoPage";
+import CalculatorPreview from "./CalculatorPreview";
 
-export default function FormsSection() {
+export default function CalculatorLayout() {
   const [showPreview, setShowPreview] = useState(false);
 
   return (
@@ -20,7 +20,7 @@ export default function FormsSection() {
       {showPreview ? (
         <div className="w-full min-h-screen  animate-in fade-in duration-300">
           <div className="w-full max-w-7xl mx-auto px-6 py-8">
-            <Preview onBack={() => setShowPreview(false)} />
+            <CalculatorPreview onBack={() => setShowPreview(false)} />
           </div>
         </div>
       ) : (

@@ -1,6 +1,6 @@
-import FormField from '../ui/FormField';
+import FormField from '../../../components/ui/FormField';
 
-type RellenoCementadoInputsProps = {
+type RellenoDetriticoInputsProps = {
   inputValues: Record<string, number>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   showResults: boolean;
@@ -11,7 +11,7 @@ type RellenoCementadoInputsProps = {
   onResetField?: (fieldName: string) => void;
 };
 
-export default function RellenoCementadoInputs({ 
+export default function RellenoDetriticoInputs({ 
   inputValues, 
   onChange, 
   showResults, 
@@ -20,11 +20,11 @@ export default function RellenoCementadoInputs({
   isAutoFilled = false,
   dirtyFields = new Set(),
   onResetField
-}: RellenoCementadoInputsProps) {
+}: RellenoDetriticoInputsProps) {
   return (
     <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-gray-900">Relleno Cementado</h2>
+        <h2 className="text-lg font-semibold text-gray-900">Relleno Detrítico</h2>
         <button
           onClick={onToggleResults}
           className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
@@ -57,7 +57,7 @@ export default function RellenoCementadoInputs({
           name="produccionRelleno"
           value={inputValues.produccionRelleno}
           onChange={onChange}
-          unit="m3"
+          unit="m³"
         />
         <FormField
           label="Capacidad de Cuchara"
@@ -130,30 +130,16 @@ export default function RellenoCementadoInputs({
           unit="Ton/m³"
         />
         <FormField
-          label="Costo Preparación Agregados"
+          label="Costo Preparación Agregados Zarandeados"
           name="costoPreparacionAgregados"
           value={inputValues.costoPreparacionAgregados}
           onChange={onChange}
           unit="US$/m³"
         />
         <FormField
-          label="Costo Preparación Planta de Concreto"
-          name="costoPreparacionPlantaConcreto"
-          value={inputValues.costoPreparacionPlantaConcreto}
-          onChange={onChange}
-          unit="US$/m³"
-        />
-        <FormField
-          label="Costo Transporte (rellave + chura)"
-          name="costoTransporteRellave"
-          value={inputValues.costoTransporteRellave}
-          onChange={onChange}
-          unit="US$/m³"
-        />
-        <FormField
-          label="Costo Cemento Cemento (2% = 78 kg/m3)"
-          name="costoCementoCemento"
-          value={inputValues.costoCementoCemento}
+          label="Costo Transporte de Desmonte"
+          name="costoTransporteDesmonte"
+          value={inputValues.costoTransporteDesmonte}
           onChange={onChange}
           unit="US$/m³"
         />

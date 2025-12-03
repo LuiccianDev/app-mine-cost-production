@@ -1,30 +1,32 @@
-import FormField from '../ui/FormField';
+import FormField from '../../components/ui/FormField';
 
-type RellenoDetriticoInputsProps = {
+type LimpiezaInputsProps = {
   inputValues: Record<string, number>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   showResults: boolean;
   onToggleResults: () => void;
   resultsComponent?: React.ReactNode;
-  isAutoFilled?: boolean;
+  isAutoFilledDensidad?: boolean;
+  isAutoFilledProduccion?: boolean;
   dirtyFields?: Set<string>;
   onResetField?: (fieldName: string) => void;
 };
 
-export default function RellenoDetriticoInputs({ 
+export default function LimpiezaInputs({ 
   inputValues, 
   onChange, 
   showResults, 
   onToggleResults, 
   resultsComponent, 
-  isAutoFilled = false,
+  isAutoFilledDensidad = false, 
+  isAutoFilledProduccion = false,
   dirtyFields = new Set(),
   onResetField
-}: RellenoDetriticoInputsProps) {
+}: LimpiezaInputsProps) {
   return (
     <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-gray-900">Relleno Detrítico</h2>
+        <h2 className="text-lg font-semibold text-gray-900">Limpieza</h2>
         <button
           onClick={onToggleResults}
           className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
@@ -48,16 +50,23 @@ export default function RellenoDetriticoInputs({
           onChange={onChange}
           unit="TPD"
           decimals={2}
-          isAutoFilled={isAutoFilled}
+          isAutoFilled={isAutoFilledProduccion}
           isDirty={dirtyFields.has('produccionMineral')}
           onResetToCalculated={onResetField ? () => onResetField('produccionMineral') : undefined}
         />
         <FormField
-          label="Producción Relleno"
-          name="produccionRelleno"
-          value={inputValues.produccionRelleno}
+          label="Producción Desmonte"
+          name="produccionDesmonte"
+          value={inputValues.produccionDesmonte}
           onChange={onChange}
-          unit="m³"
+          unit="TPD"
+        />
+        <FormField
+          label="Mineral + Desmonte"
+          name="mineralMasDesmonte"
+          value={inputValues.mineralMasDesmonte}
+          onChange={onChange}
+          unit="TPD"
         />
         <FormField
           label="Capacidad de Cuchara"
@@ -74,11 +83,15 @@ export default function RellenoDetriticoInputs({
           unit="%"
         />
         <FormField
-          label="Densidad rota material Relleno"
-          name="densidadRotaMaterialRelleno"
-          value={inputValues.densidadRotaMaterialRelleno}
+          label="Densidad rota material"
+          name="densidadRotaMaterial"
+          value={inputValues.densidadRotaMaterial}
           onChange={onChange}
-          unit="Ton/m³"
+          unit="Ton/m3"
+          decimals={2}
+          isAutoFilled={isAutoFilledDensidad}
+          isDirty={dirtyFields.has('densidadRotaMaterial')}
+          onResetToCalculated={onResetField ? () => onResetField('densidadRotaMaterial') : undefined}
         />
         <FormField
           label="Tiempo De 1 Pase (viaje)"
@@ -121,27 +134,6 @@ export default function RellenoDetriticoInputs({
           value={inputValues.costoHoraEquipo}
           onChange={onChange}
           unit="US$/Hr"
-        />
-        <FormField
-          label="Densidad de Mineral"
-          name="densidadMineral"
-          value={inputValues.densidadMineral}
-          onChange={onChange}
-          unit="Ton/m³"
-        />
-        <FormField
-          label="Costo Preparación Agregados Zarandeados"
-          name="costoPreparacionAgregados"
-          value={inputValues.costoPreparacionAgregados}
-          onChange={onChange}
-          unit="US$/m³"
-        />
-        <FormField
-          label="Costo Transporte de Desmonte"
-          name="costoTransporteDesmonte"
-          value={inputValues.costoTransporteDesmonte}
-          onChange={onChange}
-          unit="US$/m³"
         />
       </div>
       

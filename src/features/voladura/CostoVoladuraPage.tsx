@@ -1,10 +1,10 @@
 "use client";
 import { useState, useMemo, useEffect } from 'react';
-import CostoVoladuraInputs from '../components/forms/CostoVoladuraInputs';
-import CostoVoladuraResults from '../components/results/CostoVoladuraResults';
-import { calculateCostoVoladura, defaultCostoVoladuraValues } from '../scripts/costoVoladuraCalculations';
-import { useCalculations } from '../context/CalculationContext';
-import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../constants/storageKeys';
+import CostoVoladuraInputs from './CostoVoladuraInputs';
+import CostoVoladuraResults from './CostoVoladuraResults';
+import { calculateCostoVoladura, defaultCostoVoladuraValues } from './costoVoladuraCalculations';
+import { useCalculations } from '../../context/CalculationContext';
+import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storageKeys';
 
 export default function CostoVoladuraPage() {
   const { mallaResults } = useCalculations();

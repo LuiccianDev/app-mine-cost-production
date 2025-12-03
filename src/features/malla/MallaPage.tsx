@@ -1,10 +1,10 @@
 "use client";
 import { useState, useMemo, useEffect } from 'react';
-import MallaForm from '../components/forms/MallaInputs';
-import MallaResultados from '../components/results/MallaResults';
-import { calcularMalla, defaultMallaValues } from '../scripts/mallaCalculations';
-import { useCalculations } from '../context/CalculationContext';
-import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../constants/storageKeys';
+import MallaForm from './MallaInputs';
+import MallaResultados from './MallaResults';
+import { calcularMalla, defaultMallaValues } from './mallaCalculations';
+import { useCalculations } from '../../context/CalculationContext';
+import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storageKeys';
 
 export default function MallaSection() {
   const [inputValues, setInputValues] = useState(defaultMallaValues);

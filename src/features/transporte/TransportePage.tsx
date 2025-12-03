@@ -1,10 +1,10 @@
 "use client";
 import { useState, useMemo, useEffect } from 'react';
-import TransporteInputs from '../components/forms/TransporteInputs';
-import TransporteResults from '../components/results/TransporteResults';
-import { calcularTransporte, defaultTransporteValues } from '../scripts/transporteCalculations';
-import { useCalculations } from '../context/CalculationContext';
-import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../constants/storageKeys';
+import TransporteInputs from './TransporteInputs';
+import TransporteResults from './TransporteResults';
+import { calcularTransporte, defaultTransporteValues } from './transporteCalculations';
+import { useCalculations } from '../../context/CalculationContext';
+import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storageKeys';
 
 export default function TransportePage() {
   const { setTransporteResults } = useCalculations();

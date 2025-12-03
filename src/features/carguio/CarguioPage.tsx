@@ -1,10 +1,10 @@
 "use client";
 import { useState, useMemo, useEffect } from 'react';
-import CarguioInputs from '../components/forms/CarguioInputs';
-import CarguioResults from '../components/results/CarguioResults';
-import { calcularCarguio, defaultCarguioValues } from '../scripts/carguioCalculations';
-import { useCalculations } from '../context/CalculationContext';
-import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../constants/storageKeys';
+import CarguioInputs from './CarguioInputs';
+import CarguioResults from './CarguioResults';
+import { calcularCarguio, defaultCarguioValues } from './carguioCalculations';
+import { useCalculations } from '../../context/CalculationContext';
+import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storageKeys';
 
 export default function CarguioPage() {
   const { requerimientoPerforadoraInputs, setCarguioInputs, setCarguioResults } = useCalculations();

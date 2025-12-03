@@ -1,32 +1,30 @@
-import FormField from '../ui/FormField';
+import FormField from '../../../components/ui/FormField';
 
-type LimpiezaInputsProps = {
+type RellenoCementadoInputsProps = {
   inputValues: Record<string, number>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   showResults: boolean;
   onToggleResults: () => void;
   resultsComponent?: React.ReactNode;
-  isAutoFilledDensidad?: boolean;
-  isAutoFilledProduccion?: boolean;
+  isAutoFilled?: boolean;
   dirtyFields?: Set<string>;
   onResetField?: (fieldName: string) => void;
 };
 
-export default function LimpiezaInputs({ 
+export default function RellenoCementadoInputs({ 
   inputValues, 
   onChange, 
   showResults, 
   onToggleResults, 
   resultsComponent, 
-  isAutoFilledDensidad = false, 
-  isAutoFilledProduccion = false,
+  isAutoFilled = false,
   dirtyFields = new Set(),
   onResetField
-}: LimpiezaInputsProps) {
+}: RellenoCementadoInputsProps) {
   return (
     <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-gray-900">Limpieza</h2>
+        <h2 className="text-lg font-semibold text-gray-900">Relleno Cementado</h2>
         <button
           onClick={onToggleResults}
           className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
@@ -50,23 +48,16 @@ export default function LimpiezaInputs({
           onChange={onChange}
           unit="TPD"
           decimals={2}
-          isAutoFilled={isAutoFilledProduccion}
+          isAutoFilled={isAutoFilled}
           isDirty={dirtyFields.has('produccionMineral')}
           onResetToCalculated={onResetField ? () => onResetField('produccionMineral') : undefined}
         />
         <FormField
-          label="Producción Desmonte"
-          name="produccionDesmonte"
-          value={inputValues.produccionDesmonte}
+          label="Producción Relleno"
+          name="produccionRelleno"
+          value={inputValues.produccionRelleno}
           onChange={onChange}
-          unit="TPD"
-        />
-        <FormField
-          label="Mineral + Desmonte"
-          name="mineralMasDesmonte"
-          value={inputValues.mineralMasDesmonte}
-          onChange={onChange}
-          unit="TPD"
+          unit="m3"
         />
         <FormField
           label="Capacidad de Cuchara"
@@ -83,15 +74,11 @@ export default function LimpiezaInputs({
           unit="%"
         />
         <FormField
-          label="Densidad rota material"
-          name="densidadRotaMaterial"
-          value={inputValues.densidadRotaMaterial}
+          label="Densidad rota material Relleno"
+          name="densidadRotaMaterialRelleno"
+          value={inputValues.densidadRotaMaterialRelleno}
           onChange={onChange}
-          unit="Ton/m3"
-          decimals={2}
-          isAutoFilled={isAutoFilledDensidad}
-          isDirty={dirtyFields.has('densidadRotaMaterial')}
-          onResetToCalculated={onResetField ? () => onResetField('densidadRotaMaterial') : undefined}
+          unit="Ton/m³"
         />
         <FormField
           label="Tiempo De 1 Pase (viaje)"
@@ -134,6 +121,41 @@ export default function LimpiezaInputs({
           value={inputValues.costoHoraEquipo}
           onChange={onChange}
           unit="US$/Hr"
+        />
+        <FormField
+          label="Densidad de Mineral"
+          name="densidadMineral"
+          value={inputValues.densidadMineral}
+          onChange={onChange}
+          unit="Ton/m³"
+        />
+        <FormField
+          label="Costo Preparación Agregados"
+          name="costoPreparacionAgregados"
+          value={inputValues.costoPreparacionAgregados}
+          onChange={onChange}
+          unit="US$/m³"
+        />
+        <FormField
+          label="Costo Preparación Planta de Concreto"
+          name="costoPreparacionPlantaConcreto"
+          value={inputValues.costoPreparacionPlantaConcreto}
+          onChange={onChange}
+          unit="US$/m³"
+        />
+        <FormField
+          label="Costo Transporte (rellave + chura)"
+          name="costoTransporteRellave"
+          value={inputValues.costoTransporteRellave}
+          onChange={onChange}
+          unit="US$/m³"
+        />
+        <FormField
+          label="Costo Cemento Cemento (2% = 78 kg/m3)"
+          name="costoCementoCemento"
+          value={inputValues.costoCementoCemento}
+          onChange={onChange}
+          unit="US$/m³"
         />
       </div>
       

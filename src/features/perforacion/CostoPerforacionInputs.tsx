@@ -1,6 +1,6 @@
-import FormField from '../ui/FormField';
+import FormField from '../../components/ui/FormField';
 
-type CostoVoladuraInputsProps = {
+type CostoPerforacionInputsProps = {
   inputValues: Record<string, number>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   showResults: boolean;
@@ -11,7 +11,7 @@ type CostoVoladuraInputsProps = {
   onResetField?: (fieldName: string) => void;
 };
 
-export default function CostoVoladuraInputs({ 
+export default function CostoPerforacionInputs({ 
   inputValues, 
   onChange, 
   showResults, 
@@ -20,11 +20,11 @@ export default function CostoVoladuraInputs({
   isAutoFilled = false,
   dirtyFields = new Set(),
   onResetField
-}: CostoVoladuraInputsProps) {
+}: CostoPerforacionInputsProps) {
   return (
     <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-gray-900">Costo de Voladura</h2>
+        <h2 className="text-lg font-semibold text-gray-900">Costo de Perforación</h2>
         <button
           onClick={onToggleResults}
           className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
@@ -42,64 +42,54 @@ export default function CostoVoladuraInputs({
       </div>
       <div className="grid grid-cols-4 gap-6">
         <FormField
-          label="Costo Anfo"
-          name="costoAnfo"
-          value={inputValues.costoAnfo}
+          label="Costo Broca + Accesorios"
+          name="costoBrocaAccesorios"
+          value={inputValues.costoBrocaAccesorios}
           onChange={onChange}
-          unit="US$/Lib"
+          unit="$/und"
         />
         <FormField
-          label="Costo Dinamita"
-          name="costoDinamita"
-          value={inputValues.costoDinamita}
+          label="Costo equipo Perforacion"
+          name="costoEquipoPerforacion"
+          value={inputValues.costoEquipoPerforacion}
           onChange={onChange}
-          unit="US$/Cartucho"
+          unit="$/h"
         />
         <FormField
-          label="Costo Retardos Fanel"
-          name="costoRetardos"
-          value={inputValues.costoRetardos}
+          label="Tiempo de Perforac. (Rend. Broca)"
+          name="tiempoPerforacion"
+          value={inputValues.tiempoPerforacion}
           onChange={onChange}
-          unit="US$/Unidad"
+          unit="hr"
         />
         <FormField
-          label="Costo Cordón Detonante"
-          name="costoCordonDetonante"
-          value={inputValues.costoCordonDetonante}
+          label="Rendimiento Broca"
+          name="rendimientoBroca"
+          value={inputValues.rendimientoBroca}
           onChange={onChange}
-          unit="US$/Pie"
+          unit="m /broca"
         />
         <FormField
-          label="Costo Camión Anfocar"
-          name="costoCamionAnfocar"
-          value={inputValues.costoCamionAnfocar}
+          label="Tonelaje"
+          name="tonelaje"
+          value={inputValues.tonelaje}
           onChange={onChange}
-          unit="US$/Hr"
-        />
-        <FormField
-          label="Costo Chispeo"
-          name="costoChispeo"
-          value={inputValues.costoChispeo}
-          onChange={onChange}
-          unit="US$/Pie"
-        />
-        <FormField
-          label="Costo Mano de Obra"
-          name="costoManoObra"
-          value={inputValues.costoManoObra}
-          onChange={onChange}
-          unit="US$/Hr"
-        />
-        <FormField
-          label="Tonelaje por Taladro"
-          name="tonelajePorTaladro"
-          value={inputValues.tonelajePorTaladro}
-          onChange={onChange}
-          unit="Ton/Taladro"
+          unit="ton / taladro"
           decimals={2}
           isAutoFilled={isAutoFilled}
-          isDirty={dirtyFields.has('tonelajePorTaladro')}
-          onResetToCalculated={onResetField ? () => onResetField('tonelajePorTaladro') : undefined}
+          isDirty={dirtyFields.has('tonelaje')}
+          onResetToCalculated={onResetField ? () => onResetField('tonelaje') : undefined}
+        />
+        <FormField
+          label="Altura de banco"
+          name="alturaBanco"
+          value={inputValues.alturaBanco}
+          onChange={onChange}
+          unit="m"
+          decimals={2}
+          isAutoFilled={isAutoFilled}
+          isDirty={dirtyFields.has('alturaBanco')}
+          onResetToCalculated={onResetField ? () => onResetField('alturaBanco') : undefined}
         />
       </div>
       

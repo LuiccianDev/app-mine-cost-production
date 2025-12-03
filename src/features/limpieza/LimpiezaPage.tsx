@@ -1,10 +1,10 @@
 "use client";
 import { useState, useMemo, useEffect } from 'react';
-import LimpiezaInputs from '../components/forms/LimpiezaInputs';
-import LimpiezaResults from '../components/results/LimpiezaResults';
-import { calcularLimpieza, defaultLimpiezaValues } from '../scripts/limpiezaCalculations';
-import { useCalculations } from '../context/CalculationContext';
-import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../constants/storageKeys';
+import LimpiezaInputs from './LimpiezaInputs';
+import LimpiezaResults from './LimpiezaResults';
+import { calcularLimpieza, defaultLimpiezaValues } from './limpiezaCalculations';
+import { useCalculations } from '../../context/CalculationContext';
+import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storageKeys';
 
 export default function LimpiezaPage() {
   const { carguioInputs, requerimientoPerforadoraInputs, setLimpiezaResults } = useCalculations();

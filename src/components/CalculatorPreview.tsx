@@ -1,6 +1,6 @@
 "use client";
 import { jsPDF } from "jspdf";
-import { useCalculations } from './context/CalculationContext';
+import { useCalculations } from '../context/CalculationContext';
 
 export type PreviewData = {
   projectCode?: string;

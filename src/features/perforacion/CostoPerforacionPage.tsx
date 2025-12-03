@@ -1,10 +1,10 @@
 "use client";
 import { useState, useMemo, useEffect } from 'react';
-import CostoPerforacionInputs from '../components/forms/CostoPerforacionInputs';
-import CostoPerforacionResults from '../components/results/CostoPerforacionResults';
-import { calcularCostoPerforacion, defaultCostoPerforacionValues } from '../scripts/costoPerforacionCalculations';
-import { useCalculations } from '../context/CalculationContext';
-import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../constants/storageKeys';
+import CostoPerforacionInputs from './CostoPerforacionInputs';
+import CostoPerforacionResults from './CostoPerforacionResults';
+import { calcularCostoPerforacion, defaultCostoPerforacionValues } from './costoPerforacionCalculations';
+import { useCalculations } from '../../context/CalculationContext';
+import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storageKeys';
 
 export default function CostoPerforacionPage() {
   const [inputValues, setInputValues] = useState(defaultCostoPerforacionValues);

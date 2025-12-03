@@ -1,4 +1,4 @@
-import FormField from '../ui/FormField';
+import FormField from '../../components/ui/FormField';
 
 type CarguioInputsProps = {
   inputValues: Record<string, number>;

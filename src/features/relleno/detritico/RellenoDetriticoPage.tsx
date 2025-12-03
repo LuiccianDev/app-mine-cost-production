@@ -1,25 +1,25 @@
 "use client";
 import { useState, useMemo, useEffect } from 'react';
-import RellenoCementadoInputs from '../components/forms/RellenoCementadoInputs';
-import RellenoCementadoResults from '../components/results/RellenoCementadoResults';
-import { calcularRellenoCementado, defaultRellenoCementadoValues } from '../scripts/rellenoCementadoCalculations';
-import { useCalculations } from '../context/CalculationContext';
-import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../constants/storageKeys';
+import RellenoDetriticoInputs from './RellenoDetriticoInputs';
+import RellenoDetriticoResults from './RellenoDetriticoResults';
+import { calcularRellenoDetritico, defaultRellenoDetriticoValues } from './rellenoDetriticoCalculations';
+import { useCalculations } from '../../../context/CalculationContext';
+import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../../lib/storageKeys';
 
-export default function RellenoCementadoPage() {
-  const { requerimientoPerforadoraInputs, setRellenoCementadoResults } = useCalculations();
-  const [inputValues, setInputValues] = useState(defaultRellenoCementadoValues);
+export default function RellenoDetriticoPage() {
+  const { requerimientoPerforadoraInputs, setRellenoDetriticoResults } = useCalculations();
+  const [inputValues, setInputValues] = useState(defaultRellenoDetriticoValues);
   const [showResults, setShowResults] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   const [dirtyFields, setDirtyFields] = useState<Set<string>>(new Set());
 
   // Cargar valores guardados desde localStorage al iniciar
   useEffect(() => {
-    const savedInputs = localStorage.getItem(STORAGE_KEYS.RELLENO_CEMENTADO_INPUTS);
+    const savedInputs = localStorage.getItem(STORAGE_KEYS.RELLENO_DETRITICO_INPUTS);
     if (savedInputs) {
       setInputValues(JSON.parse(savedInputs));
     }
-    const savedDirtyFields = loadDirtyFields(STORAGE_KEYS.RELLENO_CEMENTADO_DIRTY);
+    const savedDirtyFields = loadDirtyFields(STORAGE_KEYS.RELLENO_DETRITICO_DIRTY);
     setDirtyFields(savedDirtyFields);
     setIsInitialized(true);
   }, []);
@@ -27,7 +27,7 @@ export default function RellenoCementadoPage() {
   // Guardar inputs en localStorage cuando cambien (solo después de inicializar)
   useEffect(() => {
     if (isInitialized) {
-      localStorage.setItem(STORAGE_KEYS.RELLENO_CEMENTADO_INPUTS, JSON.stringify(inputValues));
+      localStorage.setItem(STORAGE_KEYS.RELLENO_DETRITICO_INPUTS, JSON.stringify(inputValues));
     }
   }, [inputValues, isInitialized]);
 
@@ -46,7 +46,7 @@ export default function RellenoCementadoPage() {
     setDirtyFields(prev => {
       const newSet = new Set(prev);
       newSet.add(fieldName);
-      saveDirtyFields(STORAGE_KEYS.RELLENO_CEMENTADO_DIRTY, newSet);
+      saveDirtyFields(STORAGE_KEYS.RELLENO_DETRITICO_DIRTY, newSet);
       return newSet;
     });
     setInputValues(prev => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
@@ -56,7 +56,7 @@ export default function RellenoCementadoPage() {
     setDirtyFields(prev => {
       const newSet = new Set(prev);
       newSet.delete(fieldName);
-      saveDirtyFields(STORAGE_KEYS.RELLENO_CEMENTADO_DIRTY, newSet);
+      saveDirtyFields(STORAGE_KEYS.RELLENO_DETRITICO_DIRTY, newSet);
       return newSet;
     });
     
@@ -65,22 +65,22 @@ export default function RellenoCementadoPage() {
     }
   };
 
-  const resultados = useMemo(() => calcularRellenoCementado(inputValues), [inputValues]);
+  const resultados = useMemo(() => calcularRellenoDetritico(inputValues), [inputValues]);
 
   // Guardar resultados en el contexto
   useEffect(() => {
-    setRellenoCementadoResults(resultados);
-  }, [resultados, setRellenoCementadoResults]);
+    setRellenoDetriticoResults(resultados);
+  }, [resultados, setRellenoDetriticoResults]);
 
   return (
     <div className="flex flex-col w-full">
       <div className="w-full p-6 min-w-0">
-        <RellenoCementadoInputs 
+        <RellenoDetriticoInputs 
           inputValues={inputValues} 
           onChange={handleChange}
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}
-          resultsComponent={<RellenoCementadoResults resultados={resultados} />}
+          resultsComponent={<RellenoDetriticoResults resultados={resultados} />}
           isAutoFilled={!!requerimientoPerforadoraInputs?.produccionMina}
           dirtyFields={dirtyFields}
           onResetField={handleResetField}

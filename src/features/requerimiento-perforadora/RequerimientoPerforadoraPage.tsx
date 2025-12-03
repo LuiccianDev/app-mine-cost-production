@@ -1,10 +1,10 @@
 "use client";
 import { useState, useMemo, useEffect } from 'react';
-import RequerimientoPerforadoraInputs from '../components/forms/RequerimientoPerforadoraInputs';
-import RequerimientoPerforadoraResults from '../components/results/RequerimientoPerforadoraResults';
-import { calcularRequerimientoPerforadora, defaultRequerimientoPerforadoraValues } from '../scripts/requerimientoPerforadoraCalculations';
-import { useCalculations } from '../context/CalculationContext';
-import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../constants/storageKeys';
+import RequerimientoPerforadoraInputs from './RequerimientoPerforadoraInputs';
+import RequerimientoPerforadoraResults from './RequerimientoPerforadoraResults';
+import { calcularRequerimientoPerforadora, defaultRequerimientoPerforadoraValues } from './requerimientoPerforadoraCalculations';
+import { useCalculations } from '../../context/CalculationContext';
+import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storageKeys';
 
 export default function RequerimientoPerforadoraPage() {
   const [inputValues, setInputValues] = useState(defaultRequerimientoPerforadoraValues);
