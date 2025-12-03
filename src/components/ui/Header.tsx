@@ -40,18 +40,26 @@ export default function Header() {
             {/* Dots Button - Cuadrados */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="relative w-6 h-6 hover:bg-slate-100 rounded transition-colors"
+              className="relative w-6 h-6 "
               aria-label="Menu"
             >
-              {/* Dots cuadrados en las esquinas */}
-              <div className="absolute top-1 left-1 w-1 h-1 bg-slate-900"></div>
-              <div className="absolute top-1 right-1 w-1 h-1 bg-slate-900"></div>
-              <div className="absolute bottom-1 left-1 w-1 h-1 bg-slate-900"></div>
-              <div className="absolute bottom-1 right-1 w-1 h-1 bg-slate-900"></div>
+              {/* Dots cuadrados en las esquinas - se acercan al centro cuando el menú está abierto */}
+              <div className={`absolute w-1 h-1 bg-slate-900 transition-all duration-300 ${
+                isMenuOpen ? 'top-1.5 left-1.5' : 'top-1 left-1'
+              }`}></div>
+              <div className={`absolute w-1 h-1 bg-slate-900 transition-all duration-300 ${
+                isMenuOpen ? 'top-1.5 right-1.5' : 'top-1 right-1'
+              }`}></div>
+              <div className={`absolute w-1 h-1 bg-slate-900 transition-all duration-300 ${
+                isMenuOpen ? 'bottom-1.5 left-1.5' : 'bottom-1 left-1'
+              }`}></div>
+              <div className={`absolute w-1 h-1 bg-slate-900 transition-all duration-300 ${
+                isMenuOpen ? 'bottom-1.5 right-1.5' : 'bottom-1 right-1'
+              }`}></div>
               
               {/* Cuadrado central - aparece cuando el menú está abierto */}
               {isMenuOpen && (
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-slate-900"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-slate-900 animate-in fade-in zoom-in duration-200"></div>
               )}
             </button>
           </div>

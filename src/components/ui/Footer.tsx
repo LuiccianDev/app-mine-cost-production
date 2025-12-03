@@ -4,12 +4,12 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="w-full min-h-screen bg-black text-white flex flex-col justify-between py-8 px-8 md:px-16 lg:px-20">
-            <div className="w-full h-full flex flex-col justify-between min-h-screen">
+        <footer className="sticky bottom-0 w-full h-screen bg-black text-white flex flex-col justify-between py-8 px-8 md:px-16 lg:px-20 -z-10">
+            <div className="w-full h-full flex flex-col justify-between">
                 {/* Top Section - Social Links */}
                 <div className="flex justify-end gap-6 md:gap-8 pt-4">
                     <a
-                        href="https://linkedin.com"
+                        href="https://www.linkedin.com/in/william-guevara-lazaro-79274b2a3"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-white hover:text-gray-400 transition-colors text-sm font-light"
@@ -17,20 +17,20 @@ export default function Footer() {
                         Linkedin
                     </a>
                     <a
-                        href="https://twitter.com"
+                        href="https://www.instagram.com/luiccian_dev"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-white hover:text-gray-400 transition-colors text-sm font-light"
                     >
-                        Twitter
+                        Instagram
                     </a>
                     <a
-                        href="https://behance.net"
+                        href="https://github.com/LuiccianDev"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-white hover:text-gray-400 transition-colors text-sm font-light"
                     >
-                        Behance
+                        Github
                     </a>
                 </div>
 
@@ -59,27 +59,18 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom Section - Footer Info */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-4 text-sm font-light">
-                    {/* Left - Contact */}
-                    <div className="space-y-0.5">
-                        <p>+81 (0)90 1234 5678</p>
-                        <p>hello@yuya.com</p>
-                    </div>
+                <div className="flex items-center justify-between md:grid-cols-3 gap-8 pb-4 text-sm font-light">
 
                     {/* Center - Credits */}
                     <div className="space-y-0.5">
                         <p>Designed & Developed</p>
-                        <p>by Peter Hodak</p>
+                        <p>by Luiccian</p>
                     </div>
 
                     {/* Right - Copyright */}
                     <div className="md:text-right space-y-0.5">
                         <p>All rights reserved,</p>
-                        <p>YUYA ©{currentYear}</p>
-                        <div className="flex items-center md:justify-end gap-1.5 text-xs pt-2 bg-white text-black px-3 py-1.5 rounded-full w-fit md:ml-auto">
-                            <span>⚡</span>
-                            <span>Made in Framer</span>
-                        </div>
+                        <p>LUICCIAN ©{currentYear}</p>
                     </div>
                 </div>
             </div>
