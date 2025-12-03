@@ -1,5 +1,6 @@
 "use client";
 import { jsPDF } from "jspdf";
+import { useCalculations } from './context/CalculationContext';
 
 export type PreviewData = {
   projectCode?: string;
@@ -63,6 +64,73 @@ type PreviewProps = {
 };
 
 export default function Preview({ data = {}, onBack }: PreviewProps) {
+  const { 
+    mallaResults, 
+    costoPerforacionResults, 
+    costoVoladuraResults,
+    limpiezaResults,
+    carguioResults,
+    transporteResults,
+    rellenoCementadoResults,
+    rellenoDetriticoResults
+  } = useCalculations();
+
+  // Usar datos del contexto si están disponibles, sino usar valores por defecto
+  const projectCode = data.projectCode || "EXP01";
+  
+  // Malla de Perforación
+  const burden = mallaResults?.burden ?? data.burden ?? 1.62;
+  const espaciamiento = mallaResults?.espaciamiento ?? data.espaciamiento ?? 2.03;
+  const volumenRotaTaladro = mallaResults?.volumenRotaTaladro ?? data.volumenRotaTaladro ?? 32.65;
+  const tonelaje = mallaResults?.tonelaje ?? data.tonelaje ?? 122.45;
+  const librasAnfo = mallaResults?.librasAnfo ?? data.librasAnfo ?? 48.98;
+  const alturaCarga = mallaResults?.alturaCarga ?? data.alturaCarga ?? 8.77;
+  
+  // Perforación
+  const costoPerforacionMetro = costoPerforacionResults?.costoPerforacionPorMetro ?? data.costoPerforacionMetro ?? 1.59;
+  const costoPerforacionTon = costoPerforacionResults?.costoPerforacionPorTon ?? data.costoPerforacionTon ?? 0.13;
+  const numeroPerforadoras = data.numeroPerforadoras ?? 1.09;
+  const metrosPerforado = data.metrosPerforado ?? 117.44;
+  
+  // Voladura
+  const costoVoladura = costoVoladuraResults?.costoVoladuraPorTonelada ?? data.costoVoladura ?? 0.16;
+  
+  // Limpieza
+  const requerimientoScoops = limpiezaResults?.requerimientoScoops ?? data.requerimientoScoops ?? 1.95;
+  const costoLimpieza = limpiezaResults?.costoLimpieza ?? data.costoLimpieza ?? 1.61;
+  
+  // Carguio
+  const requerimientoScoop = carguioResults?.requerimientoScoop ?? data.requerimientoScoop ?? 0.77;
+  const costoCarguio = carguioResults?.costoCarguio ?? data.costoCarguio ?? 0.63;
+  
+  // Transporte
+  const flotaCamiones = transporteResults?.flotaCamiones ?? data.flotaCamiones ?? 4.13;
+  const produccionFlotaCamiones = transporteResults?.produccionFlotaCamiones ?? data.produccionFlotaCamiones ?? 178.05;
+  const costoTransporte = transporteResults?.costoTransporte ?? data.costoTransporte ?? 1.39;
+  
+  // Requerimiento Equipos
+  const requerimientoPerforadora = data.requerimientoPerforadora ?? 1.09;
+  const requerimientoScoopsLimpieza = data.requerimientoScoopsLimpieza ?? 1.95;
+  const requerimientoScoopsCarguio = data.requerimientoScoopsCarguio ?? 0.77;
+  const requerimientoScoopRelleno = data.requerimientoScoopRelleno ?? 1.19;
+  const totalScoops = data.totalScoops ?? 3.91;
+  const flotaCamionesTransporte = data.flotaCamionesTransporte ?? 4.13;
+  
+  // Relleno Cementado
+  const costoTransporteRC = rellenoCementadoResults?.costoTransporte ?? data.costoTransporteRC ?? 3.63;
+  const costoMaterialRelleno = rellenoCementadoResults?.costoMaterialRelleno35 ?? data.costoMaterialRelleno ?? 4.69;
+  const costoTotalRelleno35 = rellenoCementadoResults?.costoTotalRelleno35 ?? data.costoTotalRelleno35 ?? 8.33;
+  const costoTotalRelleno30 = rellenoCementadoResults?.costoTotalRelleno30 ?? data.costoTotalRelleno30 ?? 8.00;
+  
+  // Relleno Detrítico
+  const costoTransporteRD = rellenoDetriticoResults?.costoTransporte ?? data.costoTransporteRD ?? 2.20;
+  const costoMaterialRellenoRD = rellenoDetriticoResults?.costoMaterialRelleno ?? data.costoMaterialRellenoRD ?? 0.50;
+  const costoTotalRellenoRD = rellenoDetriticoResults?.costoTotalRelleno ?? data.costoTotalRellenoRD ?? 2.70;
+  
+  // Costos Finales
+  const costoMinadoProyectado = data.costoMinadoProyectado ?? 11.82;
+  const costoMinado = data.costoMinado ?? 12.25;
+
   const generatePDF = () => {
     const doc = new jsPDF();
     let yPos = 20;
@@ -199,43 +267,6 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
     // Save PDF
     doc.save(`Costos_Produccion_${projectCode}_${new Date().toISOString().split('T')[0]}.pdf`);
   };
-
-  const {
-    projectCode = "EXP01",
-    burden = 1.62,
-    espaciamiento = 2.03,
-    volumenRotaTaladro = 32.65,
-    tonelaje = 122.45,
-    librasAnfo = 48.98,
-    alturaCarga = 8.77,
-    costoPerforacionMetro = 1.59,
-    costoPerforacionTon = 0.13,
-    numeroPerforadoras = 1.09,
-    metrosPerforado = 117.44,
-    costoVoladura = 0.16,
-    requerimientoScoops = 1.95,
-    costoLimpieza = 1.61,
-    requerimientoScoop = 0.77,
-    costoCarguio = 0.63,
-    flotaCamiones = 4.13,
-    produccionFlotaCamiones = 178.05,
-    costoTransporte = 1.39,
-    requerimientoPerforadora = 1.09,
-    requerimientoScoopsLimpieza = 1.95,
-    requerimientoScoopsCarguio = 0.77,
-    requerimientoScoopRelleno = 1.19,
-    totalScoops = 3.91,
-    flotaCamionesTransporte = 4.13,
-    costoTransporteRC = 3.63,
-    costoMaterialRelleno = 4.69,
-    costoTotalRelleno35 = 8.33,
-    costoTotalRelleno30 = 8.00,
-    costoTransporteRD = 2.20,
-    costoMaterialRellenoRD =0.50,
-    costoTotalRellenoRD = 2.70,
-    costoMinadoProyectado = 11.82,
-    costoMinado = 12.25,
-  } = data;
 
   return (
     <div className="w-full">

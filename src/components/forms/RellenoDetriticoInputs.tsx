@@ -6,9 +6,10 @@ type RellenoDetriticoInputsProps = {
   showResults: boolean;
   onToggleResults: () => void;
   resultsComponent?: React.ReactNode;
+  isAutoFilled?: boolean;
 };
 
-export default function RellenoDetriticoInputs({ inputValues, onChange, showResults, onToggleResults, resultsComponent }: RellenoDetriticoInputsProps) {
+export default function RellenoDetriticoInputs({ inputValues, onChange, showResults, onToggleResults, resultsComponent, isAutoFilled = false }: RellenoDetriticoInputsProps) {
   return (
     <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
       <div className="mb-5 flex items-center justify-between">
@@ -35,6 +36,9 @@ export default function RellenoDetriticoInputs({ inputValues, onChange, showResu
           value={inputValues.produccionMineral}
           onChange={onChange}
           unit="TPD"
+          readOnly={isAutoFilled}
+          className={isAutoFilled ? "bg-blue-50" : ""}
+          decimals={2}
         />
         <FormField
           label="Producción Relleno"

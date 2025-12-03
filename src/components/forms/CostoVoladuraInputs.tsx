@@ -6,9 +6,10 @@ type CostoVoladuraInputsProps = {
   showResults: boolean;
   onToggleResults: () => void;
   resultsComponent?: React.ReactNode;
+  isAutoFilled?: boolean;
 };
 
-export default function CostoVoladuraInputs({ inputValues, onChange, showResults, onToggleResults, resultsComponent }: CostoVoladuraInputsProps) {
+export default function CostoVoladuraInputs({ inputValues, onChange, showResults, onToggleResults, resultsComponent, isAutoFilled = false }: CostoVoladuraInputsProps) {
   return (
     <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
       <div className="mb-5 flex items-center justify-between">
@@ -84,6 +85,9 @@ export default function CostoVoladuraInputs({ inputValues, onChange, showResults
           value={inputValues.tonelajePorTaladro}
           onChange={onChange}
           unit="Ton/Taladro"
+          readOnly={isAutoFilled}
+          className={isAutoFilled ? "bg-blue-50" : ""}
+          decimals={2}
         />
       </div>
       

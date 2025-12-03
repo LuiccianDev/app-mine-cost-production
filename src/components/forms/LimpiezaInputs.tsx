@@ -6,9 +6,11 @@ type LimpiezaInputsProps = {
   showResults: boolean;
   onToggleResults: () => void;
   resultsComponent?: React.ReactNode;
+  isAutoFilledDensidad?: boolean;
+  isAutoFilledProduccion?: boolean;
 };
 
-export default function LimpiezaInputs({ inputValues, onChange, showResults, onToggleResults, resultsComponent }: LimpiezaInputsProps) {
+export default function LimpiezaInputs({ inputValues, onChange, showResults, onToggleResults, resultsComponent, isAutoFilledDensidad = false, isAutoFilledProduccion = false }: LimpiezaInputsProps) {
   return (
     <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
       <div className="mb-5 flex items-center justify-between">
@@ -35,6 +37,9 @@ export default function LimpiezaInputs({ inputValues, onChange, showResults, onT
           value={inputValues.produccionMineral}
           onChange={onChange}
           unit="TPD"
+          readOnly={isAutoFilledProduccion}
+          className={isAutoFilledProduccion ? "bg-blue-50" : ""}
+          decimals={2}
         />
         <FormField
           label="Producción Desmonte"
@@ -70,6 +75,9 @@ export default function LimpiezaInputs({ inputValues, onChange, showResults, onT
           value={inputValues.densidadRotaMaterial}
           onChange={onChange}
           unit="Ton/m3"
+          readOnly={isAutoFilledDensidad}
+          className={isAutoFilledDensidad ? "bg-blue-50" : ""}
+          decimals={2}
         />
         <FormField
           label="Tiempo De 1 Pase (viaje)"

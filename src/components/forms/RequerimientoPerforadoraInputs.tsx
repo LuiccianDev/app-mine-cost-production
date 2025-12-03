@@ -6,9 +6,10 @@ type RequerimientoPerforadoraInputsProps = {
   showResults: boolean;
   onToggleResults: () => void;
   resultsComponent?: React.ReactNode;
+  isAutoFilled?: boolean;
 };
 
-export default function RequerimientoPerforadoraInputs({ inputValues, onChange, showResults, onToggleResults, resultsComponent }: RequerimientoPerforadoraInputsProps) {
+export default function RequerimientoPerforadoraInputs({ inputValues, onChange, showResults, onToggleResults, resultsComponent, isAutoFilled = false }: RequerimientoPerforadoraInputsProps) {
   return (
     <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
       <div className="mb-5 flex items-center justify-between">
@@ -42,6 +43,9 @@ export default function RequerimientoPerforadoraInputs({ inputValues, onChange, 
           value={inputValues.alturaBanco}
           onChange={onChange}
           unit="m"
+          readOnly={isAutoFilled}
+          className={isAutoFilled ? "bg-blue-50" : ""}
+          decimals={2}
         />
         <FormField
           label="Longitud de Taladro"
@@ -56,6 +60,9 @@ export default function RequerimientoPerforadoraInputs({ inputValues, onChange, 
           value={inputValues.tonelajePorTaladro}
           onChange={onChange}
           unit="Ton/taladro"
+          readOnly={isAutoFilled}
+          className={isAutoFilled ? "bg-blue-50" : ""}
+          decimals={2}
         />
         <FormField
           label="Rendimiento Broca"

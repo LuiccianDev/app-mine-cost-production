@@ -13,6 +13,7 @@ export type MallaResultados = {
   tonelaje: number;
   librasAnfo: number;
   alturaCarga: number;
+  alturaBanco: number; // en metros
 };
 
 export const defaultMallaValues = {
@@ -81,6 +82,7 @@ export function calcularMalla(data: MallaFormData): MallaResultados {
     volumenRotaTaladro: volumenRotaTaladro,
     tonelaje: tonelajeFinal,
     librasAnfo: librasAnfoFinal,
-    alturaCarga: alturaCargaFinal
+    alturaCarga: alturaCargaFinal,
+    alturaBanco: alturaBanco_m // Guardar altura de banco en metros
   };
 }
