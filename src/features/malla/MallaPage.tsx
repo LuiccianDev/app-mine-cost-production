@@ -7,40 +7,36 @@ import { useCalculations } from '../../context/CalculationContext';
 import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storageKeys';
 
 export default function MallaSection() {
-  const [inputValues, setInputValues] = useState(defaultMallaValues);
-  const [showResults, setShowResults] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
-  const [dirtyFields, setDirtyFields] = useState<Set<string>>(new Set());
-  const { setMallaResults } = useCalculations();
-
-  // Cargar valores guardados desde localStorage al iniciar
-  useEffect(() => {
+  // Lazy initialization: cargar desde localStorage solo una vez
+  const [inputValues, setInputValues] = useState(() => {
     const savedInputs = localStorage.getItem(STORAGE_KEYS.MALLA_INPUTS);
     if (savedInputs) {
-      setInputValues(JSON.parse(savedInputs));
+      return JSON.parse(savedInputs);
     }
-    // Cargar dirty fields
-    const savedDirtyFields = loadDirtyFields(STORAGE_KEYS.MALLA_DIRTY);
-    setDirtyFields(savedDirtyFields);
-    setIsInitialized(true);
-  }, []);
+    return defaultMallaValues;
+  });
 
-  // Guardar inputs en localStorage cuando cambien (solo después de inicializar)
+  const [_dirtyFields, setDirtyFields] = useState<Set<string>>(() => {
+    return loadDirtyFields(STORAGE_KEYS.MALLA_DIRTY);
+  });
+
+  const [showResults, setShowResults] = useState(false);
+  const { setMallaResults } = useCalculations();
+
+  // Guardar inputs en localStorage cuando cambien
   useEffect(() => {
-    if (isInitialized) {
-      localStorage.setItem(STORAGE_KEYS.MALLA_INPUTS, JSON.stringify(inputValues));
-    }
-  }, [inputValues, isInitialized]);
+    localStorage.setItem(STORAGE_KEYS.MALLA_INPUTS, JSON.stringify(inputValues));
+  }, [inputValues]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
-    setDirtyFields(prev => {
+    setDirtyFields((prev: Set<string>) => {
       const newSet = new Set(prev);
       newSet.add(fieldName);
       saveDirtyFields(STORAGE_KEYS.MALLA_DIRTY, newSet);
       return newSet;
     });
-    setInputValues(prev => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
+    setInputValues((prev: typeof defaultMallaValues) => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
   };
 
   const resultados = useMemo(() => calcularMalla(inputValues), [inputValues]);

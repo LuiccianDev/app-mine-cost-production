@@ -8,52 +8,54 @@ import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storag
 
 export default function CostoVoladuraPage() {
   const { mallaResults } = useCalculations();
-  const [inputValues, setInputValues] = useState(defaultCostoVoladuraValues);
-  const [showResults, setShowResults] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
-  const [dirtyFields, setDirtyFields] = useState<Set<string>>(new Set());
-
-  // Cargar valores guardados desde localStorage al iniciar
-  useEffect(() => {
+  
+  // Lazy initialization: cargar desde localStorage solo una vez
+  const [inputValues, setInputValues] = useState(() => {
     const savedInputs = localStorage.getItem(STORAGE_KEYS.COSTO_VOLADURA_INPUTS);
     if (savedInputs) {
-      setInputValues(JSON.parse(savedInputs));
+      return JSON.parse(savedInputs);
     }
-    const savedDirtyFields = loadDirtyFields(STORAGE_KEYS.COSTO_VOLADURA_DIRTY);
-    setDirtyFields(savedDirtyFields);
-    setIsInitialized(true);
-  }, []);
+    return defaultCostoVoladuraValues;
+  });
 
-  // Guardar inputs en localStorage cuando cambien (solo después de inicializar)
-  useEffect(() => {
-    if (isInitialized) {
-      localStorage.setItem(STORAGE_KEYS.COSTO_VOLADURA_INPUTS, JSON.stringify(inputValues));
-    }
-  }, [inputValues, isInitialized]);
+  const [dirtyFields, setDirtyFields] = useState<Set<string>>(() => {
+    return loadDirtyFields(STORAGE_KEYS.COSTO_VOLADURA_DIRTY);
+  });
 
-  // Auto-actualizar solo tonelajePorTaladro cuando cambia en el contexto (si no ha sido editado)
-  useEffect(() => {
-    if (isInitialized && mallaResults?.tonelaje && !dirtyFields.has('tonelajePorTaladro')) {
-      setInputValues(prev => ({
-        ...prev,
-        tonelajePorTaladro: parseFloat(mallaResults.tonelaje.toFixed(2))
-      }));
+  const [showResults, setShowResults] = useState(false);
+
+  // Calcular el valor derivado del contexto (sin setState en effect)
+  const derivedTonelajePorTaladro = useMemo(() => {
+    if (mallaResults?.tonelaje && !dirtyFields.has('tonelajePorTaladro')) {
+      return parseFloat(mallaResults.tonelaje.toFixed(2));
     }
-  }, [mallaResults?.tonelaje, isInitialized, dirtyFields]);
+    return inputValues.tonelajePorTaladro;
+  }, [mallaResults, dirtyFields, inputValues.tonelajePorTaladro]);
+
+  // Valores finales con el campo derivado
+  const finalInputValues = useMemo(() => ({
+    ...inputValues,
+    tonelajePorTaladro: derivedTonelajePorTaladro
+  }), [inputValues, derivedTonelajePorTaladro]);
+
+  // Guardar inputs en localStorage cuando cambien
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.COSTO_VOLADURA_INPUTS, JSON.stringify(finalInputValues));
+  }, [finalInputValues]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
-    setDirtyFields(prev => {
+    setDirtyFields((prev: Set<string>) => {
       const newSet = new Set(prev);
       newSet.add(fieldName);
       saveDirtyFields(STORAGE_KEYS.COSTO_VOLADURA_DIRTY, newSet);
       return newSet;
     });
-    setInputValues(prev => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
+    setInputValues((prev: typeof defaultCostoVoladuraValues) => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
   };
 
   const handleResetField = (fieldName: string) => {
-    setDirtyFields(prev => {
+    setDirtyFields((prev: Set<string>) => {
       const newSet = new Set(prev);
       newSet.delete(fieldName);
       saveDirtyFields(STORAGE_KEYS.COSTO_VOLADURA_DIRTY, newSet);
@@ -61,17 +63,17 @@ export default function CostoVoladuraPage() {
     });
     
     if (fieldName === 'tonelajePorTaladro' && mallaResults?.tonelaje) {
-      setInputValues(prev => ({ ...prev, tonelajePorTaladro: parseFloat(mallaResults.tonelaje.toFixed(2)) }));
+      setInputValues((prev: typeof defaultCostoVoladuraValues) => ({ ...prev, tonelajePorTaladro: parseFloat(mallaResults.tonelaje.toFixed(2)) }));
     }
   };
 
-  const resultados = useMemo(() => calculateCostoVoladura(inputValues), [inputValues]);
+  const resultados = useMemo(() => calculateCostoVoladura(finalInputValues), [finalInputValues]);
 
   return (
     <div className="flex flex-col w-full">
       <div className="w-full p-6 min-w-0">
         <CostoVoladuraInputs 
-          inputValues={inputValues} 
+          inputValues={finalInputValues} 
           onChange={handleChange}
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}

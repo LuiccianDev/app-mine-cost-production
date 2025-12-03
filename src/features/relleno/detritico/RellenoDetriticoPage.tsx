@@ -8,52 +8,54 @@ import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../../lib/sto
 
 export default function RellenoDetriticoPage() {
   const { requerimientoPerforadoraInputs, setRellenoDetriticoResults } = useCalculations();
-  const [inputValues, setInputValues] = useState(defaultRellenoDetriticoValues);
-  const [showResults, setShowResults] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
-  const [dirtyFields, setDirtyFields] = useState<Set<string>>(new Set());
-
-  // Cargar valores guardados desde localStorage al iniciar
-  useEffect(() => {
+  
+  // Lazy initialization: cargar desde localStorage solo una vez
+  const [inputValues, setInputValues] = useState(() => {
     const savedInputs = localStorage.getItem(STORAGE_KEYS.RELLENO_DETRITICO_INPUTS);
     if (savedInputs) {
-      setInputValues(JSON.parse(savedInputs));
+      return JSON.parse(savedInputs);
     }
-    const savedDirtyFields = loadDirtyFields(STORAGE_KEYS.RELLENO_DETRITICO_DIRTY);
-    setDirtyFields(savedDirtyFields);
-    setIsInitialized(true);
-  }, []);
+    return defaultRellenoDetriticoValues;
+  });
 
-  // Guardar inputs en localStorage cuando cambien (solo después de inicializar)
-  useEffect(() => {
-    if (isInitialized) {
-      localStorage.setItem(STORAGE_KEYS.RELLENO_DETRITICO_INPUTS, JSON.stringify(inputValues));
-    }
-  }, [inputValues, isInitialized]);
+  const [dirtyFields, setDirtyFields] = useState<Set<string>>(() => {
+    return loadDirtyFields(STORAGE_KEYS.RELLENO_DETRITICO_DIRTY);
+  });
 
-  // Auto-actualizar solo produccionMineral cuando cambia en el contexto (si no ha sido editado)
-  useEffect(() => {
-    if (isInitialized && requerimientoPerforadoraInputs?.produccionMina && !dirtyFields.has('produccionMineral')) {
-      setInputValues(prev => ({
-        ...prev,
-        produccionMineral: parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2))
-      }));
+  const [showResults, setShowResults] = useState(false);
+
+  // Calcular el valor derivado del contexto (sin setState en effect)
+  const derivedProduccionMineral = useMemo(() => {
+    if (requerimientoPerforadoraInputs?.produccionMina && !dirtyFields.has('produccionMineral')) {
+      return parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2));
     }
-  }, [requerimientoPerforadoraInputs?.produccionMina, isInitialized, dirtyFields]);
+    return inputValues.produccionMineral;
+  }, [requerimientoPerforadoraInputs, dirtyFields, inputValues.produccionMineral]);
+
+  // Valores finales con el campo derivado
+  const finalInputValues = useMemo(() => ({
+    ...inputValues,
+    produccionMineral: derivedProduccionMineral
+  }), [inputValues, derivedProduccionMineral]);
+
+  // Guardar inputs en localStorage cuando cambien
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.RELLENO_DETRITICO_INPUTS, JSON.stringify(finalInputValues));
+  }, [finalInputValues]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
-    setDirtyFields(prev => {
+    setDirtyFields((prev: Set<string>) => {
       const newSet = new Set(prev);
       newSet.add(fieldName);
       saveDirtyFields(STORAGE_KEYS.RELLENO_DETRITICO_DIRTY, newSet);
       return newSet;
     });
-    setInputValues(prev => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
+    setInputValues((prev: typeof defaultRellenoDetriticoValues) => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
   };
 
   const handleResetField = (fieldName: string) => {
-    setDirtyFields(prev => {
+    setDirtyFields((prev: Set<string>) => {
       const newSet = new Set(prev);
       newSet.delete(fieldName);
       saveDirtyFields(STORAGE_KEYS.RELLENO_DETRITICO_DIRTY, newSet);
@@ -61,11 +63,11 @@ export default function RellenoDetriticoPage() {
     });
     
     if (fieldName === 'produccionMineral' && requerimientoPerforadoraInputs?.produccionMina) {
-      setInputValues(prev => ({ ...prev, produccionMineral: parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2)) }));
+      setInputValues((prev: typeof defaultRellenoDetriticoValues) => ({ ...prev, produccionMineral: parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2)) }));
     }
   };
 
-  const resultados = useMemo(() => calcularRellenoDetritico(inputValues), [inputValues]);
+  const resultados = useMemo(() => calcularRellenoDetritico(finalInputValues), [finalInputValues]);
 
   // Guardar resultados en el contexto
   useEffect(() => {
@@ -76,7 +78,7 @@ export default function RellenoDetriticoPage() {
     <div className="flex flex-col w-full">
       <div className="w-full p-6 min-w-0">
         <RellenoDetriticoInputs 
-          inputValues={inputValues} 
+          inputValues={finalInputValues} 
           onChange={handleChange}
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}

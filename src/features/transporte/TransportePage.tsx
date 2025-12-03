@@ -8,39 +8,36 @@ import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storag
 
 export default function TransportePage() {
   const { setTransporteResults } = useCalculations();
-  const [inputValues, setInputValues] = useState(defaultTransporteValues);
-  const [showResults, setShowResults] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
-  const [dirtyFields, setDirtyFields] = useState<Set<string>>(new Set());
-
-  // Cargar valores guardados desde localStorage al iniciar
-  useEffect(() => {
+  
+  // Lazy initialization: cargar desde localStorage solo una vez
+  const [inputValues, setInputValues] = useState(() => {
     const savedInputs = localStorage.getItem(STORAGE_KEYS.TRANSPORTE_INPUTS);
     if (savedInputs) {
-      setInputValues(JSON.parse(savedInputs));
+      return JSON.parse(savedInputs);
     }
-    // Cargar dirty fields
-    const savedDirtyFields = loadDirtyFields(STORAGE_KEYS.TRANSPORTE_DIRTY);
-    setDirtyFields(savedDirtyFields);
-    setIsInitialized(true);
-  }, []);
+    return defaultTransporteValues;
+  });
 
-  // Guardar inputs en localStorage cuando cambien (solo después de inicializar)
+  const [_dirtyFields, setDirtyFields] = useState<Set<string>>(() => {
+    return loadDirtyFields(STORAGE_KEYS.TRANSPORTE_DIRTY);
+  });
+
+  const [showResults, setShowResults] = useState(false);
+
+  // Guardar inputs en localStorage cuando cambien
   useEffect(() => {
-    if (isInitialized) {
-      localStorage.setItem(STORAGE_KEYS.TRANSPORTE_INPUTS, JSON.stringify(inputValues));
-    }
-  }, [inputValues, isInitialized]);
+    localStorage.setItem(STORAGE_KEYS.TRANSPORTE_INPUTS, JSON.stringify(inputValues));
+  }, [inputValues]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
-    setDirtyFields(prev => {
+    setDirtyFields((prev: Set<string>) => {
       const newSet = new Set(prev);
       newSet.add(fieldName);
       saveDirtyFields(STORAGE_KEYS.TRANSPORTE_DIRTY, newSet);
       return newSet;
     });
-    setInputValues(prev => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
+    setInputValues((prev: typeof defaultTransporteValues) => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
   };
 
   const resultados = useMemo(() => calcularTransporte(inputValues), [inputValues]);

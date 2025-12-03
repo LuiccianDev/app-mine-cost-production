@@ -7,61 +7,63 @@ import { useCalculations } from '../../context/CalculationContext';
 import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storageKeys';
 
 export default function RequerimientoPerforadoraPage() {
-  const [inputValues, setInputValues] = useState(defaultRequerimientoPerforadoraValues);
-  const [showResults, setShowResults] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
-  const [dirtyFields, setDirtyFields] = useState<Set<string>>(new Set());
   const { mallaResults, setRequerimientoPerforadoraInputs } = useCalculations();
-
-  // Cargar valores guardados desde localStorage al iniciar
-  useEffect(() => {
+  
+  // Lazy initialization: cargar desde localStorage solo una vez
+  const [inputValues, setInputValues] = useState(() => {
     const savedInputs = localStorage.getItem(STORAGE_KEYS.REQUERIMIENTO_PERFORADORA_INPUTS);
     if (savedInputs) {
-      setInputValues(JSON.parse(savedInputs));
+      return JSON.parse(savedInputs);
     }
-    const savedDirtyFields = loadDirtyFields(STORAGE_KEYS.REQUERIMIENTO_PERFORADORA_DIRTY);
-    setDirtyFields(savedDirtyFields);
-    setIsInitialized(true);
-  }, []);
+    return defaultRequerimientoPerforadoraValues;
+  });
 
-  // Guardar inputs en localStorage cuando cambien (solo después de inicializar)
-  useEffect(() => {
-    if (isInitialized) {
-      localStorage.setItem(STORAGE_KEYS.REQUERIMIENTO_PERFORADORA_INPUTS, JSON.stringify(inputValues));
-    }
-  }, [inputValues, isInitialized]);
+  const [dirtyFields, setDirtyFields] = useState<Set<string>>(() => {
+    return loadDirtyFields(STORAGE_KEYS.REQUERIMIENTO_PERFORADORA_DIRTY);
+  });
 
-  // Auto-actualizar solo los campos del contexto cuando cambian (si no han sido editados)
-  useEffect(() => {
-    if (isInitialized && mallaResults) {
-      const updates: Partial<typeof inputValues> = {};
-      
-      if (mallaResults.alturaBanco && !dirtyFields.has('alturaBanco')) {
-        updates.alturaBanco = parseFloat(mallaResults.alturaBanco.toFixed(2));
-      }
-      if (mallaResults.tonelaje && !dirtyFields.has('tonelajePorTaladro')) {
-        updates.tonelajePorTaladro = parseFloat(mallaResults.tonelaje.toFixed(2));
-      }
-      
-      if (Object.keys(updates).length > 0) {
-        setInputValues(prev => ({ ...prev, ...updates }));
-      }
+  const [showResults, setShowResults] = useState(false);
+
+  // Calcular valores derivados del contexto (sin setState en effect)
+  const derivedAlturaBanco = useMemo(() => {
+    if (mallaResults?.alturaBanco && !dirtyFields.has('alturaBanco')) {
+      return parseFloat(mallaResults.alturaBanco.toFixed(2));
     }
-  }, [mallaResults?.alturaBanco, mallaResults?.tonelaje, isInitialized, dirtyFields]);
+    return inputValues.alturaBanco;
+  }, [mallaResults, dirtyFields, inputValues.alturaBanco]);
+
+  const derivedTonelajePorTaladro = useMemo(() => {
+    if (mallaResults?.tonelaje && !dirtyFields.has('tonelajePorTaladro')) {
+      return parseFloat(mallaResults.tonelaje.toFixed(2));
+    }
+    return inputValues.tonelajePorTaladro;
+  }, [mallaResults, dirtyFields, inputValues.tonelajePorTaladro]);
+
+  // Valores finales con los campos derivados
+  const finalInputValues = useMemo(() => ({
+    ...inputValues,
+    alturaBanco: derivedAlturaBanco,
+    tonelajePorTaladro: derivedTonelajePorTaladro
+  }), [inputValues, derivedAlturaBanco, derivedTonelajePorTaladro]);
+
+  // Guardar inputs en localStorage cuando cambien
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.REQUERIMIENTO_PERFORADORA_INPUTS, JSON.stringify(finalInputValues));
+  }, [finalInputValues]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
-    setDirtyFields(prev => {
+    setDirtyFields((prev: Set<string>) => {
       const newSet = new Set(prev);
       newSet.add(fieldName);
       saveDirtyFields(STORAGE_KEYS.REQUERIMIENTO_PERFORADORA_DIRTY, newSet);
       return newSet;
     });
-    setInputValues(prev => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
+    setInputValues((prev: typeof defaultRequerimientoPerforadoraValues) => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
   };
 
   const handleResetField = (fieldName: string) => {
-    setDirtyFields(prev => {
+    setDirtyFields((prev: Set<string>) => {
       const newSet = new Set(prev);
       newSet.delete(fieldName);
       saveDirtyFields(STORAGE_KEYS.REQUERIMIENTO_PERFORADORA_DIRTY, newSet);
@@ -69,26 +71,26 @@ export default function RequerimientoPerforadoraPage() {
     });
     
     if (fieldName === 'alturaBanco' && mallaResults?.alturaBanco) {
-      setInputValues(prev => ({ ...prev, alturaBanco: parseFloat(mallaResults.alturaBanco.toFixed(2)) }));
+      setInputValues((prev: typeof defaultRequerimientoPerforadoraValues) => ({ ...prev, alturaBanco: parseFloat(mallaResults.alturaBanco.toFixed(2)) }));
     } else if (fieldName === 'tonelajePorTaladro' && mallaResults?.tonelaje) {
-      setInputValues(prev => ({ ...prev, tonelajePorTaladro: parseFloat(mallaResults.tonelaje.toFixed(2)) }));
+      setInputValues((prev: typeof defaultRequerimientoPerforadoraValues) => ({ ...prev, tonelajePorTaladro: parseFloat(mallaResults.tonelaje.toFixed(2)) }));
     }
   };
 
-  const resultados = useMemo(() => calcularRequerimientoPerforadora(inputValues), [inputValues]);
+  const resultados = useMemo(() => calcularRequerimientoPerforadora(finalInputValues), [finalInputValues]);
 
   // Guardar produccionMina en el contexto
   useEffect(() => {
     setRequerimientoPerforadoraInputs({
-      produccionMina: inputValues.produccionMina
+      produccionMina: finalInputValues.produccionMina
     });
-  }, [inputValues.produccionMina, setRequerimientoPerforadoraInputs]);
+  }, [finalInputValues.produccionMina, setRequerimientoPerforadoraInputs]);
 
   return (
     <div className="flex flex-col w-full">
       <div className="w-full p-6 min-w-0">
         <RequerimientoPerforadoraInputs 
-          inputValues={inputValues} 
+          inputValues={finalInputValues} 
           onChange={handleChange}
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}
