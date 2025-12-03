@@ -73,14 +73,12 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
 
     // Helper function to add section
     const addSection = (title: string, rows: Array<{ label: string; value: number | string | undefined; unit: string }>) => {
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.setFillColor(220, 220, 220);
-      doc.rect(20, yPos, pageWidth - 40, 7, "F");
-      doc.text(title, 22, yPos + 5);
-      yPos += 10;
-
       doc.setFontSize(10);
+      doc.setFont("helvetica", "bold");
+      doc.text(title, 22, yPos);
+      yPos += 8;
+
+      doc.setFontSize(9);
       doc.setFont("helvetica", "normal");
       
       rows.forEach(row => {
@@ -92,8 +90,10 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
         const displayValue = typeof row.value === 'number' ? row.value.toFixed(2) : (row.value || '');
         doc.text(row.label, 22, yPos);
         doc.text("=", 120, yPos);
-        doc.text(displayValue, 130, yPos);
-        doc.text(row.unit, 150, yPos);
+        doc.setFont("helvetica", "bold");
+        doc.text(displayValue, 150, yPos, { align: "right" });
+        doc.setFont("helvetica", "normal");
+        doc.text(row.unit, 155, yPos);
         yPos += lineHeight;
       });
       
@@ -112,67 +112,71 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
 
     // Perforación
     addSection("PERFORACION", [
-      { label: "COSTO PERFORACION ( US$ / m )", value: costoPerforacionMetro, unit: "US$ / m" },
-      { label: "COSTO PERFORACION ( US$ / Ton )", value: costoPerforacionTon, unit: "US$ / Ton" },
-      { label: "Nº PERFORADORA", value: numeroPerforadoras, unit: "Perforadoras" },
-      { label: "METROS PERFORADO (m/dia)", value: metrosPerforado, unit: "m / dia" },
+      { label: "Costo perforación ( US$ / m )", value: costoPerforacionMetro, unit: "US$ / m" },
+      { label: "Costo perforación ( US$ / Ton )", value: costoPerforacionTon, unit: "US$ / Ton" },
+      { label: "Nº perforadora", value: numeroPerforadoras, unit: "Perforadoras" },
+      { label: "Metros perforado (m/dia)", value: metrosPerforado, unit: "m / dia" },
     ]);
 
     // Voladura
     addSection("VOLADURA", [
-      { label: "COSTO DE VOLADURA ( US$ / Ton )", value: costoVoladura, unit: "US$/Ton" },
+      { label: "Costo de voladura ( US$ / Ton )", value: costoVoladura, unit: "US$/Ton" },
     ]);
 
     // Limpieza
     addSection("LIMPIEZA", [
-      { label: "REQUERIMIENTO DE SCOOPS", value: requerimientoScoops, unit: "Scoop" },
-      { label: "COSTO DE LIMPIEZA ( US$ / Ton )", value: costoLimpieza, unit: "US$/Ton" },
+      { label: "Requerimiento de scoops", value: requerimientoScoops, unit: "Scoop" },
+      { label: "Costo de limpieza ( US$ / Ton )", value: costoLimpieza, unit: "US$/Ton" },
     ]);
 
     // Carguio
     addSection("CARGUIO", [
-      { label: "REQUERIMIENTO DE SCOOP", value: requerimientoScoop, unit: "Scoop" },
-      { label: "COSTO DE CARGUIO ( US$ / Ton )", value: costoCarguio, unit: "US$/Ton" },
+      { label: "Requerimiento de scoop", value: requerimientoScoop, unit: "Scoop" },
+      { label: "Costo de carguio ( US$ / Ton )", value: costoCarguio, unit: "US$/Ton" },
     ]);
 
     // Transporte
     addSection("TRANSPORTE", [
-      { label: "FLOTA DE CAMIONES", value: flotaCamiones, unit: "Camiones en Operacion" },
-      { label: "PRODUCCION DE FLOTA DE CAMIONES", value: produccionFlotaCamiones, unit: "Ton / Hr" },
-      { label: "COSTO DE TRANSPORTE ( US$ / Ton )", value: costoTransporte, unit: "US$ / Ton" },
+      { label: "Flota de camiones", value: flotaCamiones, unit: "Camiones en Operacion" },
+      { label: "Producción de flota de camiones", value: produccionFlotaCamiones, unit: "Ton / Hr" },
+      { label: "Costo de transporte ( US$ / Ton )", value: costoTransporte, unit: "US$ / Ton" },
     ]);
 
     // Relleno Cementado
     addSection("RELLENO CEMENTADO", [
-      { label: "COSTO DE TRANSPORTE ( US$ / Ton )", value: costoTransporteRC, unit: "US$/Ton" },
-      { label: "COSTO MATERIAL RELLENO ( US$/Ton )", value: costoMaterialRelleno, unit: "US$/Ton" },
-      { label: "COSTO TOTAL RELLENO 3.5% ( US$ / Ton )", value: costoTotalRelleno35, unit: "US$/Ton" },
-      { label: "COSTO TOTAL RELLENO 3.0% ( US$ / Ton )", value: costoTotalRelleno30, unit: "US$/Ton" },
+      { label: "Costo de transporte ( US$ / Ton )", value: costoTransporteRC, unit: "US$/Ton" },
+      { label: "Costo material relleno ( US$/Ton )", value: costoMaterialRelleno, unit: "US$/Ton" },
+      { label: "Costo total relleno 3.5% ( US$ / Ton )", value: costoTotalRelleno35, unit: "US$/Ton" },
+      { label: "Costo total relleno 3.0% ( US$ / Ton )", value: costoTotalRelleno30, unit: "US$/Ton" },
     ]);
 
     // Relleno Detrítico
     if (costoTransporteRD || costoMaterialRellenoRD || costoTotalRellenoRD) {
       addSection("RELLENO DETRITICO", [
-        { label: "COSTO DE TRANSPORTE ( US$ / Ton )", value: costoTransporteRD, unit: "US$/Ton" },
-        { label: "COSTO MATERIAL RELLENO ( US$/Ton )", value: costoMaterialRellenoRD, unit: "US$/Ton" },
-        { label: "COSTO TOTAL RELLENO ( US$ / Ton )", value: costoTotalRellenoRD, unit: "US$/Ton" },
+        { label: "Costo de transporte ( US$ / Ton )", value: costoTransporteRD, unit: "US$/Ton" },
+        { label: "Costo material relleno ( US$/Ton )", value: costoMaterialRellenoRD, unit: "US$/Ton" },
+        { label: "Costo total relleno ( US$ / Ton )", value: costoTotalRellenoRD, unit: "US$/Ton" },
       ]);
     }
 
     // Costos Finales
-    yPos += 5;
-    doc.setFontSize(11);
-    doc.setFont("helvetica", "bold");
-    doc.setFillColor(144, 238, 144);
-    doc.rect(20, yPos, pageWidth - 40, 7, "F");
-    doc.text("COSTO MINADO PROYECTADO ( US$ / Ton )", 22, yPos + 5);
-    doc.text(`${costoMinadoProyectado.toFixed(2)} US$ / Ton`, 150, yPos + 5);
     yPos += 10;
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text("Costo minado proyectado ( US$ / Ton )", 22, yPos);
+    doc.text("=", 120, yPos);
+    doc.setFont("helvetica", "bold");
+    doc.text(costoMinadoProyectado.toFixed(2), 150, yPos, { align: "right" });
+    doc.setFont("helvetica", "normal");
+    doc.text("US$ / Ton", 155, yPos);
+    yPos += 7;
 
-    doc.setFillColor(255, 255, 153);
-    doc.rect(20, yPos, pageWidth - 40, 7, "F");
-    doc.text("COSTO MINADO ( US$ / Ton )", 22, yPos + 5);
-    doc.text(`${costoMinado.toFixed(2)} US$ / Ton`, 150, yPos + 5);
+    doc.text("Costo minado ( US$ / Ton )", 22, yPos);
+    doc.text("=", 120, yPos);
+    doc.setFont("helvetica", "bold");
+    doc.text(costoMinado.toFixed(2), 150, yPos, { align: "right" });
+    doc.setFont("helvetica", "normal");
+    doc.text("US$ / Ton", 155, yPos);
 
     // Save PDF
     doc.save(`Costos_Produccion_${projectCode}_${new Date().toISOString().split('T')[0]}.pdf`);
@@ -256,7 +260,7 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
 
       {/* Malla de Perforación */}
       <section className="mb-8">
-        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">MALLA DE PERFORACION</h2>
+        <h2 className="text-xs font-bold px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">MALLA DE PERFORACION</h2>
         <table className="w-full border-collapse bg-white">
           <tbody>
             <ReportRow label="Burden" value={burden} unit="m" />
@@ -271,7 +275,7 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
 
       {/* Perforación */}
       <section className="mb-8">
-        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">PERFORACION</h2>
+        <h2 className="text-xs font-bold  px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">PERFORACION</h2>
         <table className="w-full border-collapse bg-white">
           <tbody>
             <ReportRow label="Costo perforación ( US$ / m )" value={costoPerforacionMetro} unit="US$ / m" />
@@ -284,7 +288,7 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
 
       {/* Voladura */}
       <section className="mb-8">
-        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">VOLADURA</h2>
+        <h2 className="text-xs font-bold  px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">VOLADURA</h2>
         <table className="w-full border-collapse bg-white">
           <tbody>
             <ReportRow label="Costo de voladura ( US$ / Ton )" value={costoVoladura} unit="US$/Ton" />
@@ -294,7 +298,7 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
 
       {/* Limpieza */}
       <section className="mb-8">
-        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">LIMPIEZA</h2>
+        <h2 className="text-xs font-bold px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">LIMPIEZA</h2>
         <table className="w-full border-collapse bg-white">
           <tbody>
             <ReportRow label="Requerimiento de scoops" value={requerimientoScoops} unit="Scoop" />
@@ -305,7 +309,7 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
 
       {/* Carguio */}
       <section className="mb-8">
-        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">CARGUIO</h2>
+        <h2 className="text-xs font-bold  px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">CARGUIO</h2>
         <table className="w-full border-collapse bg-white">
           <tbody>
             <ReportRow label="Requerimiento de scoop" value={requerimientoScoop} unit="Scoop" />
@@ -316,7 +320,7 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
 
       {/* Transporte */}
       <section className="mb-8">
-        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">TRANSPORTE</h2>
+        <h2 className="text-xs font-bold  px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">TRANSPORTE</h2>
         <table className="w-full border-collapse bg-white">
           <tbody>
             <ReportRow label="Flota de camiones" value={flotaCamiones} unit="Camiones en Operacion" />
@@ -328,7 +332,7 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
 
       {/* Relleno Cementado */}
       <section className="mb-8">
-        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">RELLENO CEMENTADO</h2>
+        <h2 className="text-xs font-bold  px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">RELLENO CEMENTADO</h2>
         <table className="w-full border-collapse bg-white">
           <tbody>
             <ReportRow label="Costo de transporte ( US$ / Ton )" value={costoTransporteRC} unit="US$/Ton" />
@@ -341,7 +345,7 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
 
       {/* Relleno Detrítico */}
       <section className="mb-8">
-        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">RELLENO DETRITICO</h2>
+        <h2 className="text-xs font-bold  px-4 py-2.5 mb-0 uppercase tracking-wider ">RELLENO DETRITICO</h2>
         <table className="w-full border-collapse bg-white">
           <tbody>
             <ReportRow label="Costo de transporte ( US$ / Ton )" value={costoTransporteRD} unit="US$/Ton" />
@@ -390,7 +394,7 @@ function ReportRow({ label, value, unit, highlight }: ReportRowProps) {
       <td className="py-2.5 pr-4 text-right text-sm font-bold tabular-nums w-24">
         {displayValue}
       </td>
-      <td className="py-2.5 pl-4 text-xs text-gray-500 w-[30%]">{unit}</td>
+      <td className="py-2.5 pl-4 text-xs  w-[30%]">{unit}</td>
       {highlight && (
         <td className="py-2.5 pl-4 text-xs text-gray-500">{highlight}</td>
       )}
