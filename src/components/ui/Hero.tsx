@@ -23,7 +23,7 @@ export default function Hero() {
               alt="Luiccian Mine"
               fill
               className="object-cover"
-              quality={90}
+              quality={75}
             />
           </div>
         </div>
@@ -57,11 +57,6 @@ export default function Hero() {
             </a>
           </div>
         </div>
-      </div>
-
-      {/* Marca de agua */}
-      <div className="absolute bottom-6 right-8 text-xs text-slate-400">
-        Made with Next.js
       </div>
     </section>
   );
