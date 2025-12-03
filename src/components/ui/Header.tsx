@@ -19,7 +19,7 @@ export default function Header() {
             {/* Menu Links - aparecen al lado izquierdo del botón */}
             {isMenuOpen && (
               <div className="flex items-center gap-6 animate-in fade-in slide-in-from-right">
-                <Link href="#calculadora" className="text-slate-700 hover:text-slate-900 text-sm font-medium transition-colors">
+                <Link href="calculadora" className="text-slate-700 hover:text-slate-900 text-sm font-medium transition-colors">
                   Calculadora
                 </Link>
                 <Link href="about" className="text-slate-700 hover:text-slate-900 text-sm font-medium transition-colors">

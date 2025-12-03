@@ -47,7 +47,7 @@ export default function Hero() {
             </p>
             
             <a 
-              href="#calculadora"
+              href="/calculadora"
               className="inline-flex items-center gap-2 px-8 py-3 bg-slate-900 text-white rounded text-sm font-medium hover:bg-slate-800 transition-colors shadow-lg"
             >
               Iniciar Cálculo
