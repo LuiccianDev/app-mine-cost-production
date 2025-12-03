@@ -36,7 +36,7 @@ export default function Footer() {
 
                 {/* Middle Section - Main Text and CTA */}
                 <div className="flex-1 flex flex-col items-start justify-center max-w-5xl py-16">
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light leading-tight mb-8">
+                    <h2 className="text-4xl font-light leading-tight mb-8">
                         Curious about what we can create{" "}
                         <span className="text-gray-500">together?</span>
                         <br />

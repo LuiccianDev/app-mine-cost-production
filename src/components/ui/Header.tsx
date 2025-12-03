@@ -22,14 +22,11 @@ export default function Header() {
                 <Link href="#calculadora" className="text-slate-700 hover:text-slate-900 text-sm font-medium transition-colors">
                   Calculadora
                 </Link>
-                <Link href="#features" className="text-slate-700 hover:text-slate-900 text-sm font-medium transition-colors">
-                  Características
-                </Link>
-                <Link href="#about" className="text-slate-700 hover:text-slate-900 text-sm font-medium transition-colors">
+                <Link href="about" className="text-slate-700 hover:text-slate-900 text-sm font-medium transition-colors">
                   Acerca de
                 </Link>
                 <Link 
-                  href="#contact" 
+                  href="contact" 
                   className="text-slate-700 hover:text-slate-900 text-sm font-medium transition-colors"
                 >
                   Contacto

@@ -1,10 +1,12 @@
 import FormsSection from "../src/Pages";
 import Footer from "../src/components/ui/Footer";
 import Hero from "../src/components/ui/Hero";
+import Header from "../src/components/ui/Header";
 
 export default function Home() {
   return (
     <>
+      <Header />
       <div className="relative z-10 bg-white">
         <Hero />
       </div>
