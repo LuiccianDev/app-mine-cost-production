@@ -101,7 +101,7 @@ export default function TransporteInputs({ inputValues, onChange }: TransporteIn
           name="tiempoCarguioCamionTolva"
           value={inputValues.tiempoCarguioCamionTolva}
           onChange={onChange}
-          unit="Minutos"
+          unit="minutos"
         />
       </div>
     </div>

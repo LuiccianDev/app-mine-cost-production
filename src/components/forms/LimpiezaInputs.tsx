@@ -38,7 +38,7 @@ export default function LimpiezaInputs({ inputValues, onChange }: LimpiezaInputs
           name="capacidadCuchara"
           value={inputValues.capacidadCuchara}
           onChange={onChange}
-          unit="Yd3/pase"
+          unit="yd³/pase"
         />
         <FormField
           label="Factor de Cuchara"

@@ -24,14 +24,14 @@ export default function RellenoDetriticoInputs({ inputValues, onChange }: Rellen
           name="produccionRelleno"
           value={inputValues.produccionRelleno}
           onChange={onChange}
-          unit="m3"
+          unit="m³"
         />
         <FormField
           label="Capacidad de Cuchara"
           name="capacidadCuchara"
           value={inputValues.capacidadCuchara}
           onChange={onChange}
-          unit="Yd3/pase"
+          unit="yd³/pase"
         />
         <FormField
           label="Factor de Cuchara"
@@ -45,7 +45,7 @@ export default function RellenoDetriticoInputs({ inputValues, onChange }: Rellen
           name="densidadRotaMaterialRelleno"
           value={inputValues.densidadRotaMaterialRelleno}
           onChange={onChange}
-          unit="Ton/m3"
+          unit="Ton/m³"
         />
         <FormField
           label="Tiempo De 1 Pase (viaje)"
@@ -94,21 +94,21 @@ export default function RellenoDetriticoInputs({ inputValues, onChange }: Rellen
           name="densidadMineral"
           value={inputValues.densidadMineral}
           onChange={onChange}
-          unit="Ton/m3"
+          unit="Ton/m³"
         />
         <FormField
           label="Costo Preparación Agregados Zarandeados"
           name="costoPreparacionAgregados"
           value={inputValues.costoPreparacionAgregados}
           onChange={onChange}
-          unit="US$/m3"
+          unit="US$/m³"
         />
         <FormField
           label="Costo Transporte de Desmonte"
           name="costoTransporteDesmonte"
           value={inputValues.costoTransporteDesmonte}
           onChange={onChange}
-          unit="US$/m3"
+          unit="US$/m³"
         />
       </div>
     </div>

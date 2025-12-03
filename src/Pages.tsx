@@ -26,7 +26,7 @@ export default function FormsSection() {
 
   return (
     <div className="w-full min-h-screen animate-in fade-in duration-300">
-      <div className="w-full max-w-7xl mx-auto px-6 py-8">
+      <div className="w-full max-w-7xl mx-auto px-6 pt-8">
         <div className="  p-6 mb-6 flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Costos y Producción</h1>
@@ -59,7 +59,7 @@ export default function FormsSection() {
           </button>
         </div>
         
-        <div className="space-y-6">
+        <div className="">
           <Malla />
           <CostoPerforacion />
           <CostoVoladura />
