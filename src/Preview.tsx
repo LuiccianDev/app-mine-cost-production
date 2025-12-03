@@ -51,9 +51,10 @@ export type PreviewData = {
 
 type PreviewProps = {
   data?: PreviewData;
+  onBack?: () => void;
 };
 
-export default function Preview({ data = {} }: PreviewProps) {
+export default function Preview({ data = {}, onBack }: PreviewProps) {
   const generatePDF = () => {
     const doc = new jsPDF();
     let yPos = 20;
@@ -174,7 +175,7 @@ export default function Preview({ data = {} }: PreviewProps) {
     doc.text(`${costoMinado.toFixed(2)} US$ / Ton`, 150, yPos + 5);
 
     // Save PDF
-    doc.save(`Reporte_${projectCode}_${new Date().toISOString().split('T')[0]}.pdf`);
+    doc.save(`Costos_Produccion_${projectCode}_${new Date().toISOString().split('T')[0]}.pdf`);
   };
 
   const {
@@ -209,25 +210,54 @@ export default function Preview({ data = {} }: PreviewProps) {
   } = data;
 
   return (
-    <div className="w-full max-w-5xl mx-auto bg-white p-8 shadow-lg">
-      {/* Header */}
-      <div className="border-b-2 border-gray-800 pb-4 mb-6 flex justify-between items-center">
-        <h1 className="text-2xl font-bold">PRODUCCION Y COSTOS</h1>
-        <div className="flex items-center gap-4">
-          <div className="text-xl font-semibold">{projectCode}</div>
+    <div className="w-full">
+      {/* Header con botones */}
+      <div className=" p-6 mb-6 flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-gray-900">Reporte Preview</h1>
+        <div className="flex items-center gap-3">
+          {onBack && (
+            <button
+              onClick={onBack}
+              className=" hover:bg-gray-50 text-gray-700 font-medium py-2.5 px-5 rounded-lg transition-colors border border-gray-300 shadow-sm inline-flex items-center gap-2"
+            >
+              Back to Edit
+            </button>
+          )}
           <button
             onClick={generatePDF}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors"
+            className="bg-gray-900 hover:bg-gray-800 text-white font-medium py-2.5 px-5 rounded-lg transition-all flex items-center gap-2 shadow-sm"
           >
-            Descargar PDF
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+              />
+            </svg>
+            Download PDF
           </button>
         </div>
       </div>
 
+      {/* Contenido del reporte */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-10">
+        {/* Header del reporte */}
+        <div className="border-b-2 border-gray-800 pb-4 mb-6 flex justify-between items-center">
+          <h2 className="text-2xl font-bold">PRODUCCION Y COSTOS</h2>
+          <div className="text-xl font-semibold">{projectCode}</div>
+        </div>
+
       {/* Malla de Perforación */}
       <section className="mb-8">
-        <h2 className="text-lg font-bold bg-gray-200 px-2 py-1 mb-3">MALLA DE PERFORACION</h2>
-        <table className="w-full border-collapse">
+        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">MALLA DE PERFORACION</h2>
+        <table className="w-full border-collapse bg-white">
           <tbody>
             <ReportRow label="Burden" value={burden} unit="m" />
             <ReportRow label="Espaciamiento" value={espaciamiento} unit="m" />
@@ -241,105 +271,104 @@ export default function Preview({ data = {} }: PreviewProps) {
 
       {/* Perforación */}
       <section className="mb-8">
-        <h2 className="text-lg font-bold bg-gray-200 px-2 py-1 mb-3">PERFORACION</h2>
-        <table className="w-full border-collapse">
+        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">PERFORACION</h2>
+        <table className="w-full border-collapse bg-white">
           <tbody>
-            <ReportRow label="COSTO PERFORACION ( US$ / m )" value={costoPerforacionMetro} unit="US$ / m" />
-            <ReportRow label="COSTO PERFORACION ( US$ / Ton )" value={costoPerforacionTon} unit="US$ / Ton" />
-            <ReportRow label="Nº PERFORADORA" value={numeroPerforadoras} unit="Perforadoras" />
-            <ReportRow label="METROS PERFORADO (m/dia)" value={metrosPerforado} unit="m / dia" />
+            <ReportRow label="Costo perforación ( US$ / m )" value={costoPerforacionMetro} unit="US$ / m" />
+            <ReportRow label="Costo perforación ( US$ / Ton )" value={costoPerforacionTon} unit="US$ / Ton" />
+            <ReportRow label="Nº perforadora" value={numeroPerforadoras} unit="Perforadoras" />
+            <ReportRow label="Metros perforado (m/dia)" value={metrosPerforado} unit="m / dia" />
           </tbody>
         </table>
       </section>
 
       {/* Voladura */}
       <section className="mb-8">
-        <h2 className="text-lg font-bold bg-gray-200 px-2 py-1 mb-3">VOLADURA</h2>
-        <table className="w-full border-collapse">
+        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">VOLADURA</h2>
+        <table className="w-full border-collapse bg-white">
           <tbody>
-            <ReportRow label="COSTO DE VOLADURA ( US$ / Ton )" value={costoVoladura} unit="US$/Ton" />
+            <ReportRow label="Costo de voladura ( US$ / Ton )" value={costoVoladura} unit="US$/Ton" />
           </tbody>
         </table>
       </section>
 
       {/* Limpieza */}
       <section className="mb-8">
-        <h2 className="text-lg font-bold bg-gray-200 px-2 py-1 mb-3">LIMPIEZA</h2>
-        <table className="w-full border-collapse">
+        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">LIMPIEZA</h2>
+        <table className="w-full border-collapse bg-white">
           <tbody>
-            <ReportRow label="REQUERIMIENTO DE SCOOPS" value={requerimientoScoops} unit="Scoop" />
-            <ReportRow label="COSTO DE LIMPIEZA ( US$ / Ton )" value={costoLimpieza} unit="US$/Ton" />
+            <ReportRow label="Requerimiento de scoops" value={requerimientoScoops} unit="Scoop" />
+            <ReportRow label="Costo de limpieza ( US$ / Ton )" value={costoLimpieza} unit="US$/Ton" />
           </tbody>
         </table>
       </section>
 
       {/* Carguio */}
       <section className="mb-8">
-        <h2 className="text-lg font-bold bg-gray-200 px-2 py-1 mb-3">CARGUIO</h2>
-        <table className="w-full border-collapse">
+        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">CARGUIO</h2>
+        <table className="w-full border-collapse bg-white">
           <tbody>
-            <ReportRow label="REQUERIMIENTO DE SCOOP" value={requerimientoScoop} unit="Scoop" />
-            <ReportRow label="COSTO DE CARGUIO ( US$ / Ton )" value={costoCarguio} unit="US$/Ton" />
+            <ReportRow label="Requerimiento de scoop" value={requerimientoScoop} unit="Scoop" />
+            <ReportRow label="Costo de carguio ( US$ / Ton )" value={costoCarguio} unit="US$/Ton" />
           </tbody>
         </table>
       </section>
 
       {/* Transporte */}
       <section className="mb-8">
-        <h2 className="text-lg font-bold bg-gray-200 px-2 py-1 mb-3">TRANSPORTE</h2>
-        <table className="w-full border-collapse">
+        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">TRANSPORTE</h2>
+        <table className="w-full border-collapse bg-white">
           <tbody>
-            <ReportRow label="FLOTA DE CAMIONES" value={flotaCamiones} unit="Camiones en Operacion" />
-            <ReportRow label="PRODUCCION DE FLOTA DE CAMIONES" value={produccionFlotaCamiones} unit="Ton / Hr" />
-            <ReportRow label="COSTO DE TRANSPORTE ( US$ / Ton )" value={costoTransporte} unit="US$ / Ton" />
+            <ReportRow label="Flota de camiones" value={flotaCamiones} unit="Camiones en Operacion" />
+            <ReportRow label="Producción de flota de camiones" value={produccionFlotaCamiones} unit="Ton / Hr" />
+            <ReportRow label="Costo de transporte ( US$ / Ton )" value={costoTransporte} unit="US$ / Ton" />
           </tbody>
         </table>
       </section>
 
       {/* Relleno Cementado */}
       <section className="mb-8">
-        <h2 className="text-lg font-bold bg-gray-200 px-2 py-1 mb-3">RELLENO CEMENTADO</h2>
-        <table className="w-full border-collapse">
+        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">RELLENO CEMENTADO</h2>
+        <table className="w-full border-collapse bg-white">
           <tbody>
-            <ReportRow label="COSTO DE TRANSPORTE ( US$ / Ton )" value={costoTransporteRC} unit="US$/Ton" />
-            <ReportRow label="COSTO  MATERIAL RELLENO ( US$/Ton )" value={costoMaterialRelleno} unit="US$/Ton" />
-            <ReportRow label="COSTO TOTAL RELLENO 3.5% ( US$ / Ton )" value={costoTotalRelleno35} unit="US$/Ton" highlight="Minado Hz" />
-            <ReportRow label="COSTO TOTAL RELLENO 3.0% ( US$ / Ton )" value={costoTotalRelleno30} unit="US$/Ton" highlight="Minado Vt" />
+            <ReportRow label="Costo de transporte ( US$ / Ton )" value={costoTransporteRC} unit="US$/Ton" />
+            <ReportRow label="Costo material relleno ( US$/Ton )" value={costoMaterialRelleno} unit="US$/Ton" />
+            <ReportRow label="Costo total relleno 3.5% ( US$ / Ton ) Minado Hz" value={costoTotalRelleno35} unit="US$/Ton"/>
+            <ReportRow label="Costo total relleno 3.0% ( US$ / Ton ) Minado VT" value={costoTotalRelleno30} unit="US$/Ton"/>
           </tbody>
         </table>
       </section>
 
       {/* Relleno Detrítico */}
       <section className="mb-8">
-        <h2 className="text-lg font-bold bg-gray-200 px-2 py-1 mb-3">RELLENO DETRITICO</h2>
-        <table className="w-full border-collapse">
+        <h2 className="text-xs font-bold bg-gray-100 px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">RELLENO DETRITICO</h2>
+        <table className="w-full border-collapse bg-white">
           <tbody>
-            <ReportRow label="COSTO DE TRANSPORTE ( US$ / Ton )" value={costoTransporteRD} unit="US$/Ton" />
-            <ReportRow label="COSTO  MATERIAL RELLENO ( US$/Ton )" value={costoMaterialRellenoRD} unit="US$/Ton" />
-            <ReportRow label="COSTO TOTAL RELLENO ( US$ / Ton )" value={costoTotalRellenoRD} unit="US$/Ton" />
+            <ReportRow label="Costo de transporte ( US$ / Ton )" value={costoTransporteRD} unit="US$/Ton" />
+            <ReportRow label="Costo material relleno ( US$/Ton )" value={costoMaterialRellenoRD} unit="US$/Ton" />
+            <ReportRow label="Costo total relleno ( US$ / Ton )" value={costoTotalRellenoRD} unit="US$/Ton" />
           </tbody>
         </table>
       </section>
 
       {/* Costos Finales */}
-      <section className="mb-8">
-        <table className="w-full border-collapse">
+      <section className="mb-8 mt-10">
+        <table className="w-full border-collapse bg-white">
           <tbody>
             <ReportRow 
-              label="COSTO  MINADO PROYECTADO ( US$ / Ton )" 
+              label="Costo minado proyectado ( US$ / Ton )" 
               value={costoMinadoProyectado} 
-              unit="US$ / Ton" 
-              highlight="green"
+              unit="US$ / Ton"
             />
             <ReportRow 
-              label="COSTO  MINADO  ( US$ / Ton )" 
+              label="Costo minado ( US$ / Ton )" 
               value={costoMinado} 
-              unit="US$ / Ton" 
-              highlight="yellow"
+              unit="US$ / Ton"
             />
           </tbody>
         </table>
       </section>
+      </div>
     </div>
   );
 }
@@ -353,22 +382,17 @@ type ReportRowProps = {
 
 function ReportRow({ label, value, unit, highlight }: ReportRowProps) {
   const displayValue = typeof value === 'number' ? value.toFixed(2) : (value || '');
-  
-  let bgColor = '';
-  if (highlight === 'green') bgColor = 'bg-green-200';
-  else if (highlight === 'yellow') bgColor = 'bg-yellow-200';
-  else if (highlight) bgColor = 'bg-gray-100';
 
   return (
-    <tr className="border-b border-gray-300">
-      <td className="py-2 px-2 text-sm">{label}</td>
-      <td className="py-2 px-2 text-center text-sm">=</td>
-      <td className={`py-2 px-2 text-right text-sm font-semibold ${bgColor}`}>
+    <tr className="border-b border-gray-200 hover:bg-gray-50">
+      <td className="py-2.5 pl-4 pr-8 text-xs text-gray-600 w-[45%]">{label}</td>
+      <td className="py-2.5 px-2 text-center text-xs text-gray-400 w-8">=</td>
+      <td className="py-2.5 pr-4 text-right text-sm font-bold tabular-nums w-24">
         {displayValue}
       </td>
-      <td className="py-2 px-2 text-sm">{unit}</td>
-      {highlight && typeof highlight === 'string' && highlight !== 'green' && highlight !== 'yellow' && (
-        <td className="py-2 px-2 text-sm text-gray-600">{highlight}</td>
+      <td className="py-2.5 pl-4 text-xs text-gray-500 w-[30%]">{unit}</td>
+      {highlight && (
+        <td className="py-2.5 pl-4 text-xs text-gray-500">{highlight}</td>
       )}
     </tr>
   );

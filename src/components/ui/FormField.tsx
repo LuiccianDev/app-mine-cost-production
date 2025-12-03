@@ -10,9 +10,9 @@ type FormFieldProps = {
 
 export default function FormField({ label, name, value, onChange, unit }: FormFieldProps) {
   return (
-    <div className="flex flex-col gap-2 ">
-      <label htmlFor={name} className="text-sm text-gray-600">
-        {label} {unit && <span className="text-gray-500">({unit})</span>}
+    <div className="flex flex-col gap-1.5">
+      <label htmlFor={name} className="text-xs font-medium text-gray-700">
+        {label}
       </label>
       <input
         type="text"
@@ -20,9 +20,10 @@ export default function FormField({ label, name, value, onChange, unit }: FormFi
         name={name}
         value={value}
         onChange={onChange}
-        placeholder="Value"
-        className=" px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 transition-all text-sm bg-white text-gray-900 overflow-hidden"
+        placeholder={unit || "0"}
+        className="px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all text-sm bg-gray-50 text-gray-900 placeholder:text-gray-400"
       />
+      {unit && <span className="text-xs text-gray-500">{unit}</span>}
     </div>
   );
 }

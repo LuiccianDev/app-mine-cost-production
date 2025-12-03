@@ -7,12 +7,11 @@ type TransporteInputsProps = {
 
 export default function TransporteInputs({ inputValues, onChange }: TransporteInputsProps) {
   return (
-    <div className="border border-gray-300 rounded-3xl p-8 bg-white ">
-      <div className="mb-6">
-        <h2 className="text-3xl font-bold text-gray-900">TRANSPORTE</h2>
-        <p className="text-sm text-gray-500 mt-1">Datos</p>
+    <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
+      <div className="mb-5">
+        <h2 className="text-lg font-semibold text-gray-900">Transporte</h2>
       </div>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-4 gap-6">
         <FormField
           label="Capacidad de camion"
           name="capacidadCamion"
