@@ -27,6 +27,7 @@ export default function CostoVoladuraPage() {
   const [isMounted, setIsMounted] = useState(false);
 
   // Marcar como montado después de la hidratación
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
     setIsMounted(true);
   }, []);
