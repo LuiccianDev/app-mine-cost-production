@@ -75,12 +75,6 @@ export default function Footer() {
                         <p>Designed & Developed</p>
                         <p>by Luiccian</p>
                     </div>
-
-                    {/* Right - Copyright */}
-                    <div className="md:text-right space-y-0.5">
-                        <p>All rights reserved,</p>
-                        <p>LUICCIAN ©{currentYear}</p>
-                    </div>
                 </div>
             </div>
         </footer>

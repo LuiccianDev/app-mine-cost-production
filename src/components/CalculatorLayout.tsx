@@ -28,8 +28,8 @@ export default function CalculatorLayout() {
         <div className="w-full max-w-7xl mx-auto px-6 pt-8">
           <div className="  p-6 mb-6 flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Costos y Producción</h1>
-              <p className="text-sm text-gray-500 mt-1">Calculadora de costos mineros</p>
+              <h1 className="text-2xl font-bold text-gray-900">Costs and Production</h1>
+              <p className="text-sm text-gray-500 mt-1">Mining cost calculator</p>
             </div>
             <button
               onClick={() => setShowPreview(true)}

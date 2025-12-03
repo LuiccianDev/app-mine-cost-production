@@ -19,8 +19,8 @@ const bodoni = Bodoni_Moda({
 });
 
 export const metadata: Metadata = {
-  title: "Costos y Producción Minera",
-  description: "Calculadora de costos y producción para operaciones mineras",
+  title: "Mining Costs and Production",
+  description: "Cost and production calculator for mining operations",
 };
 
 export default function RootLayout({

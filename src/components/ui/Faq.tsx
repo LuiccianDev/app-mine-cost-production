@@ -8,28 +8,28 @@ type FaqItem = {
 
 const faqData: FaqItem[] = [
   {
-    question: "¿Qué tipos de cálculos puedo realizar?",
-    answer: "La aplicación incluye 9 calculadoras especializadas: Diseño de Malla de Perforación, Costo de Perforación, Costo de Voladura, Carguío, Transporte, Limpieza, Relleno Cementado, Relleno Detrítico y Requerimiento de Perforadora."
+    question: "What types of calculations can I perform?",
+    answer: "The application includes 9 specialized calculators: Drilling Pattern Design, Drilling Cost, Blasting Cost, Loading, Transport, Cleaning, Cemented Backfill, Detritic Backfill, and Drill Rig Requirements."
   },
   {
-    question: "¿Cómo uso las calculadoras?",
-    answer: "Selecciona la calculadora que necesitas desde el menú desplegable, ingresa los parámetros requeridos en el formulario y los resultados se calcularán automáticamente. Puedes exportar los resultados a PDF usando el botón de vista previa."
+    question: "How do I use the calculators?",
+    answer: "Select the calculator you need from the dropdown menu, enter the required parameters in the form, and the results will be calculated automatically. You can export the results to PDF using the preview button."
   },
   {
-    question: "¿Se guardan mis datos?",
-    answer: "Sí, todos tus cálculos se guardan automáticamente en tu navegador (localStorage). Los datos permanecen disponibles incluso si cierras la página, y puedes acceder a ellos en cualquier momento."
+    question: "Is my data saved?",
+    answer: "Yes, all your calculations are automatically saved in your browser (localStorage). The data remains available even if you close the page, and you can access it at any time."
   },
   {
-    question: "¿Puedo exportar los resultados?",
-    answer: "Sí, puedes generar un PDF con todos los resultados de tus cálculos. Haz clic en 'Vista Previa y Exportar PDF' para ver y descargar un reporte completo con todos los parámetros y resultados."
+    question: "Can I export the results?",
+    answer: "Yes, you can generate a PDF with all your calculation results. Click 'Preview and Export PDF' to view and download a complete report with all parameters and results."
   },
   {
-    question: "¿Los cálculos son precisos?",
-    answer: "Los cálculos están basados en fórmulas estándar de ingeniería de minas. Sin embargo, siempre recomendamos validar los resultados con un ingeniero especializado para aplicaciones críticas."
+    question: "Are the calculations accurate?",
+    answer: "The calculations are based on standard mining engineering formulas. However, we always recommend validating the results with a specialized engineer for critical applications."
   },
   {
-    question: "¿Los datos están seguros?",
-    answer: "Todos los datos se almacenan localmente en tu navegador. No enviamos ni almacenamos información en servidores externos, garantizando la privacidad de tus cálculos."
+    question: "Is my data secure?",
+    answer: "All data is stored locally in your browser. We do not send or store information on external servers, ensuring the privacy of your calculations."
   }
 ];
 

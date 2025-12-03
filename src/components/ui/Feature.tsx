@@ -7,8 +7,8 @@ export default function Products() {
         <div className="mb-12">
           <h2 className="text-2xl  font-light mb-4">feature.</h2>
           <p className="text-3xl text-gray-600 max-w-md">
-            Herramientas especializadas para cálculos mineros con interfaz intuitiva
-            y resultados precisos en tiempo real.
+            Specialized tools for mining calculations with intuitive interface
+            and accurate real-time results.
           </p>
         </div>
 
@@ -26,10 +26,10 @@ export default function Products() {
               </div>
             </div>
             <div className="max-w-2xl space-y-3 text-xl pl-20">
-              <h3 className=" font-light text-gray-900">Cálculos Precisos</h3>
+              <h3 className=" font-light text-gray-900">Accurate Calculations</h3>
               <p className=" text-gray-600 leading-relaxed">
-                Interfaz intuitiva para realizar cálculos de malla de perforación, 
-                voladura y costos operacionales con resultados en tiempo real.
+                Intuitive interface to perform drilling pattern, blasting, 
+                and operational cost calculations with real-time results.
               </p>
             </div>
           </div>
@@ -47,10 +47,10 @@ export default function Products() {
               </div>
             </div>
             <div className="max-w-2xl space-y-3 text-xl pr-20">
-              <h3 className=" font-light text-gray-900">Exportación Fácil</h3>
+              <h3 className=" font-light text-gray-900">Easy Export</h3>
               <p className=" text-gray-600 leading-relaxed">
-                Genera reportes profesionales en PDF con todos tus cálculos y 
-                parámetros para compartir con tu equipo.
+                Generate professional PDF reports with all your calculations and 
+                parameters to share with your team.
               </p>
             </div>
           </div>

@@ -20,16 +20,16 @@ export default function Header() {
             {isMenuOpen && (
               <div className="flex items-center gap-6 animate-in fade-in slide-in-from-right">
                 <Link href="calculadora" className="text-slate-700 hover:text-slate-900 text-sm font-medium transition-colors">
-                  Calculadora
+                  Calculator
                 </Link>
                 <Link href="about" className="text-slate-700 hover:text-slate-900 text-sm font-medium transition-colors">
-                  Acerca de
+                  About
                 </Link>
                 <Link 
                   href="contact" 
                   className="text-slate-700 hover:text-slate-900 text-sm font-medium transition-colors"
                 >
-                  Contacto
+                  Contact
                 </Link>
               </div>
             )}
