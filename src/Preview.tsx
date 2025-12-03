@@ -33,6 +33,14 @@ export type PreviewData = {
   produccionFlotaCamiones?: number;
   costoTransporte?: number;
   
+  // Requerimiento Equipos
+  requerimientoPerforadora?: number;
+  requerimientoScoopsLimpieza?: number;
+  requerimientoScoopsCarguio?: number;
+  requerimientoScoopRelleno?: number;
+  totalScoops?: number;
+  flotaCamionesTransporte?: number;
+  
   // Relleno Cementado
   costoTransporteRC?: number;
   costoMaterialRelleno?: number;
@@ -142,6 +150,16 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
       { label: "Costo de transporte ( US$ / Ton )", value: costoTransporte, unit: "US$ / Ton" },
     ]);
 
+    // Requerimiento Equipos
+    addSection("REQUERIMIENTO EQUIPOS", [
+      { label: "Nº perforadora", value: requerimientoPerforadora, unit: "Perforadoras" },
+      { label: "Requerimiento de scoops - limpieza", value: requerimientoScoopsLimpieza, unit: "Scoop" },
+      { label: "Requerimiento de scoops - carguio", value: requerimientoScoopsCarguio, unit: "Scoop" },
+      { label: "Requerimiento de scoop - relleno", value: requerimientoScoopRelleno, unit: "Scoop" },
+      { label: "Total scoops", value: totalScoops, unit: "Scoop" },
+      { label: "Flota de camiones - transporte", value: flotaCamionesTransporte, unit: "Camiones en Operacion" },
+    ]);
+
     // Relleno Cementado
     addSection("RELLENO CEMENTADO", [
       { label: "Costo de transporte ( US$ / Ton )", value: costoTransporteRC, unit: "US$/Ton" },
@@ -202,6 +220,12 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
     flotaCamiones = 4.13,
     produccionFlotaCamiones = 178.05,
     costoTransporte = 1.39,
+    requerimientoPerforadora = 1.09,
+    requerimientoScoopsLimpieza = 1.95,
+    requerimientoScoopsCarguio = 0.77,
+    requerimientoScoopRelleno = 1.19,
+    totalScoops = 3.91,
+    flotaCamionesTransporte = 4.13,
     costoTransporteRC = 3.63,
     costoMaterialRelleno = 4.69,
     costoTotalRelleno35 = 8.33,
@@ -369,6 +393,26 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
               value={costoMinado} 
               unit="US$ / Ton"
             />
+          </tbody>
+        </table>
+      </section>
+
+      <div className="border-b-2 border-gray-800 pb-4 mb-6 flex justify-between items-center">
+          <h2 className="text-2xl font-bold">Requerimeinto de Equipos</h2>
+          <div className="text-xl font-semibold">{projectCode}</div>
+      </div>
+
+      {/* Requerimiento Equipos */}
+      <section className="mb-8">
+        <h2 className="text-xs font-bold px-4 py-2.5 mb-0 uppercase tracking-wider text-gray-700">REQUERIMIENTO EQUIPOS</h2>
+        <table className="w-full border-collapse bg-white">
+          <tbody>
+            <ReportRow label="Nº perforadora" value={requerimientoPerforadora} unit="Perforadoras"  />
+            <ReportRow label="Requerimiento de scoops" value={requerimientoScoopsLimpieza} unit="Scoop" />
+            <ReportRow label="Requerimiento de scoops" value={requerimientoScoopsCarguio} unit="Scoop"  />
+            <ReportRow label="Requerimiento de scoop" value={requerimientoScoopRelleno} unit="Scoop"  />
+            <ReportRow label="Total scoops" value={totalScoops} unit="Scoop" />
+            <ReportRow label="Flota de camiones" value={flotaCamionesTransporte} unit="Camiones en Operacion" />
           </tbody>
         </table>
       </section>
