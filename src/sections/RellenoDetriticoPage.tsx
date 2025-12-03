@@ -6,6 +6,7 @@ import { calcularRellenoDetritico, defaultRellenoDetriticoValues } from '../scri
 
 export default function RellenoDetriticoPage() {
   const [inputValues, setInputValues] = useState(defaultRellenoDetriticoValues);
+  const [showResults, setShowResults] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValues(prev => ({ ...prev, [e.target.name]: parseFloat(e.target.value) || 0 }));
@@ -14,13 +15,16 @@ export default function RellenoDetriticoPage() {
   const resultados = useMemo(() => calcularRellenoDetritico(inputValues), [inputValues]);
 
   return (
-    <div className="flex flex-col lg:flex-row w-full">
-      <div className="w-full p-6 min-w-0 ">
-        <RellenoDetriticoInputs inputValues={inputValues} onChange={handleChange} />
+    <div className="flex flex-col w-full">
+      <div className="w-full p-6 min-w-0">
+        <RellenoDetriticoInputs 
+          inputValues={inputValues} 
+          onChange={handleChange}
+          showResults={showResults}
+          onToggleResults={() => setShowResults(!showResults)}
+          resultsComponent={<RellenoDetriticoResults resultados={resultados} />}
+        />
       </div>
-      {/* <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
-        <RellenoDetriticoResults resultados={resultados} />
-      </div> */}
     </div>
   );
 }

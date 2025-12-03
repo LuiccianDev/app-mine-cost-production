@@ -1,4 +1,3 @@
-
 import type { CostoPerforacionResultados } from '../../scripts/costoPerforacionCalculations';
 
 type CostoPerforacionResultsProps = {
@@ -9,28 +8,18 @@ export default function CostoPerforacionResults({ resultados }: CostoPerforacion
   const isValid = (value: number) => !isNaN(value) && isFinite(value);
 
   return (
-    <div className="border border-gray-300 rounded-3xl p-8 bg-white h-fit">
-      <div className="mb-6">
-        <h2 className="text-3xl font-bold text-gray-900">RESULTADOS</h2>
-        <p className="text-sm text-gray-500 mt-1">Costo Perforacion</p>
+    <div>
+      <div className="mb-4">
+        <h3 className="text-base font-semibold text-gray-900">Resultados</h3>
       </div>
-
-      <div className="space-y-1">
-        <div className="flex justify-between items-center py-4">
-          <span className="text-gray-700 text-base">Costo Perforacion</span>
-          <span className="font-medium text-gray-900">
-            {isValid(resultados.costoPerforacionPorMetro) 
-              ? `${resultados.costoPerforacionPorMetro.toFixed(2)} US$/m` 
-              : '- US$/m'}
-          </span>
+      <div className="grid grid-cols-3 gap-x-4">
+        <div className="flex justify-between items-center py-2">
+          <span className="text-gray-600 text-sm">Costo Perforación (US$/m)</span>
+          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.costoPerforacionPorMetro) ? resultados.costoPerforacionPorMetro.toFixed(2) : '-'}</span>
         </div>
-        <div className="flex justify-between items-center py-4">
-          <span className="text-gray-700 text-base">Costo Perforacion</span>
-          <span className="font-medium text-gray-900">
-            {isValid(resultados.costoPerforacionPorTon) 
-              ? `${resultados.costoPerforacionPorTon.toFixed(2)} US$/Ton` 
-              : '- US$/Ton'}
-          </span>
+        <div className="flex justify-between items-center py-2">
+          <span className="text-gray-600 text-sm">Costo Perforación (US$/Ton)</span>
+          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.costoPerforacionPorTon) ? resultados.costoPerforacionPorTon.toFixed(2) : '-'}</span>
         </div>
       </div>
     </div>

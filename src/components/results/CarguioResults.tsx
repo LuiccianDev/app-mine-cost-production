@@ -1,4 +1,3 @@
-"use client";
 import type { CarguioResultados } from '../../scripts/carguioCalculations';
 
 type CarguioResultsProps = {
@@ -9,35 +8,34 @@ export default function CarguioResults({ resultados }: CarguioResultsProps) {
   const isValid = (value: number) => !isNaN(value) && isFinite(value);
 
   return (
-    <div className="border border-gray-300 rounded-3xl p-8 bg-white h-fit">
-      <div className="mb-6">
-        <h2 className="text-3xl font-bold text-gray-900">RESULTADOS</h2>
-        <p className="text-sm text-gray-500 mt-1">Carguío</p>
+    <div>
+      <div className="mb-4">
+        <h3 className="text-base font-semibold text-gray-900">Resultados</h3>
       </div>
-      <div className="space-y-1">
-        <div className="flex justify-between items-center py-4">
-          <span className="text-gray-700 text-base">Tonelada por Pase</span>
-          <span className="font-medium text-gray-900">{isValid(resultados.toneladaPorPase) ? `${resultados.toneladaPorPase.toFixed(2)} Ton/pase` : '- Ton/pase'}</span>
+      <div className="grid grid-cols-3 gap-x-4">
+        <div className="flex justify-between items-center py-2">
+          <span className="text-gray-600 text-sm">Tonelada por Pase</span>
+          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.toneladaPorPase) ? resultados.toneladaPorPase.toFixed(2) : '-'}</span>
         </div>
-        <div className="flex justify-between items-center py-4">
-          <span className="text-gray-700 text-base">Nº de Pases por Hora</span>
-          <span className="font-medium text-gray-900">{isValid(resultados.numeroPasesPorHora) ? `${resultados.numeroPasesPorHora.toFixed(2)} Pase/Hr` : '- Pase/Hr'}</span>
+        <div className="flex justify-between items-center py-2">
+          <span className="text-gray-600 text-sm">Nº de Pases por Hora</span>
+          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.numeroPasesPorHora) ? resultados.numeroPasesPorHora.toFixed(2) : '-'}</span>
         </div>
-        <div className="flex justify-between items-center py-4">
-          <span className="text-gray-700 text-base">Producción</span>
-          <span className="font-medium text-gray-900">{isValid(resultados.produccionTonPorHora) ? `${resultados.produccionTonPorHora.toFixed(2)} Ton/Hr` : '- Ton/Hr'}</span>
+        <div className="flex justify-between items-center py-2">
+          <span className="text-gray-600 text-sm">Producción (Ton/Hr)</span>
+          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.produccionTonPorHora) ? resultados.produccionTonPorHora.toFixed(2) : '-'}</span>
         </div>
-        <div className="flex justify-between items-center py-4">
-          <span className="text-gray-700 text-base">Producción</span>
-          <span className="font-medium text-gray-900">{isValid(resultados.produccionTonPorDia) ? `${resultados.produccionTonPorDia.toFixed(2)} Ton/día` : '- Ton/día'}</span>
+        <div className="flex justify-between items-center py-2">
+          <span className="text-gray-600 text-sm">Producción (Ton/día)</span>
+          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.produccionTonPorDia) ? resultados.produccionTonPorDia.toFixed(2) : '-'}</span>
         </div>
-        <div className="flex justify-between items-center py-4">
-          <span className="text-gray-700 text-base">Requerimiento de Scoop</span>
-          <span className="font-medium text-gray-900">{isValid(resultados.requerimientoScoop) ? `${resultados.requerimientoScoop.toFixed(2)} Scoop` : '- Scoop'}</span>
+        <div className="flex justify-between items-center py-2">
+          <span className="text-gray-600 text-sm">Requerimiento de Scoop</span>
+          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.requerimientoScoop) ? resultados.requerimientoScoop.toFixed(2) : '-'}</span>
         </div>
-        <div className="flex justify-between items-center py-4">
-          <span className="text-gray-700 text-base">Costo de Carguío</span>
-          <span className="font-medium text-gray-900">{isValid(resultados.costoCarguio) ? `${resultados.costoCarguio.toFixed(2)} US$/Ton` : '- US$/Ton'}</span>
+        <div className="flex justify-between items-center py-2">
+          <span className="text-gray-600 text-sm">Costo de Carguío (US$/Ton)</span>
+          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.costoCarguio) ? resultados.costoCarguio.toFixed(2) : '-'}</span>
         </div>
       </div>
     </div>

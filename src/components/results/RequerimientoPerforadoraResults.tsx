@@ -1,4 +1,3 @@
-
 import type { RequerimientoPerforadoraResultados } from '../../scripts/requerimientoPerforadoraCalculations';
 
 type RequerimientoPerforadoraResultsProps = {
@@ -9,23 +8,22 @@ export default function RequerimientoPerforadoraResults({ resultados }: Requerim
   const isValid = (value: number) => !isNaN(value) && isFinite(value);
 
   return (
-    <div className="border border-gray-300 rounded-3xl p-8 bg-white h-fit">
-      <div className="mb-6">
-        <h2 className="text-3xl font-bold text-gray-900">RESULTADOS</h2>
-        <p className="text-sm text-gray-500 mt-1">Requerimiento de Perforadora</p>
+    <div>
+      <div className="mb-4">
+        <h3 className="text-base font-semibold text-gray-900">Resultados</h3>
       </div>
-      <div className="space-y-1">
-        <div className="flex justify-between items-center py-4">
-          <span className="text-gray-700 text-base">Nº Perforadoras</span>
-          <span className="font-medium text-gray-900">{isValid(resultados.numeroPerforadoras) ? `${resultados.numeroPerforadoras.toFixed(2)} Perforadoras` : '- Perforadoras'}</span>
+      <div className="grid grid-cols-3 gap-x-4">
+        <div className="flex justify-between items-center py-2">
+          <span className="text-gray-600 text-sm">Nº Perforadoras</span>
+          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.numeroPerforadoras) ? resultados.numeroPerforadoras.toFixed(2) : '-'}</span>
         </div>
-        <div className="flex justify-between items-center py-4">
-          <span className="text-gray-700 text-base">Metros Perforado</span>
-          <span className="font-medium text-gray-900">{isValid(resultados.metrosPerforadosPorDia) ? `${resultados.metrosPerforadosPorDia.toFixed(2)} m/día` : '- m/día'}</span>
+        <div className="flex justify-between items-center py-2">
+          <span className="text-gray-600 text-sm">Metros Perforado (m/día)</span>
+          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.metrosPerforadosPorDia) ? resultados.metrosPerforadosPorDia.toFixed(2) : '-'}</span>
         </div>
-        <div className="flex justify-between items-center py-4">
-          <span className="text-gray-700 text-base">Pies Perforado</span>
-          <span className="font-medium text-gray-900">{isValid(resultados.piesPerforadosPorDia) ? `${resultados.piesPerforadosPorDia.toFixed(2)} pies/día` : '- pies/día'}</span>
+        <div className="flex justify-between items-center py-2">
+          <span className="text-gray-600 text-sm">Pies Perforado (pies/día)</span>
+          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.piesPerforadosPorDia) ? resultados.piesPerforadosPorDia.toFixed(2) : '-'}</span>
         </div>
       </div>
     </div>
