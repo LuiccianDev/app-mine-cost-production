@@ -11,6 +11,7 @@ export default function RequerimientoPerforadoraPage() {
   
   // Lazy initialization: cargar desde localStorage solo una vez
   const [inputValues, setInputValues] = useState(() => {
+    if (typeof window === 'undefined') return defaultRequerimientoPerforadoraValues;
     const savedInputs = localStorage.getItem(STORAGE_KEYS.REQUERIMIENTO_PERFORADORA_INPUTS);
     if (savedInputs) {
       return JSON.parse(savedInputs);
@@ -48,8 +49,10 @@ export default function RequerimientoPerforadoraPage() {
 
   // Guardar inputs en localStorage cuando cambien
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.REQUERIMIENTO_PERFORADORA_INPUTS, JSON.stringify(finalInputValues));
-  }, [finalInputValues]);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEYS.REQUERIMIENTO_PERFORADORA_INPUTS, JSON.stringify(inputValues));
+    }
+  }, [inputValues]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;

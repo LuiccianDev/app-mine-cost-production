@@ -38,11 +38,13 @@ export const STORAGE_KEYS = {
 } as const;
 
 // Helper functions for dirty fields management
-export const saveDirtyFields = (key: string, fields: Set<string>) => {
-  localStorage.setItem(key, JSON.stringify(Array.from(fields)));
-};
-
 export const loadDirtyFields = (key: string): Set<string> => {
+  if (typeof window === 'undefined') return new Set();
   const saved = localStorage.getItem(key);
   return saved ? new Set(JSON.parse(saved)) : new Set();
+};
+
+export const saveDirtyFields = (key: string, fields: Set<string>): void => {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(key, JSON.stringify(Array.from(fields)));
 };

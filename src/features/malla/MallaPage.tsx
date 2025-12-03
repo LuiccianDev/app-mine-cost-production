@@ -9,6 +9,7 @@ import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storag
 export default function MallaSection() {
   // Lazy initialization: cargar desde localStorage solo una vez
   const [inputValues, setInputValues] = useState(() => {
+    if (typeof window === 'undefined') return defaultMallaValues;
     const savedInputs = localStorage.getItem(STORAGE_KEYS.MALLA_INPUTS);
     if (savedInputs) {
       return JSON.parse(savedInputs);
@@ -25,7 +26,9 @@ export default function MallaSection() {
 
   // Guardar inputs en localStorage cuando cambien
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.MALLA_INPUTS, JSON.stringify(inputValues));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEYS.MALLA_INPUTS, JSON.stringify(inputValues));
+    }
   }, [inputValues]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

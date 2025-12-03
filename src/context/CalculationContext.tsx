@@ -44,51 +44,61 @@ const CalculationContext = createContext<CalculationContextType | undefined>(und
 
 export function CalculationProvider({ children }: { children: ReactNode }) {
   const [mallaResults, setMallaResults] = useState<MallaResultados | null>(() => {
+    if (typeof window === 'undefined') return null;
     const saved = localStorage.getItem('mallaResults');
     return saved ? JSON.parse(saved) : null;
   });
 
   const [costoPerforacionResults, setCostoPerforacionResults] = useState<CostoPerforacionResultados | null>(() => {
+    if (typeof window === 'undefined') return null;
     const saved = localStorage.getItem('costoPerforacionResults');
     return saved ? JSON.parse(saved) : null;
   });
 
   const [costoVoladuraResults, setCostoVoladuraResults] = useState<CostoVoladuraResultsData | null>(() => {
+    if (typeof window === 'undefined') return null;
     const saved = localStorage.getItem('costoVoladuraResults');
     return saved ? JSON.parse(saved) : null;
   });
 
   const [limpiezaResults, setLimpiezaResults] = useState<LimpiezaResultados | null>(() => {
+    if (typeof window === 'undefined') return null;
     const saved = localStorage.getItem('limpiezaResults');
     return saved ? JSON.parse(saved) : null;
   });
 
   const [carguioResults, setCarguioResults] = useState<CarguioResultados | null>(() => {
+    if (typeof window === 'undefined') return null;
     const saved = localStorage.getItem('carguioResults');
     return saved ? JSON.parse(saved) : null;
   });
 
   const [transporteResults, setTransporteResults] = useState<TransporteResultados | null>(() => {
+    if (typeof window === 'undefined') return null;
     const saved = localStorage.getItem('transporteResults');
     return saved ? JSON.parse(saved) : null;
   });
 
   const [rellenoCementadoResults, setRellenoCementadoResults] = useState<RellenoCementadoResultados | null>(() => {
+    if (typeof window === 'undefined') return null;
     const saved = localStorage.getItem('rellenoCementadoResults');
     return saved ? JSON.parse(saved) : null;
   });
 
   const [rellenoDetriticoResults, setRellenoDetriticoResults] = useState<RellenoDetriticoResultados | null>(() => {
+    if (typeof window === 'undefined') return null;
     const saved = localStorage.getItem('rellenoDetriticoResults');
     return saved ? JSON.parse(saved) : null;
   });
 
   const [requerimientoPerforadoraInputs, setRequerimientoPerforadoraInputs] = useState<RequerimientoPerforadoraInputs | null>(() => {
+    if (typeof window === 'undefined') return null;
     const saved = localStorage.getItem('requerimientoPerforadoraInputs');
     return saved ? JSON.parse(saved) : null;
   });
 
   const [carguioInputs, setCarguioInputs] = useState<CarguioInputs | null>(() => {
+    if (typeof window === 'undefined') return null;
     const saved = localStorage.getItem('carguioInputs');
     return saved ? JSON.parse(saved) : null;
   });

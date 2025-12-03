@@ -11,6 +11,7 @@ export default function TransportePage() {
   
   // Lazy initialization: cargar desde localStorage solo una vez
   const [inputValues, setInputValues] = useState(() => {
+    if (typeof window === 'undefined') return defaultTransporteValues;
     const savedInputs = localStorage.getItem(STORAGE_KEYS.TRANSPORTE_INPUTS);
     if (savedInputs) {
       return JSON.parse(savedInputs);
@@ -26,7 +27,9 @@ export default function TransportePage() {
 
   // Guardar inputs en localStorage cuando cambien
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.TRANSPORTE_INPUTS, JSON.stringify(inputValues));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEYS.TRANSPORTE_INPUTS, JSON.stringify(inputValues));
+    }
   }, [inputValues]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
