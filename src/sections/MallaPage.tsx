@@ -15,7 +15,7 @@ export default function MallaSection() {
 
   return (
     <div className="flex flex-col lg:flex-row w-full">
-      <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">
+      <div className="w-full p-6 min-w-0 ">
         <MallaForm inputValues={inputValues} onChange={handleChange} />
       </div>
       {/* <div className="w-full lg:w-1/2 p-6 min-w-0 max-w-[50vw]">

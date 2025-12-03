@@ -7,12 +7,12 @@ type CostoVoladuraInputsProps = {
 
 export default function CostoVoladuraInputs({ inputValues, onChange }: CostoVoladuraInputsProps) {
   return (
-    <div className="border border-gray-300 rounded-3xl p-8 bg-white w-full h-full min-w-0">
+    <div className="border border-gray-300 rounded-3xl p-8 bg-white ">
       <div className="mb-6">
         <h2 className="text-3xl font-bold text-gray-900">COSTO DE VOLADURA</h2>
         <p className="text-sm text-gray-500 mt-1">Datos</p>
       </div>
-      <div className="flex flex-col gap-y-4 min-w-0">
+      <div className="grid grid-cols-4 gap-4">
         <FormField
           label="Costo Anfo"
           name="costoAnfo"
