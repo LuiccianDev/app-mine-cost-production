@@ -1,4 +1,4 @@
-a"use client";
+"use client";
 import { jsPDF } from "jspdf";
 
 export type PreviewData = {
