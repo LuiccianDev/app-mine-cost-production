@@ -2,10 +2,10 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="relative w-full h-screen ">
+    <section className="relative w-full h-[calc(100vh-5rem)]">
       <div className="container mx-auto px-8 h-full flex flex-col justify-between py-20">
         {/* Parte superior - Título y foto */}
-        <div className="flex items-start justify-between pt-10">
+        <div className="flex items-start justify-between ">
           {/* Título izquierda arriba */}
           <h1 className="text-8xl md:text-[12rem] font-bold text-slate-900 tracking-tight leading-none">
             LUICCIAN
