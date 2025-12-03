@@ -1,53 +1,42 @@
 "use client";
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import MallaForm from './MallaInputs';
 import MallaResultados from './MallaResults';
 import { calcularMalla, defaultMallaValues } from './mallaCalculations';
 import { useCalculations } from '../../context/CalculationContext';
-import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storageKeys';
+import { STORAGE_KEYS } from '../../lib/storageKeys';
+import { usePersistedState } from '../../lib/hooks/usePersistedState';
+import { useDirtyFields } from '../../lib/hooks/useDirtyFields';
+import { useSyncToContext } from '../../lib/hooks/useSyncToContext';
 
 export default function MallaSection() {
-  // Lazy initialization: cargar desde localStorage solo una vez
-  const [inputValues, setInputValues] = useState(() => {
-    if (typeof window === 'undefined') return defaultMallaValues;
-    const savedInputs = localStorage.getItem(STORAGE_KEYS.MALLA_INPUTS);
-    if (savedInputs) {
-      return JSON.parse(savedInputs);
-    }
-    return defaultMallaValues;
-  });
-  // se removio para no dar el error _dirtyFields 
-  const [, setDirtyFields] = useState<Set<string>>(() => {
-    return loadDirtyFields(STORAGE_KEYS.MALLA_DIRTY);
-  });
+  const { setMallaResults } = useCalculations();
+  
+  // Use custom hooks for state management
+  const [inputValues, setInputValues] = usePersistedState(
+    STORAGE_KEYS.MALLA_INPUTS,
+    defaultMallaValues
+  );
+
+  const { dirtyFields, markDirty } = useDirtyFields(
+    STORAGE_KEYS.MALLA_DIRTY
+  );
 
   const [showResults, setShowResults] = useState(false);
-  const { setMallaResults } = useCalculations();
-
-  // Guardar inputs en localStorage cuando cambien
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(STORAGE_KEYS.MALLA_INPUTS, JSON.stringify(inputValues));
-    }
-  }, [inputValues]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
-    setDirtyFields((prev: Set<string>) => {
-      const newSet = new Set(prev);
-      newSet.add(fieldName);
-      saveDirtyFields(STORAGE_KEYS.MALLA_DIRTY, newSet);
-      return newSet;
-    });
-    setInputValues((prev: typeof defaultMallaValues) => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
+    markDirty(fieldName);
+    setInputValues((prev: typeof defaultMallaValues) => ({ 
+      ...prev, 
+      [fieldName]: parseFloat(e.target.value) || 0 
+    }));
   };
 
   const resultados = useMemo(() => calcularMalla(inputValues), [inputValues]);
 
-  // Guardar resultados en el context cada vez que cambien
-  useEffect(() => {
-    setMallaResults(resultados);
-  }, [resultados, setMallaResults]);
+  // Sync results to context using custom hook
+  useSyncToContext(resultados, setMallaResults);
 
   return (
     <div className="flex flex-col w-full">

@@ -1,88 +1,72 @@
 "use client";
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import RellenoCementadoInputs from './RellenoCementadoInputs';
 import RellenoCementadoResults from './RellenoCementadoResults';
 import { calcularRellenoCementado, defaultRellenoCementadoValues } from './rellenoCementadoCalculations';
 import { useCalculations } from '../../../context/CalculationContext';
-import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../../lib/storageKeys';
+import { STORAGE_KEYS } from '../../../lib/storageKeys';
+import { usePersistedState } from '../../../lib/hooks/usePersistedState';
+import { useDirtyFields } from '../../../lib/hooks/useDirtyFields';
+import { useDerivedValue } from '../../../lib/hooks/useDerivedValue';
+import { useSyncToContext } from '../../../lib/hooks/useSyncToContext';
+import { useClientOnly } from '../../../lib/hooks/useClientOnly';
 
 export default function RellenoCementadoPage() {
   const { requerimientoPerforadoraInputs, setRellenoCementadoResults } = useCalculations();
   
-  // Lazy initialization: cargar desde localStorage solo una vez
-  const [inputValues, setInputValues] = useState(() => {
-    if (typeof window === 'undefined') return defaultRellenoCementadoValues;
-    const savedInputs = localStorage.getItem(STORAGE_KEYS.RELLENO_CEMENTADO_INPUTS);
-    if (savedInputs) {
-      return JSON.parse(savedInputs);
-    }
-    return defaultRellenoCementadoValues;
-  });
+  // Use custom hooks for state management
+  const [inputValues, setInputValues] = usePersistedState(
+    STORAGE_KEYS.RELLENO_CEMENTADO_INPUTS,
+    defaultRellenoCementadoValues
+  );
 
-  const [dirtyFields, setDirtyFields] = useState<Set<string>>(() => {
-    return loadDirtyFields(STORAGE_KEYS.RELLENO_CEMENTADO_DIRTY);
-  });
+  const { dirtyFields, markDirty, clearDirty } = useDirtyFields(
+    STORAGE_KEYS.RELLENO_CEMENTADO_DIRTY
+  );
 
   const [showResults, setShowResults] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const isClient = useClientOnly();
 
-  // Marcar como montado después de la hidratación
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // Calcular el valor derivado del contexto (sin setState en effect)
-  const derivedProduccionMineral = useMemo(() => {
-    if (requerimientoPerforadoraInputs?.produccionMina && !dirtyFields.has('produccionMineral')) {
-      return parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2));
-    }
-    return inputValues.produccionMineral;
-  }, [requerimientoPerforadoraInputs, dirtyFields, inputValues.produccionMineral]);
+  // Calculate derived value using the custom hook
+  const finalProduccionMineral = useDerivedValue(
+    requerimientoPerforadoraInputs?.produccionMina 
+      ? parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2))
+      : null,
+    inputValues.produccionMineral,
+    'produccionMineral',
+    dirtyFields
+  );
 
   // Valores finales con el campo derivado
   const finalInputValues = useMemo(() => ({
     ...inputValues,
-    produccionMineral: derivedProduccionMineral
-  }), [inputValues, derivedProduccionMineral]);
-
-  // Guardar inputs en localStorage cuando cambien
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(STORAGE_KEYS.RELLENO_CEMENTADO_INPUTS, JSON.stringify(inputValues));
-    }
-  }, [inputValues]);
+    produccionMineral: finalProduccionMineral
+  }), [inputValues, finalProduccionMineral]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
-    setDirtyFields((prev: Set<string>) => {
-      const newSet = new Set(prev);
-      newSet.add(fieldName);
-      saveDirtyFields(STORAGE_KEYS.RELLENO_CEMENTADO_DIRTY, newSet);
-      return newSet;
-    });
-    setInputValues((prev: typeof defaultRellenoCementadoValues) => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
+    markDirty(fieldName);
+    setInputValues((prev: typeof defaultRellenoCementadoValues) => ({ 
+      ...prev, 
+      [fieldName]: parseFloat(e.target.value) || 0 
+    }));
   };
 
   const handleResetField = (fieldName: string) => {
-    setDirtyFields((prev: Set<string>) => {
-      const newSet = new Set(prev);
-      newSet.delete(fieldName);
-      saveDirtyFields(STORAGE_KEYS.RELLENO_CEMENTADO_DIRTY, newSet);
-      return newSet;
-    });
+    clearDirty(fieldName);
     
     if (fieldName === 'produccionMineral' && requerimientoPerforadoraInputs?.produccionMina) {
-      setInputValues((prev: typeof defaultRellenoCementadoValues) => ({ ...prev, produccionMineral: parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2)) }));
+      setInputValues((prev: typeof defaultRellenoCementadoValues) => ({ 
+        ...prev, 
+        produccionMineral: parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2)) 
+      }));
     }
   };
 
   const resultados = useMemo(() => calcularRellenoCementado(finalInputValues), [finalInputValues]);
 
-  // Guardar resultados en el contexto
-  useEffect(() => {
-    setRellenoCementadoResults(resultados);
-  }, [resultados, setRellenoCementadoResults]);
+  // Sync results to context using custom hook
+  useSyncToContext(resultados, setRellenoCementadoResults);
 
   return (
     <div className="flex flex-col w-full">
@@ -93,7 +77,7 @@ export default function RellenoCementadoPage() {
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}
           resultsComponent={<RellenoCementadoResults resultados={resultados} />}
-          isAutoFilled={isMounted && !!requerimientoPerforadoraInputs?.produccionMina}
+          isAutoFilled={isClient && !!requerimientoPerforadoraInputs?.produccionMina}
           dirtyFields={dirtyFields}
           onResetField={handleResetField}
         />

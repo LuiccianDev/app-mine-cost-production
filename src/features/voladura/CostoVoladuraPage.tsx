@@ -1,79 +1,64 @@
 "use client";
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import CostoVoladuraInputs from './CostoVoladuraInputs';
 import CostoVoladuraResults from './CostoVoladuraResults';
 import { calculateCostoVoladura, defaultCostoVoladuraValues } from './costoVoladuraCalculations';
 import { useCalculations } from '../../context/CalculationContext';
-import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storageKeys';
+import { STORAGE_KEYS } from '../../lib/storageKeys';
+import { usePersistedState } from '../../lib/hooks/usePersistedState';
+import { useDirtyFields } from '../../lib/hooks/useDirtyFields';
+import { useDerivedValue } from '../../lib/hooks/useDerivedValue';
+import { useClientOnly } from '../../lib/hooks/useClientOnly';
 
 export default function CostoVoladuraPage() {
   const { mallaResults } = useCalculations();
   
-  // Lazy initialization: cargar desde localStorage solo una vez
-  const [inputValues, setInputValues] = useState(() => {
-    if (typeof window === 'undefined') return defaultCostoVoladuraValues;
-    const savedInputs = localStorage.getItem(STORAGE_KEYS.COSTO_VOLADURA_INPUTS);
-    if (savedInputs) {
-      return JSON.parse(savedInputs);
-    }
-    return defaultCostoVoladuraValues;
-  });
+  // Use custom hooks for state management
+  const [inputValues, setInputValues] = usePersistedState(
+    STORAGE_KEYS.COSTO_VOLADURA_INPUTS,
+    defaultCostoVoladuraValues
+  );
 
-  const [dirtyFields, setDirtyFields] = useState<Set<string>>(() => {
-    return loadDirtyFields(STORAGE_KEYS.COSTO_VOLADURA_DIRTY);
-  });
+  const { dirtyFields, markDirty, clearDirty } = useDirtyFields(
+    STORAGE_KEYS.COSTO_VOLADURA_DIRTY
+  );
 
   const [showResults, setShowResults] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const isClient = useClientOnly();
 
-  // Marcar como montado después de la hidratación
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // Calcular el valor derivado del contexto (sin setState en effect)
-  const derivedTonelajePorTaladro = useMemo(() => {
-    if (mallaResults?.tonelaje && !dirtyFields.has('tonelajePorTaladro')) {
-      return parseFloat(mallaResults.tonelaje.toFixed(2));
-    }
-    return inputValues.tonelajePorTaladro;
-  }, [mallaResults, dirtyFields, inputValues.tonelajePorTaladro]);
+  // Calculate derived value using the custom hook
+  const finalTonelajePorTaladro = useDerivedValue(
+    mallaResults?.tonelaje 
+      ? parseFloat(mallaResults.tonelaje.toFixed(2))
+      : null,
+    inputValues.tonelajePorTaladro,
+    'tonelajePorTaladro',
+    dirtyFields
+  );
 
   // Valores finales con el campo derivado
   const finalInputValues = useMemo(() => ({
     ...inputValues,
-    tonelajePorTaladro: derivedTonelajePorTaladro
-  }), [inputValues, derivedTonelajePorTaladro]);
-
-  // Guardar inputs en localStorage cuando cambien
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(STORAGE_KEYS.COSTO_VOLADURA_INPUTS, JSON.stringify(inputValues));
-    }
-  }, [inputValues]);
+    tonelajePorTaladro: finalTonelajePorTaladro
+  }), [inputValues, finalTonelajePorTaladro]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
-    setDirtyFields((prev: Set<string>) => {
-      const newSet = new Set(prev);
-      newSet.add(fieldName);
-      saveDirtyFields(STORAGE_KEYS.COSTO_VOLADURA_DIRTY, newSet);
-      return newSet;
-    });
-    setInputValues((prev: typeof defaultCostoVoladuraValues) => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
+    markDirty(fieldName);
+    setInputValues((prev: typeof defaultCostoVoladuraValues) => ({ 
+      ...prev, 
+      [fieldName]: parseFloat(e.target.value) || 0 
+    }));
   };
 
   const handleResetField = (fieldName: string) => {
-    setDirtyFields((prev: Set<string>) => {
-      const newSet = new Set(prev);
-      newSet.delete(fieldName);
-      saveDirtyFields(STORAGE_KEYS.COSTO_VOLADURA_DIRTY, newSet);
-      return newSet;
-    });
+    clearDirty(fieldName);
     
     if (fieldName === 'tonelajePorTaladro' && mallaResults?.tonelaje) {
-      setInputValues((prev: typeof defaultCostoVoladuraValues) => ({ ...prev, tonelajePorTaladro: parseFloat(mallaResults.tonelaje.toFixed(2)) }));
+      setInputValues((prev: typeof defaultCostoVoladuraValues) => ({ 
+        ...prev, 
+        tonelajePorTaladro: parseFloat(mallaResults.tonelaje.toFixed(2)) 
+      }));
     }
   };
 
@@ -88,7 +73,7 @@ export default function CostoVoladuraPage() {
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}
           resultsComponent={<CostoVoladuraResults resultados={resultados} />}
-          isAutoFilled={isMounted && !!mallaResults?.tonelaje}
+          isAutoFilled={isClient && !!mallaResults?.tonelaje}
           dirtyFields={dirtyFields}
           onResetField={handleResetField}
         />

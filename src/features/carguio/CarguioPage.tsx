@@ -1,76 +1,59 @@
 "use client";
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import CarguioInputs from './CarguioInputs';
 import CarguioResults from './CarguioResults';
 import { calcularCarguio, defaultCarguioValues } from './carguioCalculations';
 import { useCalculations } from '../../context/CalculationContext';
-import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storageKeys';
+import { STORAGE_KEYS } from '../../lib/storageKeys';
+import { usePersistedState } from '../../lib/hooks/usePersistedState';
+import { useDirtyFields } from '../../lib/hooks/useDirtyFields';
+import { useDerivedValue } from '../../lib/hooks/useDerivedValue';
+import { useSyncToContext } from '../../lib/hooks/useSyncToContext';
+import { useClientOnly } from '../../lib/hooks/useClientOnly';
 
 export default function CarguioPage() {
   const { requerimientoPerforadoraInputs, setCarguioInputs, setCarguioResults } = useCalculations();
   
-  // Lazy initialization: cargar desde localStorage solo una vez
-  const [inputValues, setInputValues] = useState(() => {
-    if (typeof window === 'undefined') return defaultCarguioValues;
-    const savedInputs = localStorage.getItem(STORAGE_KEYS.CARGUIO_INPUTS);
-    if (savedInputs) {
-      return JSON.parse(savedInputs);
-    }
-    return defaultCarguioValues;
-  });
+  // Use custom hooks for state management
+  const [inputValues, setInputValues] = usePersistedState(
+    STORAGE_KEYS.CARGUIO_INPUTS,
+    defaultCarguioValues
+  );
 
-  const [dirtyFields, setDirtyFields] = useState<Set<string>>(() => {
-    return loadDirtyFields(STORAGE_KEYS.CARGUIO_DIRTY);
-  });
+  const { dirtyFields, markDirty, clearDirty } = useDirtyFields(
+    STORAGE_KEYS.CARGUIO_DIRTY
+  );
 
   const [showResults, setShowResults] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const isClient = useClientOnly();
 
-  // Marcar como montado después de la hidratación
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // Calcular el valor derivado del contexto (sin setState en effect)
-  const derivedProduccionMineral = useMemo(() => {
-    if (requerimientoPerforadoraInputs?.produccionMina && !dirtyFields.has('produccionMineral')) {
-      return parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2));
-    }
-    return inputValues.produccionMineral;
-  }, [requerimientoPerforadoraInputs, dirtyFields, inputValues.produccionMineral]);
+  // Calculate derived value for produccionMineral using the custom hook
+  const finalProduccionMineral = useDerivedValue(
+    requerimientoPerforadoraInputs?.produccionMina 
+      ? parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2))
+      : null,
+    inputValues.produccionMineral,
+    'produccionMineral',
+    dirtyFields
+  );
 
   // Valores finales con el campo derivado
   const finalInputValues = useMemo(() => ({
     ...inputValues,
-    produccionMineral: derivedProduccionMineral
-  }), [inputValues, derivedProduccionMineral]);
-
-  // Guardar inputs en localStorage cuando cambien
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(STORAGE_KEYS.CARGUIO_INPUTS, JSON.stringify(inputValues));
-    }
-  }, [inputValues]);
+    produccionMineral: finalProduccionMineral
+  }), [inputValues, finalProduccionMineral]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
-    setDirtyFields((prev: Set<string>) => {
-      const newSet = new Set(prev);
-      newSet.add(fieldName);
-      saveDirtyFields(STORAGE_KEYS.CARGUIO_DIRTY, newSet);
-      return newSet;
-    });
-    setInputValues((prev: typeof defaultCarguioValues) => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
+    markDirty(fieldName);
+    setInputValues((prev: typeof defaultCarguioValues) => ({ 
+      ...prev, 
+      [fieldName]: parseFloat(e.target.value) || 0 
+    }));
   };
 
   const handleResetField = (fieldName: string) => {
-    setDirtyFields((prev: Set<string>) => {
-      const newSet = new Set(prev);
-      newSet.delete(fieldName);
-      saveDirtyFields(STORAGE_KEYS.CARGUIO_DIRTY, newSet);
-      return newSet;
-    });
+    clearDirty(fieldName);
     
     if (fieldName === 'produccionMineral' && requerimientoPerforadoraInputs?.produccionMina) {
       setInputValues((prev: typeof defaultCarguioValues) => ({ 
@@ -82,17 +65,15 @@ export default function CarguioPage() {
 
   const resultados = useMemo(() => calcularCarguio(finalInputValues), [finalInputValues]);
 
-  // Guardar densidadRotaMaterial en el contexto
-  useEffect(() => {
-    setCarguioInputs({
-      densidadRotaMaterial: finalInputValues.densidadRotaMaterial
-    });
-  }, [finalInputValues.densidadRotaMaterial, setCarguioInputs]);
+  // Sync densidadRotaMaterial to context using custom hook
+  const inputsForContext = useMemo(() => ({
+    densidadRotaMaterial: finalInputValues.densidadRotaMaterial
+  }), [finalInputValues.densidadRotaMaterial]);
 
-  // Guardar resultados en el contexto
-  useEffect(() => {
-    setCarguioResults(resultados);
-  }, [resultados, setCarguioResults]);
+  useSyncToContext(inputsForContext, setCarguioInputs);
+
+  // Sync results to context using custom hook
+  useSyncToContext(resultados, setCarguioResults);
 
   return (
     <div className="flex flex-col w-full">
@@ -103,7 +84,7 @@ export default function CarguioPage() {
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}
           resultsComponent={<CarguioResults resultados={resultados} />}
-          isAutoFilled={isMounted && !!requerimientoPerforadoraInputs?.produccionMina}
+          isAutoFilled={isClient && !!requerimientoPerforadoraInputs?.produccionMina}
           dirtyFields={dirtyFields}
           onResetField={handleResetField}
         />

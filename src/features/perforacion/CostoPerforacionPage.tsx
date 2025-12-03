@@ -1,99 +1,87 @@
 "use client";
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import CostoPerforacionInputs from './CostoPerforacionInputs';
 import CostoPerforacionResults from './CostoPerforacionResults';
 import { calcularCostoPerforacion, defaultCostoPerforacionValues } from './costoPerforacionCalculations';
 import { useCalculations } from '../../context/CalculationContext';
-import { STORAGE_KEYS, loadDirtyFields, saveDirtyFields } from '../../lib/storageKeys';
+import { STORAGE_KEYS } from '../../lib/storageKeys';
+import { usePersistedState } from '../../lib/hooks/usePersistedState';
+import { useDirtyFields } from '../../lib/hooks/useDirtyFields';
+import { useDerivedValue } from '../../lib/hooks/useDerivedValue';
+import { useSyncToContext } from '../../lib/hooks/useSyncToContext';
+import { useClientOnly } from '../../lib/hooks/useClientOnly';
 
 export default function CostoPerforacionPage() {
   const { mallaResults, setCostoPerforacionResults } = useCalculations();
   
-  // Lazy initialization: cargar desde localStorage solo una vez
-  const [inputValues, setInputValues] = useState(() => {
-    if (typeof window === 'undefined') return defaultCostoPerforacionValues;
-    const savedInputs = localStorage.getItem(STORAGE_KEYS.COSTO_PERFORACION_INPUTS);
-    if (savedInputs) {
-      return JSON.parse(savedInputs);
-    }
-    return defaultCostoPerforacionValues;
-  });
+  // Use custom hooks for state management
+  const [inputValues, setInputValues] = usePersistedState(
+    STORAGE_KEYS.COSTO_PERFORACION_INPUTS,
+    defaultCostoPerforacionValues
+  );
 
-  const [dirtyFields, setDirtyFields] = useState<Set<string>>(() => {
-    return loadDirtyFields(STORAGE_KEYS.COSTO_PERFORACION_DIRTY);
-  });
+  const { dirtyFields, markDirty, clearDirty } = useDirtyFields(
+    STORAGE_KEYS.COSTO_PERFORACION_DIRTY
+  );
 
   const [showResults, setShowResults] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const isClient = useClientOnly();
 
-  // Marcar como montado después de la hidratación
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  // Calculate derived values using the custom hook
+  const finalTonelaje = useDerivedValue(
+    mallaResults?.tonelaje 
+      ? parseFloat(mallaResults.tonelaje.toFixed(2))
+      : null,
+    inputValues.tonelaje,
+    'tonelaje',
+    dirtyFields
+  );
 
-  // Calcular valores derivados del contexto (sin setState en effect)
-  const derivedTonelaje = useMemo(() => {
-    if (mallaResults?.tonelaje && !dirtyFields.has('tonelaje')) {
-      return parseFloat(mallaResults.tonelaje.toFixed(2));
-    }
-    return inputValues.tonelaje;
-  }, [mallaResults, dirtyFields, inputValues.tonelaje]);
-
-  const derivedAlturaBanco = useMemo(() => {
-    if (mallaResults?.alturaBanco && !dirtyFields.has('alturaBanco')) {
-      return parseFloat(mallaResults.alturaBanco.toFixed(2));
-    }
-    return inputValues.alturaBanco;
-  }, [mallaResults, dirtyFields, inputValues.alturaBanco]);
+  const finalAlturaBanco = useDerivedValue(
+    mallaResults?.alturaBanco 
+      ? parseFloat(mallaResults.alturaBanco.toFixed(2))
+      : null,
+    inputValues.alturaBanco,
+    'alturaBanco',
+    dirtyFields
+  );
 
   // Valores finales con los campos derivados
   const finalInputValues = useMemo(() => ({
     ...inputValues,
-    tonelaje: derivedTonelaje,
-    alturaBanco: derivedAlturaBanco
-  }), [inputValues, derivedTonelaje, derivedAlturaBanco]);
-
-  // Guardar inputs en localStorage cuando cambien
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(STORAGE_KEYS.COSTO_PERFORACION_INPUTS, JSON.stringify(finalInputValues));
-    }
-  }, [finalInputValues]);
+    tonelaje: finalTonelaje,
+    alturaBanco: finalAlturaBanco
+  }), [inputValues, finalTonelaje, finalAlturaBanco]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
-    setDirtyFields((prev: Set<string>) => {
-      const newSet = new Set(prev);
-      newSet.add(fieldName);
-      saveDirtyFields(STORAGE_KEYS.COSTO_PERFORACION_DIRTY, newSet);
-      return newSet;
-    });
-    setInputValues((prev: typeof defaultCostoPerforacionValues) => ({ ...prev, [fieldName]: parseFloat(e.target.value) || 0 }));
+    markDirty(fieldName);
+    setInputValues((prev: typeof defaultCostoPerforacionValues) => ({ 
+      ...prev, 
+      [fieldName]: parseFloat(e.target.value) || 0 
+    }));
   };
 
   const handleResetField = (fieldName: string) => {
-    setDirtyFields((prev: Set<string>) => {
-      const newSet = new Set(prev);
-      newSet.delete(fieldName);
-      saveDirtyFields(STORAGE_KEYS.COSTO_PERFORACION_DIRTY, newSet);
-      return newSet;
-    });
+    clearDirty(fieldName);
     
-    // Restaurar valor calculado
     if (fieldName === 'tonelaje' && mallaResults?.tonelaje) {
-      setInputValues((prev: typeof defaultCostoPerforacionValues) => ({ ...prev, tonelaje: parseFloat(mallaResults.tonelaje.toFixed(2)) }));
+      setInputValues((prev: typeof defaultCostoPerforacionValues) => ({ 
+        ...prev, 
+        tonelaje: parseFloat(mallaResults.tonelaje.toFixed(2)) 
+      }));
     } else if (fieldName === 'alturaBanco' && mallaResults?.alturaBanco) {
-      setInputValues((prev: typeof defaultCostoPerforacionValues) => ({ ...prev, alturaBanco: parseFloat(mallaResults.alturaBanco.toFixed(2)) }));
+      setInputValues((prev: typeof defaultCostoPerforacionValues) => ({ 
+        ...prev, 
+        alturaBanco: parseFloat(mallaResults.alturaBanco.toFixed(2)) 
+      }));
     }
   };
 
   const resultados = useMemo(() => calcularCostoPerforacion(finalInputValues), [finalInputValues]);
 
-  // Guardar resultados en el context
-  useEffect(() => {
-    setCostoPerforacionResults(resultados);
-  }, [resultados, setCostoPerforacionResults]);
+  // Sync results to context using custom hook
+  useSyncToContext(resultados, setCostoPerforacionResults);
 
   return (
     <div className="flex flex-col w-full">
@@ -104,7 +92,7 @@ export default function CostoPerforacionPage() {
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}
           resultsComponent={<CostoPerforacionResults resultados={resultados} />}
-          isAutoFilled={isMounted && !!(mallaResults?.tonelaje && mallaResults?.alturaBanco)}
+          isAutoFilled={isClient && !!(mallaResults?.tonelaje && mallaResults?.alturaBanco)}
           dirtyFields={dirtyFields}
           onResetField={handleResetField}
         />
