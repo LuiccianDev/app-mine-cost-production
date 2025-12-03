@@ -58,7 +58,7 @@ export default function Hero() {
 
       {/* Marca de agua */}
       <div className="absolute bottom-6 right-8 text-xs text-slate-400">
-        Made with precision
+        Made with Next.js
       </div>
     </section>
   );
