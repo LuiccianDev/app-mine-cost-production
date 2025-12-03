@@ -429,7 +429,7 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
       </section>
 
       <div className="border-b-2 border-gray-800 pb-4 mb-6 flex justify-between items-center">
-          <h2 className="text-2xl font-bold">Requerimeinto de Equipos</h2>
+          <h2 className="text-2xl font-bold">Requerimientos de Equipos</h2>
           <div className="text-xl font-semibold">{projectCode}</div>
       </div>
 
