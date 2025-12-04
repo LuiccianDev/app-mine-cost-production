@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="relative min-h-screen bg-white flex items-start justify-between p-8 md:p-16">
+    <div className="relative min-h-screen  flex items-start justify-between p-8 md:p-16">
 
 
       {/* Contenido principal */}

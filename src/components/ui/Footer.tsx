@@ -7,12 +7,12 @@ export default function Footer() {
         <footer className="relative w-full h-screen bg-black text-white flex flex-col py-12 px-8 md:px-16 lg:px-20">
             <div className="w-full h-full flex flex-col justify-between">
                 {/* Top Section - Social Links */}
-                <div className="flex justify-end gap-6 md:gap-8 pt-8">
+                <div className="flex justify-end gap-6 md:gap-8 pt-8 text-white">
                     <a
                         href="https://www.linkedin.com/in/william-guevara-lazaro-79274b2a3"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-white hover:text-gray-400 transition-colors text-sm font-light"
+                        className=" hover:text-gray-400 transition-colors text-sm font-light"
                     >
                         Linkedin
                     </a>
@@ -20,7 +20,7 @@ export default function Footer() {
                         href="https://www.instagram.com/luiccian_dev"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-white hover:text-gray-400 transition-colors text-sm font-light"
+                        className=" hover:text-gray-400 transition-colors text-sm font-light"
                     >
                         Instagram
                     </a>
@@ -28,7 +28,7 @@ export default function Footer() {
                         href="https://github.com/LuiccianDev"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-white hover:text-gray-400 transition-colors text-sm font-light"
+                        className=" hover:text-gray-400 transition-colors text-sm font-light"
                     >
                         Github
                     </a>
@@ -36,7 +36,7 @@ export default function Footer() {
                         href="https://luiccian.blogspot.com/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-white hover:text-gray-400 transition-colors text-sm font-light"
+                        className=" hover:text-gray-400 transition-colors text-sm font-light"
                     >
                         Blog
                     </a>
