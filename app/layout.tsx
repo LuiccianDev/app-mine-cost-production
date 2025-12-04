@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     ],
     type: "website",
     locale: "en_US",
-    url: "https://mining-costs-production.vercel.app", // Vercel URL
+    url: "https://app-mine-cost-production.vercel.app", // Vercel URL
   },
   twitter: {
     card: "summary_large_image",
@@ -51,10 +51,10 @@ export default function RootLayout({
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#1a202c" />
-        <link rel="canonical" href="https://mining-costs-production.vercel.app" />
+        <link rel="canonical" href="https://app-mine-cost-production.vercel.app" />
         {/* Facebook Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://mining-costs-production.vercel.app" />
+        <meta property="og:url" content="https://app-mine-cost-production.vercel.app" />
         <meta property="og:image" content="/SEO.png" />
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -65,11 +65,14 @@ export default function RootLayout({
             "@context": "https://schema.org",
             "@type": "WebSite",
             "name": "Mining Costs and Production",
-            "url": "https://mining-costs-production.vercel.app",
+            "url": "https://app-mine-cost-production.vercel.app",
             "description": "Mining cost and production calculator for mining operations.",
           })
         }} />
         {/* ...otros tags si es necesario... */}
+        <meta httpEquiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https://app-mine-cost-production.vercel.app;" />
+        <meta httpEquiv="X-Frame-Options" content="DENY" />
+        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
       </head>
       <body
         className="antialiased flex flex-col min-h-screen overflow-x-hidden"
