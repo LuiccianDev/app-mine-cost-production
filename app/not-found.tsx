@@ -7,7 +7,7 @@ export default function NotFound() {
 
       {/* Contenido principal */}
       <div className="flex-1 pt-16 md:pt-24">
-        <h1 className="text-9xl  font-bold text-black tracking-tight ">
+        <h1 className="text-9xl font-title font-bold text-black tracking-tight ">
           PAGE
           <br />
           NOT
