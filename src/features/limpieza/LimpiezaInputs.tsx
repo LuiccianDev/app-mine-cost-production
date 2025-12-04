@@ -24,7 +24,7 @@ export default function LimpiezaInputs({
   onResetField
 }: LimpiezaInputsProps) {
   return (
-    <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
+    <div className="border border-gray-200 rounded-xl p-6  shadow-sm">
       <div className="mb-5 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">Limpieza</h2>
         <button

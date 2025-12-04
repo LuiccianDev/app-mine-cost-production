@@ -9,7 +9,7 @@ export default function About() {
         </div>
 
         <div className="mb-8">
-          <p className="text-4xl  font-light leading-tight max-w-3xl">
+          <p className="text-4xl font-light leading-tight max-w-3xl">
             I collaborate with businesses of all sizes worldwide, using the
             latest technologies. My designs have also earned multiple awards.
           </p>
