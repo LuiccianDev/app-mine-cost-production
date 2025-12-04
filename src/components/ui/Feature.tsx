@@ -17,7 +17,7 @@ export default function Products() {
             <div className="relative w-full max-w-3xl">
               <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
                 <Image
-                  src="/img/mockup1.png"
+                  src="/img/mockup1.webp"
                   alt="Mockup 1"
                   width={600}
                   height={800}
@@ -38,7 +38,7 @@ export default function Products() {
             <div className="relative w-full max-w-3xl">
               <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
                 <Image
-                  src="/img/mockup2.png"
+                  src="/img/mockup2.webp"
                   alt="Mockup 2"
                   width={600}
                   height={800}
