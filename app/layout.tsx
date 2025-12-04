@@ -69,8 +69,8 @@ export default function RootLayout({
             "description": "Mining cost and production calculator for mining operations.",
           })
         }} />
-        {/* ...otros tags si es necesario... */}
-        <meta httpEquiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https://app-mine-cost-production.vercel.app;" />
+        {/* Security headers */}
+        <meta httpEquiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://app-mine-cost-production.vercel.app; font-src 'self' data:;" />
         <meta httpEquiv="X-Frame-Options" content="DENY" />
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
       </head>

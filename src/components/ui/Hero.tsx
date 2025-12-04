@@ -7,7 +7,7 @@ export default function Hero() {
         {/* Parte superior - Título y foto */}
         <div className="flex items-start justify-between ">
           {/* Título izquierda arriba */}
-          <div className="font-Roboto-title text-[12rem] leading-none">
+          <div className="font-title text-[12rem] leading-none">
             <h1 className="text-slate-900">
               LUICCIAN
             </h1>

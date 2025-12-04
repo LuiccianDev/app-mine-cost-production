@@ -3,24 +3,27 @@
 @font-face {
   font-family: Roboto-flex;
   font-style: normal;
-  font-weight: 300 ;
-  src: url("/fonts/Roboto_flex/RobotoFlex.woff2") format("woff2");
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/Roboto_Flex/RobotoFlex.woff2") format("woff2");
 }
+
 @font-face {
   font-family: Roboto-flex-title;
   font-style: normal;
-  font-weight: 600 ;
-  src: url("/fonts/Roboto_flex/RobotoFlex.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/Roboto_Flex/RobotoFlex.woff2") format("woff2");
 }
 
+@theme {
+  --font-sans: Roboto-flex, Arial, Helvetica, sans-serif;
+  --font-title: Roboto-flex-title, sans-serif;
+}
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme {
-  --font-Roboto-title : "Roboto-flex-title", sans-serif
 }
 
 body {
