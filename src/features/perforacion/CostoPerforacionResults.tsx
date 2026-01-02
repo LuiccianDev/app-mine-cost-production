@@ -1,4 +1,4 @@
-import type { CostoPerforacionResultados } from './costoPerforacionCalculations';
+import type { CostoPerforacionResultados } from '@/src/types/costoPerforacion.tyes';
 
 type CostoPerforacionResultsProps = {
   resultados: CostoPerforacionResultados;

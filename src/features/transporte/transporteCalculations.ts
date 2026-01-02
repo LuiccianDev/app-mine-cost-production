@@ -1,30 +1,4 @@
-type TransporteFormData = {
-  capacidadCamion: number;
-  eficienciaLlenado: number;
-  tiempoAcarreo: number;
-  tiempoRetorno: number;
-  tiempoCargaDescarga: number;
-  tiempoCarguio: number;
-  cicloCamion: number;
-  disponibilidadOperativaCamion: number;
-  disponibilidadMecanicaCamion: number;
-  requerimientoScoop: number;
-  costoHoraCamion: number;
-  costoMantenimientoCamion: number;
-  tiempoCarguioCamionTolva: number;
-};
-
-export type TransporteResultados = {
-  cicloTotalCamion: number;
-  numeroViajesPorHora: number;
-  produccionCamion: number;
-  numeroCamionesPorTolva: number;
-  flotaCamiones: number;
-  camionesOperacion: number;
-  camionesStandBy: number;
-  produccionFlotaCamiones: number;
-  costoTransporte: number;
-};
+import { type TransporteData as TransporteFormData, type TransporteResultados } from "@/src/types/transporte.types";
 
 export const defaultTransporteValues = {
   capacidadCamion: 30.00,

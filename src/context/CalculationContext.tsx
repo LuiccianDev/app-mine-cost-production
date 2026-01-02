@@ -1,8 +1,9 @@
 "use client";
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { MallaResultados } from '@/src/features/malla/mallaCalculations';
-import { CostoPerforacionResultados } from '@/src/features/perforacion/costoPerforacionCalculations';
-import { CostoVoladuraResultsData } from '@/src/features/voladura/costoVoladuraCalculations';
+import type { MallaResultados } from '@/src/types/malla.types';
+import { type CostoPerforacionResultados } from '@/src/types/costoPerforacion.tyes';
+import { type CostoVoladuraResultsData } from '../types/costoVoladura.types';
+
 import { LimpiezaResultados } from '@/src/features/limpieza/limpiezaCalculations';
 import { CarguioResultados } from '@/src/features/carguio/carguioCalculations';
 import { TransporteResultados } from '@/src/features/transporte/transporteCalculations';

@@ -1,11 +1,8 @@
 
-import type { MallaResultados } from './mallaCalculations';
+import {type  MallaResultados } from '@/src/types/malla.types';
 
-type MallaResultadosProps = {
-  resultados: MallaResultados;
-};
 
-export default function MallaResultados({ resultados }: MallaResultadosProps) {
+export default function MallaResultados({ resultados }: { resultados: MallaResultados }) {
   const isValid = (value: number) => !isNaN(value) && isFinite(value);
 
   return (
@@ -28,7 +25,7 @@ export default function MallaResultados({ resultados }: MallaResultadosProps) {
         </div>
         <div className="flex justify-between items-center py-2">
           <span className="text-gray-600 text-sm">Tonelaje (Ton/taladro)</span>
-          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.tonelaje) ? resultados.tonelaje.toFixed(2) : '-'}</span>
+          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.tonelajePerforado) ? resultados.tonelajePerforado.toFixed(2) : '-'}</span>
         </div>
         <div className="flex justify-between items-center py-2">
           <span className="text-gray-600 text-sm">Libras de anfo (lib/taladro)</span>

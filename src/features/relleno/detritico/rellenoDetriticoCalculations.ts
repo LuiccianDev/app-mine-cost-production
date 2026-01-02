@@ -1,30 +1,5 @@
-type RellenoDetriticoFormData = {
-  produccionMineral: number;
-  produccionRelleno: number;
-  capacidadCuchara: number;
-  factorCuchara: number;
-  densidadRotaMaterialRelleno: number;
-  tiempoPase: number;
-  disponibilidadMecanica: number;
-  disponibilidadOperativa: number;
-  horasPorGuardia: number;
-  numeroGuardiasPorDia: number;
-  costoHoraEquipo: number;
-  densidadMineral: number;
-  costoPreparacionAgregados: number;
-  costoTransporteDesmonte: number;
-};
+import {type RellenoDetriticoData as RellenoDetriticoFormData, type RellenoDetriticoResultados} from '@/src/types/rellenoDentritico.types';
 
-export type RellenoDetriticoResultados = {
-  toneladaPorPase: number;
-  numeroPasesPorHora: number;
-  produccionTonPorHora: number;
-  produccionTonPorDia: number;
-  requerimientoScoop: number;
-  costoTransporte: number;
-  costoMaterialRelleno: number;
-  costoTotalRelleno: number;
-};
 
 export const defaultRellenoDetriticoValues = {
   produccionMineral: 1451.67,
@@ -48,10 +23,10 @@ export function calcularRellenoDetritico(data: RellenoDetriticoFormData): Rellen
     capacidadCuchara,
     densidadRotaMaterialRelleno,
     factorCuchara,
-    tiempoPase,
+    tiempoDeUnPase,
     disponibilidadMecanica,
     disponibilidadOperativa,
-    horasPorGuardia,
+    numeroHorasPorGuardia,
     numeroGuardiasPorDia,
     produccionRelleno,
     costoHoraEquipo,
@@ -64,13 +39,13 @@ export function calcularRellenoDetritico(data: RellenoDetriticoFormData): Rellen
   const toneladaPorPase = capacidadCuchara * densidadRotaMaterialRelleno * factorCuchara * 0.765 /100;
 
   // Nº DE PASES POR HORA = 1 Hr / Tiempo de 1 pase
-  const numeroPasesPorHora = 60 / (tiempoPase / 60);
+  const numeroPasesPorHora = 60 / (tiempoDeUnPase / 60);
 
   // PRODUCCION (Ton/Hr) = Ton/Pase × Pases/Hr × Disponib.Mecanica × Disponib.Operativa
   const produccionTonPorHora = toneladaPorPase * numeroPasesPorHora * (disponibilidadMecanica / 100) * (disponibilidadOperativa / 100);
 
   // PRODUCCION (Ton/Dia) = Produccion (Ton/Hr) × (Hr/Guardia) × (Nº guardia/dia)
-  const produccionTonPorDia = produccionTonPorHora * horasPorGuardia * numeroGuardiasPorDia;
+  const produccionTonPorDia = produccionTonPorHora * numeroHorasPorGuardia * numeroGuardiasPorDia;
 
   // REQUERIMIENTO DE SCOOP = (Material Ton/dia) / (Produccion Ton/dia)
   const requerimientoScoop = produccionRelleno / produccionTonPorDia;

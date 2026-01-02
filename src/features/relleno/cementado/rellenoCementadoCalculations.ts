@@ -1,34 +1,5 @@
-type RellenoCementadoFormData = {
-  produccionMineral: number;
-  produccionRelleno: number;
-  capacidadCuchara: number;
-  factorCuchara: number;
-  densidadRotaMaterialRelleno: number;
-  tiempoPase: number;
-  disponibilidadMecanica: number;
-  disponibilidadOperativa: number;
-  horasPorGuardia: number;
-  numeroGuardiasPorDia: number;
-  costoHoraEquipo: number;
-  densidadMineral: number;
-  costoPreparacionAgregados: number;
-  costoPreparacionPlantaConcreto: number;
-  costoTransporteRellave: number;
-  costoCementoCemento: number;
-};
+import { type RellenoCementadoData as RellenoCementadoFormData, type RellenoCementadoResultados } from '@/src/types/rellenoCementado.types';
 
-export type RellenoCementadoResultados = {
-  toneladaPorPase: number;
-  numeroPasesPorHora: number;
-  produccionTonPorHora: number;
-  produccionTonPorDia: number;
-  requerimientoScoop: number;
-  costoTransporte: number;
-  costoMaterialRelleno35: number;
-  costoTotalRelleno35: number;
-  costoMaterialRelleno30: number;
-  costoTotalRelleno30: number;
-};
 
 export const defaultRellenoCementadoValues = {
   produccionMineral: 1451.67,
@@ -45,8 +16,8 @@ export const defaultRellenoCementadoValues = {
   densidadMineral: 3.7,
   costoPreparacionAgregados: 2.50,
   costoPreparacionPlantaConcreto: 1.47,
-  costoTransporteRellave: 2.60,
-  costoCementoCemento: 10.80,
+  costoTransporteRelaveChura: 2.60,
+  costoCemento: 10.80,
 };
 
 export function calcularRellenoCementado(data: RellenoCementadoFormData): RellenoCementadoResultados {
@@ -54,17 +25,17 @@ export function calcularRellenoCementado(data: RellenoCementadoFormData): Rellen
     capacidadCuchara,
     densidadRotaMaterialRelleno,
     factorCuchara,
-    tiempoPase,
+    tiempoDeUnPase,
     disponibilidadMecanica,
     disponibilidadOperativa,
-    horasPorGuardia,
+    numeroHorasPorGuardia,
     numeroGuardiasPorDia,
     produccionRelleno,
     costoHoraEquipo,
     costoPreparacionAgregados,
     costoPreparacionPlantaConcreto,
-    costoTransporteRellave,
-    costoCementoCemento,
+    costoTransporteRelaveChura,
+    costoCemento,
     densidadMineral
   } = data;
 
@@ -72,13 +43,13 @@ export function calcularRellenoCementado(data: RellenoCementadoFormData): Rellen
   const toneladaPorPase = capacidadCuchara * densidadRotaMaterialRelleno * factorCuchara * 0.765 /100;
 
   // Nº DE PASES POR HORA = 1 Hr / Tiempo de 1 pase
-  const numeroPasesPorHora = 60 / (tiempoPase / 60);
+  const numeroPasesPorHora = 60 / (tiempoDeUnPase / 60);
 
   // PRODUCCION (Ton/Hr) = Ton/Pase × Pases/Hr × Disponib.Mecanica × Disponib.Operativa
   const produccionTonPorHora = toneladaPorPase * numeroPasesPorHora * (disponibilidadMecanica / 100) * (disponibilidadOperativa / 100);
 
   // PRODUCCION (Ton/Dia) = Produccion (Ton/Hr) × (Hr/Guardia) × (Nº guardia/dia)
-  const produccionTonPorDia = produccionTonPorHora * horasPorGuardia * numeroGuardiasPorDia;
+  const produccionTonPorDia = produccionTonPorHora * numeroHorasPorGuardia * numeroGuardiasPorDia;
 
   // REQUERIMIENTO DE SCOOP = (Material Ton/dia) / (Produccion Ton/dia)
   const requerimientoScoop = produccionRelleno / produccionTonPorDia;
@@ -87,8 +58,7 @@ export function calcularRellenoCementado(data: RellenoCementadoFormData): Rellen
   const costoTransporte = costoHoraEquipo / produccionTonPorHora;
 
   // COSTO MATERIAL RELLENO 3.5% (US$/Ton)
-  const costoMaterialRelleno35 = (costoPreparacionAgregados + costoPreparacionPlantaConcreto + costoTransporteRellave + costoCementoCemento)/densidadMineral;
-
+  const costoMaterialRelleno35 = (costoPreparacionAgregados + costoPreparacionPlantaConcreto + costoTransporteRelaveChura + costoCemento)/densidadMineral;
   // COSTO TOTAL RELLENO 3.5% (US$/Ton)
   const costoTotalRelleno35 = (costoMaterialRelleno35) + costoTransporte;
 
@@ -96,7 +66,7 @@ export function calcularRellenoCementado(data: RellenoCementadoFormData): Rellen
   // Según la imagen, los valores son ligeramente diferentes
   const consumoCemnento_3 = 9.60 // averiguar datos 
   
-  const costoMaterialRelleno30 = (costoPreparacionAgregados + costoPreparacionPlantaConcreto + costoTransporteRellave + consumoCemnento_3)/densidadMineral;
+  const costoMaterialRelleno30 = (costoPreparacionAgregados + costoPreparacionPlantaConcreto + costoTransporteRelaveChura + consumoCemnento_3)/densidadMineral;
   const costoTotalRelleno30 = costoMaterialRelleno30 + costoTransporte;
 
   return {

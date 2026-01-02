@@ -1,20 +1,5 @@
-type MallaFormData = {
-  alturaBanco: number;
-  densidadMaterial: number;
-  factorPotencia: number;
-  diametroTaladro: number;
-  densidadAnfo: number;
-};
+import { type MallaData as MallaFormData, type MallaResultados} from "@/src/types/malla.types";
 
-export type MallaResultados = {
-  burden: number;
-  espaciamiento: number;
-  volumenRotaTaladro: number;
-  tonelaje: number;
-  librasAnfo: number;
-  alturaCarga: number;
-  alturaBanco: number; // en metros
-};
 
 export const defaultMallaValues = {
   alturaBanco: 32.5,
@@ -80,7 +65,7 @@ export function calcularMalla(data: MallaFormData): MallaResultados {
     burden: burden,
     espaciamiento: espaciamientoFinal,
     volumenRotaTaladro: volumenRotaTaladro,
-    tonelaje: tonelajeFinal,
+    tonelajePerforado: tonelajeFinal,
     librasAnfo: librasAnfoFinal,
     alturaCarga: alturaCargaFinal,
     alturaBanco: alturaBanco_m // Guardar altura de banco en metros

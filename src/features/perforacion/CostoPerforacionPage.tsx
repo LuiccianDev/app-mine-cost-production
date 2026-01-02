@@ -29,11 +29,11 @@ export default function CostoPerforacionPage() {
 
   // Calculate derived values using the custom hook
   const finalTonelaje = useDerivedValue(
-    mallaResults?.tonelaje 
-      ? parseFloat(mallaResults.tonelaje.toFixed(2))
+    mallaResults?.tonelajePerforado 
+      ? parseFloat(mallaResults.tonelajePerforado.toFixed(2))
       : null,
-    inputValues.tonelaje,
-    'tonelaje',
+    inputValues.tonelajePerforado,
+    'tonelajePerforado',
     dirtyFields
   );
 
@@ -49,7 +49,7 @@ export default function CostoPerforacionPage() {
   // Valores finales con los campos derivados
   const finalInputValues = useMemo(() => ({
     ...inputValues,
-    tonelaje: finalTonelaje,
+    tonelajePerforado: finalTonelaje,  /* cahange obtener inputs  */
     alturaBanco: finalAlturaBanco
   }), [inputValues, finalTonelaje, finalAlturaBanco]);
 
@@ -65,10 +65,10 @@ export default function CostoPerforacionPage() {
   const handleResetField = (fieldName: string) => {
     clearDirty(fieldName);
     
-    if (fieldName === 'tonelaje' && mallaResults?.tonelaje) {
+    if (fieldName === 'tonelajePerforado' && mallaResults?.tonelajePerforado) {
       setInputValues((prev: typeof defaultCostoPerforacionValues) => ({ 
         ...prev, 
-        tonelaje: parseFloat(mallaResults.tonelaje.toFixed(2)) 
+        tonelajePerforado: parseFloat(mallaResults.tonelajePerforado.toFixed(2)) 
       }));
     } else if (fieldName === 'alturaBanco' && mallaResults?.alturaBanco) {
       setInputValues((prev: typeof defaultCostoPerforacionValues) => ({ 
@@ -92,7 +92,7 @@ export default function CostoPerforacionPage() {
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}
           resultsComponent={<CostoPerforacionResults resultados={resultados} />}
-          isAutoFilled={isClient && !!(mallaResults?.tonelaje && mallaResults?.alturaBanco)}
+          isAutoFilled={isClient && !!(mallaResults?.tonelajePerforado && mallaResults?.alturaBanco)}
           dirtyFields={dirtyFields}
           onResetField={handleResetField}
         />

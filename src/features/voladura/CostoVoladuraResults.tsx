@@ -1,4 +1,4 @@
-import type { CostoVoladuraResultsData } from './costoVoladuraCalculations';
+import type { CostoVoladuraResultsData } from "@/src/types/costoVoladura.types";
 
 type CostoVoladuraResultsProps = {
   resultados: CostoVoladuraResultsData;

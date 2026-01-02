@@ -1,23 +1,11 @@
-type CostoPerforacionFormData = {
-  costoBrocaAccesorios: number;
-  costoEquipoPerforacion: number;
-  tiempoPerforacion: number;
-  rendimientoBroca: number;
-  tonelaje: number;
-  alturaBanco: number;
-};
-
-export type CostoPerforacionResultados = {
-  costoPerforacionPorMetro: number;
-  costoPerforacionPorTon: number;
-};
+import { type CostoPerforacionData as CostoPerforacionFormData , type CostoPerforacionResultados } from '@/src/types/costoPerforacion.tyes';
 
 export const defaultCostoPerforacionValues = {
   costoBrocaAccesorios: 215.22,
   costoEquipoPerforacion: 12.50,
   tiempoPerforacion: 80.00,
   rendimientoBroca: 762.00,
-  tonelaje: 122.45,
+  tonelajePerforado: 122.45,
   alturaBanco: 9.91,
 };
 
@@ -27,7 +15,7 @@ export function calcularCostoPerforacion(data: CostoPerforacionFormData): CostoP
     costoEquipoPerforacion, 
     tiempoPerforacion, 
     rendimientoBroca, 
-    tonelaje, 
+    tonelajePerforado, 
     alturaBanco 
   } = data;
 
@@ -35,7 +23,7 @@ export function calcularCostoPerforacion(data: CostoPerforacionFormData): CostoP
   const costoPerforacionPorMetro = (costoBrocaAccesorios + (costoEquipoPerforacion * tiempoPerforacion)) / rendimientoBroca;
 
   // COSTO PERFORACION (US$/Ton) = (Costo Perforacion US$/m) / ((Ton/Taladro) / (Altura Banco + SubDrilling))
-  const costoPerforacionPorTon = costoPerforacionPorMetro / (tonelaje / alturaBanco);
+  const costoPerforacionPorTon = costoPerforacionPorMetro / (tonelajePerforado / alturaBanco);
 
   return {
     costoPerforacionPorMetro,

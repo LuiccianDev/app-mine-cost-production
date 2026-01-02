@@ -68,14 +68,14 @@ export default function RequerimientoPerforadoraInputs({
         />
         <FormField
           label="Ton / Taladro"
-          name="tonelajePorTaladro"
-          value={inputValues.tonelajePorTaladro}
+          name="tonelajePerforado"
+          value={inputValues.tonelajePerforado}
           onChange={onChange}
           unit="Ton/taladro"
           decimals={2}
           isAutoFilled={isAutoFilled}
-          isDirty={dirtyFields.has('tonelajePorTaladro')}
-          onResetToCalculated={onResetField ? () => onResetField('tonelajePorTaladro') : undefined}
+          isDirty={dirtyFields.has('tonelajePerforado')}
+          onResetToCalculated={onResetField ? () => onResetField('tonelajePerforado') : undefined}
         />
         <FormField
           label="Rendimiento Broca"

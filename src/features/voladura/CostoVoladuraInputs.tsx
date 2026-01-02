@@ -57,8 +57,8 @@ export default function CostoVoladuraInputs({
         />
         <FormField
           label="Costo Retardos Fanel"
-          name="costoRetardos"
-          value={inputValues.costoRetardos}
+          name="costoRetardoFanel"
+          value={inputValues.costoRetardoFanel}
           onChange={onChange}
           unit="US$/Unidad"
         />
@@ -72,7 +72,7 @@ export default function CostoVoladuraInputs({
         <FormField
           label="Costo Camión Anfocar"
           name="costoCamionAnfocar"
-          value={inputValues.costoCamionAnfocar}
+          value={inputValues.costoCamionAnfoCar}
           onChange={onChange}
           unit="US$/Hr"
         />
@@ -85,21 +85,21 @@ export default function CostoVoladuraInputs({
         />
         <FormField
           label="Costo Mano de Obra"
-          name="costoManoObra"
-          value={inputValues.costoManoObra}
+          name="costoManoDeObra"
+          value={inputValues.costoManoDeObra}
           onChange={onChange}
           unit="US$/Hr"
         />
         <FormField
           label="Tonelaje por Taladro"
-          name="tonelajePorTaladro"
-          value={inputValues.tonelajePorTaladro}
+          name="tonelajePerforado"
+          value={inputValues.tonelajePerforado}
           onChange={onChange}
           unit="Ton/Taladro"
           decimals={2}
           isAutoFilled={isAutoFilled}
-          isDirty={dirtyFields.has('tonelajePorTaladro')}
-          onResetToCalculated={onResetField ? () => onResetField('tonelajePorTaladro') : undefined}
+          isDirty={dirtyFields.has('tonelajePerforado')}
+          onResetToCalculated={onResetField ? () => onResetField('tonelajePerforado') : undefined}
         />
       </div>
       

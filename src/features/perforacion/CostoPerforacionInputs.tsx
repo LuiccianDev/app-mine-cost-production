@@ -71,14 +71,14 @@ export default function CostoPerforacionInputs({
         />
         <FormField
           label="Tonelaje"
-          name="tonelaje"
-          value={inputValues.tonelaje}
+          name="tonelajePerforado"
+          value={inputValues.tonelajePerforado}
           onChange={onChange}
           unit="ton / taladro"
           decimals={2}
           isAutoFilled={isAutoFilled}
-          isDirty={dirtyFields.has('tonelaje')}
-          onResetToCalculated={onResetField ? () => onResetField('tonelaje') : undefined}
+          isDirty={dirtyFields.has('tonelajePerforado')}
+          onResetToCalculated={onResetField ? () => onResetField('tonelajePerforado') : undefined}
         />
         <FormField
           label="Altura de banco"

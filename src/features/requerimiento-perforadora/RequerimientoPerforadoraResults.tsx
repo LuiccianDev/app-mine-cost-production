@@ -1,4 +1,4 @@
-import type { RequerimientoPerforadoraResultados } from './requerimientoPerforadoraCalculations';
+import type { RequerimientoPerforadoraResultados } from '@/src/types/requerimientoPerforadora.types';
 
 type RequerimientoPerforadoraResultsProps = {
   resultados: RequerimientoPerforadoraResultados;

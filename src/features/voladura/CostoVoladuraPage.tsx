@@ -3,6 +3,7 @@ import { useState, useMemo } from 'react';
 import CostoVoladuraInputs from './CostoVoladuraInputs';
 import CostoVoladuraResults from './CostoVoladuraResults';
 import { calculateCostoVoladura, defaultCostoVoladuraValues } from './costoVoladuraCalculations';
+
 import { useCalculations } from '../../context/CalculationContext';
 import { STORAGE_KEYS } from '../../lib/storageKeys';
 import { usePersistedState } from '../../lib/hooks/usePersistedState';
@@ -28,18 +29,18 @@ export default function CostoVoladuraPage() {
 
   // Calculate derived value using the custom hook
   const finalTonelajePorTaladro = useDerivedValue(
-    mallaResults?.tonelaje 
-      ? parseFloat(mallaResults.tonelaje.toFixed(2))
+    mallaResults?.tonelajePerforado 
+      ? parseFloat(mallaResults.tonelajePerforado.toFixed(2))
       : null,
-    inputValues.tonelajePorTaladro,
-    'tonelajePorTaladro',
+    inputValues.tonelajePerforado,
+    'tonelajePerforado',
     dirtyFields
   );
 
   // Valores finales con el campo derivado
   const finalInputValues = useMemo(() => ({
     ...inputValues,
-    tonelajePorTaladro: finalTonelajePorTaladro
+    tonelajePerforado: finalTonelajePorTaladro
   }), [inputValues, finalTonelajePorTaladro]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,10 +55,10 @@ export default function CostoVoladuraPage() {
   const handleResetField = (fieldName: string) => {
     clearDirty(fieldName);
     
-    if (fieldName === 'tonelajePorTaladro' && mallaResults?.tonelaje) {
+    if (fieldName === 'tonelajePerforado' && mallaResults?.tonelajePerforado) {
       setInputValues((prev: typeof defaultCostoVoladuraValues) => ({ 
         ...prev, 
-        tonelajePorTaladro: parseFloat(mallaResults.tonelaje.toFixed(2)) 
+        tonelajePerforado: parseFloat(mallaResults.tonelajePerforado.toFixed(2)) 
       }));
     }
   };
@@ -73,7 +74,7 @@ export default function CostoVoladuraPage() {
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}
           resultsComponent={<CostoVoladuraResults resultados={resultados} />}
-          isAutoFilled={isClient && !!mallaResults?.tonelaje}
+          isAutoFilled={isClient && !!mallaResults?.tonelajePerforado}
           dirtyFields={dirtyFields}
           onResetField={handleResetField}
         />

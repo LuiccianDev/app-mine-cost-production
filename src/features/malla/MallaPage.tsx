@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo } from 'react';
+import {useMemo } from 'react';
 import MallaForm from './MallaInputs';
 import MallaResultados from './MallaResults';
 import { calcularMalla, defaultMallaValues } from './mallaCalculations';
@@ -22,7 +22,6 @@ export default function MallaSection() {
     STORAGE_KEYS.MALLA_DIRTY
   );
 
-  const [showResults, setShowResults] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
@@ -38,14 +37,14 @@ export default function MallaSection() {
   // Sync results to context using custom hook
   useSyncToContext(resultados, setMallaResults);
 
+  // const resultados = calcularMalla(defaultMallaValues); 
+
   return (
     <div className="flex flex-col w-full">
       <div className="w-full p-6 min-w-0">
         <MallaForm 
           inputValues={inputValues} 
           onChange={handleChange}
-          showResults={showResults}
-          onToggleResults={() => setShowResults(!showResults)}
           resultsComponent={<MallaResultados resultados={resultados} />}
         />
       </div>

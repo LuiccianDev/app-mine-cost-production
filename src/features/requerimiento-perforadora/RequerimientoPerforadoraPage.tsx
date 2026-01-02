@@ -37,12 +37,12 @@ export default function RequerimientoPerforadoraPage() {
     dirtyFields
   );
 
-  const finalTonelajePorTaladro = useDerivedValue(
-    mallaResults?.tonelaje 
-      ? parseFloat(mallaResults.tonelaje.toFixed(2))
+  const finalTonelajePerforado = useDerivedValue(
+    mallaResults?.tonelajePerforado 
+      ? parseFloat(mallaResults.tonelajePerforado.toFixed(2))
       : null,
-    inputValues.tonelajePorTaladro,
-    'tonelajePorTaladro',
+    inputValues.tonelajePerforado,
+    'tonelajePerforado',
     dirtyFields
   );
 
@@ -50,9 +50,8 @@ export default function RequerimientoPerforadoraPage() {
   const finalInputValues = useMemo(() => ({
     ...inputValues,
     alturaBanco: finalAlturaBanco,
-    tonelajePorTaladro: finalTonelajePorTaladro
-  }), [inputValues, finalAlturaBanco, finalTonelajePorTaladro]);
-
+    tonelajePerforado: finalTonelajePerforado
+  }), [inputValues, finalAlturaBanco, finalTonelajePerforado]);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
     markDirty(fieldName);
@@ -70,10 +69,10 @@ export default function RequerimientoPerforadoraPage() {
         ...prev, 
         alturaBanco: parseFloat(mallaResults.alturaBanco.toFixed(2)) 
       }));
-    } else if (fieldName === 'tonelajePorTaladro' && mallaResults?.tonelaje) {
+    } else if (fieldName === 'tonelajePerforado' && mallaResults?.tonelajePerforado) {
       setInputValues((prev: typeof defaultRequerimientoPerforadoraValues) => ({ 
         ...prev, 
-        tonelajePorTaladro: parseFloat(mallaResults.tonelaje.toFixed(2)) 
+        tonelajePerforado: parseFloat(mallaResults.tonelajePerforado.toFixed(2)) 
       }));
     }
   };
@@ -96,7 +95,7 @@ export default function RequerimientoPerforadoraPage() {
           showResults={showResults}
           onToggleResults={() => setShowResults(!showResults)}
           resultsComponent={<RequerimientoPerforadoraResults resultados={resultados} />}
-          isAutoFilled={isClient && !!(mallaResults?.alturaBanco && mallaResults?.tonelaje)}
+          isAutoFilled={isClient && !!(mallaResults?.alturaBanco && mallaResults?.tonelajePerforado)}
           dirtyFields={dirtyFields}
           onResetField={handleResetField}
         />
