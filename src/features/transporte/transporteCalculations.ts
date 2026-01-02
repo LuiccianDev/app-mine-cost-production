@@ -1,20 +1,5 @@
 import { type TransporteData as TransporteFormData, type TransporteResultados } from "@/src/types/transporte.types";
 
-export const defaultTransporteValues = {
-  capacidadCamion: 30.00,
-  eficienciaLlenado: 95.00,
-  tiempoAcarreo: 10.00,
-  tiempoRetorno: 8.00,
-  tiempoCargaDescarga: 2.00,
-  tiempoCarguio: 2.00,
-  cicloCamion: 22.00,
-  disponibilidadOperativaCamion: 85.00,
-  disponibilidadMecanicaCamion: 80.00,
-  requerimientoScoop: 0.77,
-  costoHoraCamion: 60.00,
-  costoMantenimientoCamion: 0.00,
-  tiempoCarguioCamionTolva: 5.00,
-};
 
 export function calcularTransporte(data: TransporteFormData): TransporteResultados {
   const {

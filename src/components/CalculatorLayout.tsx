@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { CalculationProvider } from "../context/CalculationContext";
+
 import Malla from "../features/malla/MallaPage";
 import CostoPerforacion from "../features/perforacion/CostoPerforacionPage";
 import CostoVoladura from "../features/voladura/CostoVoladuraPage";
@@ -16,7 +16,7 @@ export default function CalculatorLayout() {
   const [showPreview, setShowPreview] = useState(false);
 
   return (
-    <CalculationProvider>
+<>
       {showPreview ? (
         <div className="w-full min-h-screen  animate-in fade-in duration-300">
           <div className="w-full max-w-7xl mx-auto px-6 py-8">
@@ -72,6 +72,6 @@ export default function CalculatorLayout() {
         </div>
       </div>
       )}
-    </CalculationProvider>
+</>
   );
 }

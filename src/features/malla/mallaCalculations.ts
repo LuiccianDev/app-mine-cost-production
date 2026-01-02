@@ -1,14 +1,5 @@
 import { type MallaData as MallaFormData, type MallaResultados} from "@/src/types/malla.types";
 
-
-export const defaultMallaValues = {
-  alturaBanco: 32.5,
-  densidadMaterial: 3.75,
-  factorPotencia: 0.40,
-  diametroTaladro: 2.50,
-  densidadAnfo: 0.80,
-};
-
 // Función para calcular la malla usando los datos del formulario
 export function calcularMalla(data: MallaFormData): MallaResultados {
   const { alturaBanco, densidadMaterial, factorPotencia, diametroTaladro, densidadAnfo } = data;

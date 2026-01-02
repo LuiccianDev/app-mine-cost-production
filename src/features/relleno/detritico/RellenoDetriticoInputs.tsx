@@ -1,42 +1,77 @@
-import FormField from '../../../components/ui/FormField';
+import { useRellenoDetriticoStore } from "@/src/stores/useMalla";
+import FormField from "../../../components/ui/FormField";
+import { useState } from "react";
 
 type RellenoDetriticoInputsProps = {
-  inputValues: Record<string, number>;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  showResults: boolean;
-  onToggleResults: () => void;
   resultsComponent?: React.ReactNode;
-  isAutoFilled?: boolean;
-  dirtyFields?: Set<string>;
-  onResetField?: (fieldName: string) => void;
 };
 
-export default function RellenoDetriticoInputs({ 
-  inputValues, 
-  onChange, 
-  showResults, 
-  onToggleResults, 
-  resultsComponent, 
-  isAutoFilled = false,
-  dirtyFields = new Set(),
-  onResetField
+export default function RellenoDetriticoInputs({
+  resultsComponent,
 }: RellenoDetriticoInputsProps) {
+  const [isOpen, setIsOpen] = useState(true);
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  };
+
+
+  const {
+    produccionMineral,
+    produccionRelleno,
+    capacidadCuchara,
+    factorCuchara,
+    densidadRotaMaterialRelleno,
+    tiempoDeUnPase,
+    disponibilidadMecanica,
+    disponibilidadOperativa,
+    numeroHorasPorGuardia,
+    numeroGuardiasPorDia,
+    costoHoraEquipo,
+    densidadMineral,
+    costoPreparacionAgregados,
+    costoTransporteDesmonte,
+    
+    setProduccionMineral,
+    setProduccionRelleno,
+    setCapacidadCuchara,
+    setFactorCuchara,
+    setDensidadRotaMaterialRelleno,
+    setTiempoDeUnPase,
+    setDisponibilidadMecanica,
+    setDisponibilidadOperativa,
+    setNumeroHorasPorGuardia,
+    setNumeroGuardiasPorDia,
+    setCostoHoraEquipo,
+    setDensidadMineral,
+    setCostoPreparacionAgregados,
+    setCostoTransporteDesmonte,
+  } = useRellenoDetriticoStore()
+
   return (
     <div className="border border-gray-200 rounded-xl p-6  shadow-sm">
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-gray-900">Relleno Detrítico</h2>
+        <h2 className="text-lg font-semibold text-gray-900">
+          Relleno Detrítico
+        </h2>
         <button
-          onClick={onToggleResults}
+          onClick={handleClick}
           className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
         >
-          <span>{showResults ? 'Cerrar Resultados' : 'Ver Resultados'}</span>
+          <span>{isOpen ? "Cerrar Resultados" : "Ver Resultados"}</span>
           <svg
-            className={`w-4 h-4 transition-transform ${showResults ? 'rotate-180' : ''}`}
+            className={`w-4 h-4 transition-transform ${
+              isOpen ? "rotate-180" : ""
+            }`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
           </svg>
         </button>
       </div>
@@ -44,108 +79,104 @@ export default function RellenoDetriticoInputs({
         <FormField
           label="Producción Mineral"
           name="produccionMineral"
-          value={inputValues.produccionMineral}
-          onChange={onChange}
+          value={produccionMineral}
+          onChange={(e) => setProduccionMineral(parseFloat(e.target.value) || 0)}
           unit="TPD"
-          decimals={2}
-          isAutoFilled={isAutoFilled}
-          isDirty={dirtyFields.has('produccionMineral')}
-          onResetToCalculated={onResetField ? () => onResetField('produccionMineral') : undefined}
         />
         <FormField
           label="Producción Relleno"
           name="produccionRelleno"
-          value={inputValues.produccionRelleno}
-          onChange={onChange}
+          value={produccionRelleno}
+          onChange={(e) => setProduccionRelleno(parseFloat(e.target.value) || 0)}
           unit="m³"
         />
         <FormField
           label="Capacidad de Cuchara"
           name="capacidadCuchara"
-          value={inputValues.capacidadCuchara}
-          onChange={onChange}
+          value={capacidadCuchara}
+          onChange={(e) => setCapacidadCuchara(parseFloat(e.target.value) || 0)}
           unit="yd³/pase"
         />
         <FormField
           label="Factor de Cuchara"
           name="factorCuchara"
-          value={inputValues.factorCuchara}
-          onChange={onChange}
+          value={factorCuchara}
+          onChange={(e) => setFactorCuchara(parseFloat(e.target.value) || 0)}
           unit="%"
         />
         <FormField
           label="Densidad rota material Relleno"
           name="densidadRotaMaterialRelleno"
-          value={inputValues.densidadRotaMaterialRelleno}
-          onChange={onChange}
+          value={densidadRotaMaterialRelleno}
+          onChange={(e) => setDensidadRotaMaterialRelleno(parseFloat(e.target.value) || 0)}
           unit="Ton/m³"
         />
         <FormField
           label="Tiempo De 1 Pase (viaje)"
           name="tiempoPase"
-          value={inputValues.tiempoPase}
-          onChange={onChange}
+          value={tiempoDeUnPase}
+          onChange={(e) => setTiempoDeUnPase(parseFloat(e.target.value) || 0)}
           unit="Seg/pase"
         />
         <FormField
           label="Disponibilidad Mecánica"
           name="disponibilidadMecanica"
-          value={inputValues.disponibilidadMecanica}
-          onChange={onChange}
+          value={disponibilidadMecanica}
+          onChange={(e) => setDisponibilidadMecanica(parseFloat(e.target.value) || 0)}
           unit="%"
         />
         <FormField
           label="Disponibilidad Operativa"
           name="disponibilidadOperativa"
-          value={inputValues.disponibilidadOperativa}
-          onChange={onChange}
+          value={disponibilidadOperativa}
+          onChange={(e) => setDisponibilidadOperativa(parseFloat(e.target.value) || 0)}
           unit="%"
         />
         <FormField
           label="Nº de Horas por Guardia"
           name="horasPorGuardia"
-          value={inputValues.horasPorGuardia}
-          onChange={onChange}
+          value={numeroHorasPorGuardia}
+          onChange={(e) => setNumeroHorasPorGuardia(parseFloat(e.target.value) || 0)}
           unit="Hr/guardia"
         />
         <FormField
           label="Nº Guardia por Día"
           name="numeroGuardiasPorDia"
-          value={inputValues.numeroGuardiasPorDia}
-          onChange={onChange}
+          value={numeroGuardiasPorDia}
+          onChange={(e) => setNumeroGuardiasPorDia(parseFloat(e.target.value) || 0)}
           unit="guardias/día"
         />
         <FormField
           label="Costo por Hr del Equipo"
           name="costoHoraEquipo"
-          value={inputValues.costoHoraEquipo}
-          onChange={onChange}
+          value={costoHoraEquipo}
+          onChange={(e) => setCostoHoraEquipo(parseFloat(e.target.value) || 0)}
           unit="US$/Hr"
         />
         <FormField
           label="Densidad de Mineral"
           name="densidadMineral"
-          value={inputValues.densidadMineral}
-          onChange={onChange}
+          value={densidadMineral}
+          onChange={(e) => setDensidadMineral(parseFloat(e.target.value) || 0)}
           unit="Ton/m³"
         />
         <FormField
           label="Costo Preparación Agregados Zarandeados"
           name="costoPreparacionAgregados"
-          value={inputValues.costoPreparacionAgregados}
-          onChange={onChange}
+          value={costoPreparacionAgregados}
+          onChange={(e) => setCostoPreparacionAgregados(parseFloat(e.target.value) || 0)}
           unit="US$/m³"
         />
         <FormField
           label="Costo Transporte de Desmonte"
           name="costoTransporteDesmonte"
-          value={inputValues.costoTransporteDesmonte}
-          onChange={onChange}
+          value={costoTransporteDesmonte}
+          onChange={(e) => setCostoTransporteDesmonte(parseFloat(e.target.value) || 0)}
           unit="US$/m³"
         />
       </div>
-      
-      {showResults && resultsComponent && (
+
+      {isOpen && resultsComponent && (
         <div className="mt-6 pt-6 border-t border-gray-200">
           {resultsComponent}
         </div>

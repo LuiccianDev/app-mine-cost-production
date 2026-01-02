@@ -1,20 +1,5 @@
 import { type LimpiezaData as LimpiezaFormData, type LimpiezaResultados } from "@/src/types/limpieza.types";
 
-export const defaultLimpiezaValues = {
-  produccionMineral: 1451.67,
-  produccionDesmonte: 0.00,
-  mineralMasDesmonte: 1451.67,
-  capacidadCuchara: 5.00,
-  factorCuchara:75,
-  densidadRotaMaterial: 2.70,
-  tiempoPase: 480.00,
-  disponibilidadMecanica: 80.00,
-  disponibilidadOperativa: 80.00,
-  horasPorGuardia: 10.00,
-  numeroGuardiasPorDia: 2.00,
-  costoHoraEquipo: 60.00,
-};
-
 export function calcularLimpieza(data: LimpiezaFormData): LimpiezaResultados {
   const {
     capacidadCuchara,

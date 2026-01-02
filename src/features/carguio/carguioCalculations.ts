@@ -1,25 +1,10 @@
 import { type CarguioData as CarguioFormData , type CarguioResultados } from "@/src/types/carguio.types";
 
-export const defaultCarguioValues = {
-  produccionMineral: 1451.67,
-  ratioDesmonteMineral: 0.00,
-  produccionDesmonte: 0.00,
-  mineralMasDesmonte: 1451.67,
-  capacidadCuchara: 3.00,
-  factorCuchara: 75,
-  densidaRotaMineral: 2.70,
-  tiempoDeUnPase: 120.00,
-  disponibilidadMecanica: 80.00,
-  disponibilidadOperativa: 85.00,
-  numeroHorasPorGuardia: 10.00,
-  numeroGuardiasPorDia: 2.00,
-  costoHoraDeEquipo: 60.00,
-};
 
 export function calcularCarguio(data: CarguioFormData): CarguioResultados {
   const {
     capacidadCuchara,
-    densidaRotaMineral,
+    densidadRotaMineral,
     factorCuchara,
     tiempoDeUnPase,
     disponibilidadMecanica,
@@ -31,7 +16,7 @@ export function calcularCarguio(data: CarguioFormData): CarguioResultados {
   } = data;
 
   // TONELADA POR PASE (SCOOP) = Yd3/Pase × Densid.rota × Factor Cuchara
-  const toneladaPorPase = capacidadCuchara * densidaRotaMineral * factorCuchara * 0.765 / 100; // 0,765 es yd3 a m3
+  const toneladaPorPase = capacidadCuchara * densidadRotaMineral * factorCuchara * 0.765 / 100; // 0,765 es yd3 a m3
   // Nº DE PASES POR HORA = 1 Hr / Tiempo de 1 pase
   const numeroPasesPorHora = 60 / (tiempoDeUnPase / 60);
 

@@ -1,22 +1,4 @@
-import { type CostoVoladuraData, type CostoVoladuraResultsData } from '@/src/types/costoVoladura.types';
-
-export type CostoVoladuraInputsData = CostoVoladuraData 
-
-export const defaultCostoVoladuraValues: CostoVoladuraInputsData = {
-  costoAnfo: 0.21,
-  costoDinamita: 0.13,
-  costoRetardoFanel: 1.03,
-  costoCordonDetonante: 0.12,
-  costoCamionAnfoCar: 0.00,
-  costoChispeo: 0.08,
-  costoManoDeObra: 2.00,
-  tonelajePerforado: 122.45,
-  pentacordEmpleado: 14.24,
-  tiempoCarguioAnfoCar: 0.14,
-  mechaRapidaEmpleada: 14.00,
-  numeroHombresCarguio: 3.00,
-  tiempoEmpleadoCarguio: 0.14,
-};
+import { type CostoVoladuraData as CostoVoladuraInputsData, type CostoVoladuraResultsData } from '@/src/types/costoVoladura.types';
 
 export function calculateCostoVoladura(inputs: CostoVoladuraInputsData): CostoVoladuraResultsData {
   // Los consumos vienen de cálculos previos de la malla

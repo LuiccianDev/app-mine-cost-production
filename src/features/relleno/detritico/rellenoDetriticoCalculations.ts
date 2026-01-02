@@ -1,23 +1,5 @@
 import {type RellenoDetriticoData as RellenoDetriticoFormData, type RellenoDetriticoResultados} from '@/src/types/rellenoDentritico.types';
 
-
-export const defaultRellenoDetriticoValues = {
-  produccionMineral: 1451.67,
-  produccionRelleno: 414.76,
-  capacidadCuchara: 3.00,
-  factorCuchara: 75,
-  densidadRotaMaterialRelleno: 3.00,
-  tiempoPase: 480.00,
-  disponibilidadMecanica: 85.00,
-  disponibilidadOperativa: 85.00,
-  horasPorGuardia: 10.00,
-  numeroGuardiasPorDia: 2.00,
-  costoHoraEquipo: 60.00,
-  densidadMineral: 3.50,
-  costoPreparacionAgregados: 0,
-  costoTransporteDesmonte: 1.75,
-};
-
 export function calcularRellenoDetritico(data: RellenoDetriticoFormData): RellenoDetriticoResultados {
   const {
     capacidadCuchara,

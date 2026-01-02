@@ -1,50 +1,33 @@
 "use client";
-import {useMemo } from 'react';
-import MallaForm from './MallaInputs';
-import MallaResultados from './MallaResults';
-import { calcularMalla, defaultMallaValues } from './mallaCalculations';
-import { useCalculations } from '../../context/CalculationContext';
-import { STORAGE_KEYS } from '../../lib/storageKeys';
-import { usePersistedState } from '../../lib/hooks/usePersistedState';
-import { useDirtyFields } from '../../lib/hooks/useDirtyFields';
-import { useSyncToContext } from '../../lib/hooks/useSyncToContext';
+
+import MallaForm from "./MallaInputs";
+import MallaResultados from "./MallaResults";
+import { calcularMalla} from "./mallaCalculations";
+import { useMallaStore } from "@/src/stores/useMalla";
 
 export default function MallaSection() {
-  const { setMallaResults } = useCalculations();
-  
-  // Use custom hooks for state management
-  const [inputValues, setInputValues] = usePersistedState(
-    STORAGE_KEYS.MALLA_INPUTS,
-    defaultMallaValues
-  );
 
-  const { markDirty } = useDirtyFields(
-    STORAGE_KEYS.MALLA_DIRTY
-  );
+  const {
+    alturaBanco,
+    densidadMaterial,
+    factorPotencia,
+    diametroTaladro,
+    densidadAnfo,
+  } = useMallaStore();
 
+  const resultados = calcularMalla({
+    alturaBanco,
+    densidadMaterial,
+    factorPotencia,
+    diametroTaladro,
+    densidadAnfo,
+  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fieldName = e.target.name;
-    markDirty(fieldName);
-    setInputValues((prev: typeof defaultMallaValues) => ({ 
-      ...prev, 
-      [fieldName]: parseFloat(e.target.value) || 0 
-    }));
-  };
-
-  const resultados = useMemo(() => calcularMalla(inputValues), [inputValues]);
-
-  // Sync results to context using custom hook
-  useSyncToContext(resultados, setMallaResults);
-
-  // const resultados = calcularMalla(defaultMallaValues); 
 
   return (
     <div className="flex flex-col w-full">
       <div className="w-full p-6 min-w-0">
-        <MallaForm 
-          inputValues={inputValues} 
-          onChange={handleChange}
+        <MallaForm
           resultsComponent={<MallaResultados resultados={resultados} />}
         />
       </div>

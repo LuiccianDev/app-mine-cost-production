@@ -10,8 +10,6 @@ import { type RellenoCementadoData, defaultRellenoCementadoValues } from '@/src/
 import { type RellenoDetriticoData, defaultRellenoDetriticoValues } from '@/src/types/rellenoDentritico.types';
 
 
-
-
 /*Malla state */
 interface MallaState extends MallaData {
     /*create function change values */
@@ -70,7 +68,7 @@ export const useCostosPerforacionStore = create<CostosPerforacionState>()((set) 
 
 /* Costso de Voladuras */
 
-interface CostosVoladurasState extends CostoVoladuraData {
+interface CostosVoladuraState extends CostoVoladuraData {
 /*     costoAnfo: number;
     costoDinamita: number;
     costoRetardoFanel: number;
@@ -106,7 +104,7 @@ interface CostosVoladurasState extends CostoVoladuraData {
 
 }
 
-export const useCostosVoladurasStore = create<CostosVoladurasState>()((set) => ({
+export const useCostosVoladurasStore = create<CostosVoladuraState>()((set) => ({
 
     ...defaultCostoVoladuraValues,
     //! extende values of the form

@@ -1,15 +1,18 @@
 import { useState } from "react";
 import FormField from "../../components/ui/FormField";
+import { useMallaStore } from "@/src/stores/useMalla";
 
 type MallaFormProps = {
-  inputValues: Record<string, number>;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   resultsComponent?: React.ReactNode;
 };
 
-export default function MallaForm({inputValues,onChange,resultsComponent}: MallaFormProps) {
+export default function MallaForm({resultsComponent}: MallaFormProps) {
 
   const [isOpen, setIsOpen] = useState(true);
+
+  const {alturaBanco, densidadMaterial, factorPotencia, diametroTaladro, densidadAnfo,
+          setAlturaBanco, setDensidadMaterial, setFactorPotencia, setDiametroTaladro, setDensidadAnfo
+  } = useMallaStore()
 
   const  handleClick = () => {
     setIsOpen(!isOpen);
@@ -48,36 +51,36 @@ export default function MallaForm({inputValues,onChange,resultsComponent}: Malla
         <FormField
           label="Altura de Banco"
           name="alturaBanco"
-          value={inputValues.alturaBanco}
-          onChange={onChange}
+          value={alturaBanco}
+          onChange={(e) => setAlturaBanco(parseFloat(e.target.value) || 0)}
           unit="pies"
         />
         <FormField
           label="Densidad del Material"
           name="densidadMaterial"
-          value={inputValues.densidadMaterial}
-          onChange={onChange}
+          value={densidadMaterial}
+          onChange={(e) => setDensidadMaterial(parseFloat(e.target.value) || 0)}
           unit="ton/m³"
         />
         <FormField
           label="Factor de Potencia"
           name="factorPotencia"
-          value={inputValues.factorPotencia}
-          onChange={onChange}
+          value={factorPotencia}
+          onChange={(e) => setFactorPotencia(parseFloat(e.target.value) || 0)}
           unit="lib/ton"
         />
         <FormField
           label="Diametro Taladro"
           name="diametroTaladro"
-          value={inputValues.diametroTaladro}
-          onChange={onChange}
+          value={diametroTaladro}
+          onChange={(e) => setDiametroTaladro(parseFloat(e.target.value) || 0)}
           unit="pulg"
         />
         <FormField
           label="Densidad de Anfo"
           name="densidadAnfo"
-          value={inputValues.densidadAnfo}
-          onChange={onChange}
+          value={densidadAnfo}
+          onChange={(e) => setDensidadAnfo(parseFloat(e.target.value) || 0)}
           unit="g/cm³"
         />
       </div>

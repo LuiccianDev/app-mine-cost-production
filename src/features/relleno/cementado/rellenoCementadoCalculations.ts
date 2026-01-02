@@ -1,25 +1,5 @@
 import { type RellenoCementadoData as RellenoCementadoFormData, type RellenoCementadoResultados } from '@/src/types/rellenoCementado.types';
 
-
-export const defaultRellenoCementadoValues = {
-  produccionMineral: 1451.67,
-  produccionRelleno: 390.34,
-  capacidadCuchara: 3.00,
-  factorCuchara: 75,
-  densidadRotaMaterialRelleno: 2.00,
-  tiempoPase: 480.00,
-  disponibilidadMecanica: 80.00,
-  disponibilidadOperativa: 80.00,
-  horasPorGuardia: 10.00,
-  numeroGuardiasPorDia: 2.00,
-  costoHoraEquipo: 60.00,
-  densidadMineral: 3.7,
-  costoPreparacionAgregados: 2.50,
-  costoPreparacionPlantaConcreto: 1.47,
-  costoTransporteRelaveChura: 2.60,
-  costoCemento: 10.80,
-};
-
 export function calcularRellenoCementado(data: RellenoCementadoFormData): RellenoCementadoResultados {
   const {
     capacidadCuchara,

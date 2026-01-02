@@ -1,37 +1,44 @@
+import { useCostosPerforacionStore } from '@/src/stores/useMalla';
 import FormField from '../../components/ui/FormField';
+import { useState } from "react";
+
 
 type CostoPerforacionInputsProps = {
-  inputValues: Record<string, number>;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  showResults: boolean;
-  onToggleResults: () => void;
   resultsComponent?: React.ReactNode;
-  isAutoFilled?: boolean;
-  dirtyFields?: Set<string>;
-  onResetField?: (fieldName: string) => void;
 };
 
-export default function CostoPerforacionInputs({ 
-  inputValues, 
-  onChange, 
-  showResults, 
-  onToggleResults, 
-  resultsComponent, 
-  isAutoFilled = false,
-  dirtyFields = new Set(),
-  onResetField
-}: CostoPerforacionInputsProps) {
+export default function CostoPerforacionInputs({ resultsComponent, }: CostoPerforacionInputsProps) {
+  
+  const [isOpen, setIsOpen] = useState(true);
+    const  handleClick = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const {costoBrocaAccesorios,
+          costoEquipoPerforacion,
+          tiempoPerforacion,
+          rendimientoBroca,
+          tonelajePerforado,
+          alturaBanco,
+          setCostoBrocaAccesorios,
+          setCostoEquipoPerforacion,
+          setTiempoPerforacion,
+          setRendimientoBroca,
+          setTonelajePerforado,
+          setAlturaBanco
+  } = useCostosPerforacionStore();
+  
   return (
     <div className="border border-gray-200 rounded-xl p-6  shadow-sm">
       <div className="mb-5 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">Costo de Perforación</h2>
         <button
-          onClick={onToggleResults}
+          onClick={handleClick}
           className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
         >
-          <span>{showResults ? 'Cerrar Resultados' : 'Ver Resultados'}</span>
+          <span>{isOpen ? 'Cerrar Resultados' : 'Ver Resultados'}</span>
           <svg
-            className={`w-4 h-4 transition-transform ${showResults ? 'rotate-180' : ''}`}
+            className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -44,56 +51,50 @@ export default function CostoPerforacionInputs({
         <FormField
           label="Costo Broca + Accesorios"
           name="costoBrocaAccesorios"
-          value={inputValues.costoBrocaAccesorios}
-          onChange={onChange}
+          value={costoBrocaAccesorios}
+          onChange={(e) => setCostoBrocaAccesorios(parseFloat(e.target.value) || 0)}
           unit="$/und"
         />
         <FormField
           label="Costo equipo Perforacion"
           name="costoEquipoPerforacion"
-          value={inputValues.costoEquipoPerforacion}
-          onChange={onChange}
+          value={costoEquipoPerforacion}
+          onChange={(e) => setCostoEquipoPerforacion(parseFloat(e.target.value) || 0)}
           unit="$/h"
         />
         <FormField
           label="Tiempo de Perforac. (Rend. Broca)"
           name="tiempoPerforacion"
-          value={inputValues.tiempoPerforacion}
-          onChange={onChange}
+          value={tiempoPerforacion}
+          onChange={(e) => setTiempoPerforacion(parseFloat(e.target.value) || 0)}
           unit="hr"
         />
         <FormField
           label="Rendimiento Broca"
           name="rendimientoBroca"
-          value={inputValues.rendimientoBroca}
-          onChange={onChange}
+          value={rendimientoBroca}
+          onChange={(e) => setRendimientoBroca(parseFloat(e.target.value) || 0)}
           unit="m /broca"
         />
         <FormField
           label="Tonelaje"
           name="tonelajePerforado"
-          value={inputValues.tonelajePerforado}
-          onChange={onChange}
+          value={tonelajePerforado}
+          onChange={(e) => setTonelajePerforado(parseFloat(e.target.value) || 0)}
           unit="ton / taladro"
           decimals={2}
-          isAutoFilled={isAutoFilled}
-          isDirty={dirtyFields.has('tonelajePerforado')}
-          onResetToCalculated={onResetField ? () => onResetField('tonelajePerforado') : undefined}
         />
         <FormField
-          label="Altura de banco"
+          label="Altura de banco" /* misma  */
           name="alturaBanco"
-          value={inputValues.alturaBanco}
-          onChange={onChange}
+          value={alturaBanco}
+          onChange={(e) => setAlturaBanco(parseFloat(e.target.value) || 0)}
           unit="m"
           decimals={2}
-          isAutoFilled={isAutoFilled}
-          isDirty={dirtyFields.has('alturaBanco')}
-          onResetToCalculated={onResetField ? () => onResetField('alturaBanco') : undefined}
         />
       </div>
       
-      {showResults && resultsComponent && (
+      {isOpen && resultsComponent && (
         <div className="mt-6 pt-6 border-t border-gray-200">
           {resultsComponent}
         </div>
