@@ -5,9 +5,12 @@ import CostoVoladuraInputs from "./CostoVoladuraInputs";
 import CostoVoladuraResults from "./CostoVoladuraResults";
 import { calculateCostoVoladura } from "./costoVoladuraCalculations";
 import { useCostosVoladurasStore } from "@/src/stores/useMalla";
+import { useSharedStore } from "@/src/stores/useSharedStore";
 import { usePDFStore } from "@/src/stores/usePDF";
 
 export default function CostoVoladuraPage() {
+
+  const { tonelajePerforado } = useSharedStore();
 
   /* Get values  */
   const {
@@ -18,7 +21,6 @@ export default function CostoVoladuraPage() {
     costoCamionAnfoCar,
     costoChispeo,
     costoManoDeObra,
-    tonelajePerforado,
     pentacordEmpleado,
     tiempoCarguioAnfoCar,
     mechaRapidaEmpleada,

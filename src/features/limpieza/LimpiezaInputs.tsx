@@ -1,6 +1,7 @@
 import FormField from "../../components/ui/FormField";
 import { useState } from "react";
 import { useLimpiezaStore } from "@/src/stores/useMalla";
+import { useSharedStore } from "@/src/stores/useSharedStore";
 
 type LimpiezaInputsProps = {
   resultsComponent?: React.ReactNode;
@@ -9,13 +10,14 @@ type LimpiezaInputsProps = {
 export default function LimpiezaInputs({
   resultsComponent,
 }: LimpiezaInputsProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
 
+  const { produccionMina, setProduccionMina } = useSharedStore();
+
   const {
-    produccionMina,
     produccionDesmonte,
     mineralMasDesmonte,
     capacidadCuchara,
@@ -28,7 +30,6 @@ export default function LimpiezaInputs({
     numeroGuardiasPorDia,
     costoHoraDeEquipo,
 
-    setProduccionMina,
     setProduccionDesmonte,
     setMineralMasDesmonte,
     setCapacidadCuchara,

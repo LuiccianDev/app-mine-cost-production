@@ -1,16 +1,16 @@
+// produccionMina movido a SharedData
 export type LimpiezaData = {
-    produccionMina: number; /* AUTO */
-    produccionDesmonte: number; /* AUTO */
-    mineralMasDesmonte: number; /* AUTO */
-    capacidadCuchara: number; /* VERIFICAION del AUTO */
-    factorCuchara: number; /* AUTO */
-    densidadRotaMineral: number; /* AUTO */
+    produccionDesmonte: number;
+    mineralMasDesmonte: number;
+    capacidadCuchara: number;
+    factorCuchara: number;
+    densidadRotaMineral: number;
     tiempoDeUnPase: number; /*VIAJE DE IDA Y VUELTA*/
-    disponibilidadMecanica: number; /* AUTO */
-    disponibilidadOperativa: number; /* AUTO */
-    numeroHorasPorGuardia: number; /* AUTO */
-    numeroGuardiasPorDia: number; /* AUTO */
-    costoHoraDeEquipo: number; /* AUTO */
+    disponibilidadMecanica: number;
+    disponibilidadOperativa: number;
+    numeroHorasPorGuardia: number;
+    numeroGuardiasPorDia: number;
+    costoHoraDeEquipo: number;
 };
 
 export type LimpiezaResultados = {
@@ -23,16 +23,15 @@ export type LimpiezaResultados = {
 };
 
 export const defaultLimpiezaValues: LimpiezaData = {
-    produccionMina: 1451.67,
-    produccionDesmonte: 0.00,
+    produccionDesmonte: 0.0,
     mineralMasDesmonte: 1451.67,
-    capacidadCuchara: 5.00,
+    capacidadCuchara: 5.0,
     factorCuchara: 75,
-    densidadRotaMineral: 2.70,
-    tiempoDeUnPase: 480.00,
-    disponibilidadMecanica: 80.00,
-    disponibilidadOperativa: 80.00,
-    numeroHorasPorGuardia: 10.00,
-    numeroGuardiasPorDia: 2.00,
-    costoHoraDeEquipo: 60.00,
+    densidadRotaMineral: 2.7,
+    tiempoDeUnPase: 480.0,
+    disponibilidadMecanica: 80.0,
+    disponibilidadOperativa: 80.0,
+    numeroHorasPorGuardia: 10.0,
+    numeroGuardiasPorDia: 2.0,
+    costoHoraDeEquipo: 60.0,
 };

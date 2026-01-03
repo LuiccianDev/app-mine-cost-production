@@ -11,7 +11,7 @@ type TransporteInputsProps = {
 export default function TransporteInputs({
   resultsComponent,
 }: TransporteInputsProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => {
     setIsOpen(!isOpen);
   };

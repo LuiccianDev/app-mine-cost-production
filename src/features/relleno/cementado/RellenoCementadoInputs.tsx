@@ -10,7 +10,7 @@ type RellenoCementadoInputsProps = {
 export default function RellenoCementadoInputs({
   resultsComponent,
 }: RellenoCementadoInputsProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => {
     setIsOpen(!isOpen);
   };

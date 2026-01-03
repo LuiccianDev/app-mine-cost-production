@@ -1,7 +1,10 @@
-import { type CarguioData as CarguioFormData , type CarguioResultados } from "@/src/types/carguio.types";
+import { type CarguioData, type CarguioResultados } from "@/src/types/carguio.types";
+import { type SharedData } from "@/src/types/shared.types";
 
+// Tipo combinado para los cálculos
+type CarguioCalculationData = CarguioData & Pick<SharedData, 'produccionMina'>;
 
-export function calcularCarguio(data: CarguioFormData): CarguioResultados {
+export function calcularCarguio(data: CarguioCalculationData): CarguioResultados {
   const {
     capacidadCuchara,
     densidadRotaMineral,

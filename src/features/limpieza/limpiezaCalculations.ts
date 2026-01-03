@@ -1,6 +1,10 @@
-import { type LimpiezaData as LimpiezaFormData, type LimpiezaResultados } from "@/src/types/limpieza.types";
+import { type LimpiezaData, type LimpiezaResultados } from "@/src/types/limpieza.types";
+import { type SharedData } from "@/src/types/shared.types";
 
-export function calcularLimpieza(data: LimpiezaFormData): LimpiezaResultados {
+// Tipo combinado para los cálculos
+type LimpiezaCalculationData = LimpiezaData & Pick<SharedData, 'produccionMina'>;
+
+export function calcularLimpieza(data: LimpiezaCalculationData): LimpiezaResultados {
   const {
     capacidadCuchara,
     densidadRotaMineral,

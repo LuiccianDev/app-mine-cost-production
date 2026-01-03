@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import FormField from '../../components/ui/FormField';
 import { useCarguioStore } from '@/src/stores/useMalla';
+import { useSharedStore } from '@/src/stores/useSharedStore';
 
 type CarguioInputsProps = {
   resultsComponent?: React.ReactNode;
 };
 
 export default function CarguioInputs({ resultsComponent }: CarguioInputsProps) {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const  handleClick = () => {
       setIsOpen(!isOpen);
     };
+
+    const { produccionMina, setProduccionMina } = useSharedStore();
+
     const {
-      produccionMina,
       ratioDM,
       produccionDesmonte,
       mineralMasDesmonte,
@@ -26,7 +29,6 @@ export default function CarguioInputs({ resultsComponent }: CarguioInputsProps) 
       numeroGuardiasPorDia,
       costoHoraDeEquipo,
 
-      setProduccionMina,
       setRatioDM,
       setProduccionDesmonte,
       setMineralMasDesmonte,

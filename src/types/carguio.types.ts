@@ -1,5 +1,5 @@
+// produccionMina movido a SharedData
 export type CarguioData = {
-    produccionMina: number;
     ratioDM: number;
     produccionDesmonte: number;
     mineralMasDesmonte: number;
@@ -24,17 +24,16 @@ export type CarguioResultados = {
 };
 
 export const defaultCarguioValues: CarguioData = {
-    produccionMina: 1451.67,
-    ratioDM: 0.00,
-    produccionDesmonte: 0.00,
+    ratioDM: 0.0,
+    produccionDesmonte: 0.0,
     mineralMasDesmonte: 1451.67,
-    capacidadCuchara: 3.00,
+    capacidadCuchara: 3.0,
     factorCuchara: 75,
-    densidadRotaMineral: 2.70,
-    tiempoDeUnPase: 120.00,
-    disponibilidadMecanica: 80.00,
-    disponibilidadOperativa: 85.00,
-    numeroHorasPorGuardia: 10.00,
-    numeroGuardiasPorDia: 2.00,
-    costoHoraDeEquipo: 60.00,
+    densidadRotaMineral: 2.7,
+    tiempoDeUnPase: 120.0,
+    disponibilidadMecanica: 80.0,
+    disponibilidadOperativa: 85.0,
+    numeroHorasPorGuardia: 10.0,
+    numeroGuardiasPorDia: 2.0,
+    costoHoraDeEquipo: 60.0,
 };

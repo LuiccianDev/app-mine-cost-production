@@ -1,5 +1,6 @@
 
 
+// tonelajePerforado movido a SharedData
 export type CostoVoladuraData = {
     costoAnfo: number;
     costoDinamita: number;
@@ -8,7 +9,6 @@ export type CostoVoladuraData = {
     costoCamionAnfoCar: number;
     costoChispeo: number;
     costoManoDeObra: number;
-    tonelajePerforado: number; /*  AUTO */
 
     pentacordEmpleado: number;
     tiempoCarguioAnfoCar: number;
@@ -45,7 +45,6 @@ export const defaultCostoVoladuraValues: CostoVoladuraData = {
     costoCamionAnfoCar: 0.00,
     costoChispeo: 0.08,
     costoManoDeObra: 2.00,
-    tonelajePerforado: 122.45,
 
     /* values not in form  */
     pentacordEmpleado: 14.24,

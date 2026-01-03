@@ -1,7 +1,10 @@
-import {type RequerimientoPerforadoraData as RequerimientoPerforadoraFormData, type RequerimientoPerforadoraResultados} from '@/src/types/requerimientoPerforadora.types';
+import { type RequerimientoPerforadoraData, type RequerimientoPerforadoraResultados } from '@/src/types/requerimientoPerforadora.types';
+import { type SharedData } from '@/src/types/shared.types';
 
+// Tipo combinado para los cálculos
+type RequerimientoPerforadoraCalculationData = RequerimientoPerforadoraData & Pick<SharedData, 'produccionMina' | 'alturaBanco' | 'tonelajePerforado' | 'rendimientoBroca' | 'tiempoPerforacion'>;
 
-export function calcularRequerimientoPerforadora(data: RequerimientoPerforadoraFormData): RequerimientoPerforadoraResultados {
+export function calcularRequerimientoPerforadora(data: RequerimientoPerforadoraCalculationData): RequerimientoPerforadoraResultados {
   const {
     produccionMina,
     tonelajePerforado,

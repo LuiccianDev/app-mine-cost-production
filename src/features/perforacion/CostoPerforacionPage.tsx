@@ -5,26 +5,22 @@ import CostoPerforacionInputs from './CostoPerforacionInputs';
 import CostoPerforacionResults from './CostoPerforacionResults';
 import { calcularCostoPerforacion} from './costoPerforacionCalculations';
 import { useCostosPerforacionStore } from '@/src/stores/useMalla';
+import { useSharedStore } from '@/src/stores/useSharedStore';
 import { usePDFStore } from "@/src/stores/usePDF";
 
 export default function CostoPerforacionPage() {
 
-  
-  const {costoBrocaAccesorios,
-          costoEquipoPerforacion,
-          tiempoPerforacion,
-          rendimientoBroca,
-          tonelajePerforado,
-          alturaBanco, //! se repite 
-  } = useCostosPerforacionStore();
+  const { costoBrocaAccesorios, costoEquipoPerforacion } = useCostosPerforacionStore();
+  const { tiempoPerforacion, rendimientoBroca, tonelajePerforado, alturaBanco } = useSharedStore();
 
-  const resultados = calcularCostoPerforacion({costoBrocaAccesorios,
-          costoEquipoPerforacion,
-          tiempoPerforacion,
-          rendimientoBroca,
-          tonelajePerforado,
-          alturaBanco, //! se repite
-        });
+  const resultados = calcularCostoPerforacion({
+    costoBrocaAccesorios,
+    costoEquipoPerforacion,
+    tiempoPerforacion,
+    rendimientoBroca,
+    tonelajePerforado,
+    alturaBanco,
+  });
 
   /* guardar los resulatdo con Zustand*/ 
   const { 

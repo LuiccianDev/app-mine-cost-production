@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import FormField from '../../components/ui/FormField';
 import { useCostosVoladurasStore } from '@/src/stores/useMalla';
+import { useSharedStore } from '@/src/stores/useSharedStore';
 
 
 type CostoVoladuraInputsProps = {
@@ -9,10 +10,12 @@ type CostoVoladuraInputsProps = {
 };
 
 export default function CostoVoladuraInputs({ resultsComponent}: CostoVoladuraInputsProps) {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
       const  handleClick = () => {
       setIsOpen(!isOpen);
     };
+
+    const { tonelajePerforado, setTonelajePerforado } = useSharedStore();
   
     const {costoAnfo,
           costoDinamita,
@@ -21,7 +24,6 @@ export default function CostoVoladuraInputs({ resultsComponent}: CostoVoladuraIn
           costoCamionAnfoCar,
           costoChispeo,
           costoManoDeObra,
-          tonelajePerforado,  
           setCostoAnfo,
           setCostoDinamita,
           setCostoRetardoFanel,
@@ -29,7 +31,6 @@ export default function CostoVoladuraInputs({ resultsComponent}: CostoVoladuraIn
           setCostoCamionAnfoCar,
           setCostoChispeo,
           setCostoManoDeObra,
-          setTonelajePerforado
     } = useCostosVoladurasStore();
 
 
@@ -108,6 +109,7 @@ export default function CostoVoladuraInputs({ resultsComponent}: CostoVoladuraIn
           value={tonelajePerforado}
           onChange={(e) => setTonelajePerforado(parseFloat(e.target.value) || 0)}
           unit="Ton/Taladro"
+          decimals={2}
         />
       </div>
       

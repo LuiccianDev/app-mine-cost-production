@@ -1,5 +1,5 @@
+// alturaBanco movido a SharedData
 export type MallaData = {
-    alturaBanco: number;
     densidadMaterial: number;
     factorPotencia: number;
     diametroTaladro: number;
@@ -17,8 +17,7 @@ export type MallaResultados = {
     alturaBanco: number; // en metros
 };
 
-export const defaultMallaValues : MallaData = {
-    alturaBanco: 32.5,
+export const defaultMallaValues: MallaData = {
     densidadMaterial: 3.75,
     factorPotencia: 0.40,
     diametroTaladro: 2.50,

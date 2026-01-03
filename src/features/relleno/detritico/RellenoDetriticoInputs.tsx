@@ -9,7 +9,7 @@ type RellenoDetriticoInputsProps = {
 export default function RellenoDetriticoInputs({
   resultsComponent,
 }: RellenoDetriticoInputsProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => {
     setIsOpen(!isOpen);
   };

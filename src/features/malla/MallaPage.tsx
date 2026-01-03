@@ -5,12 +5,14 @@ import MallaForm from "./MallaInputs";
 import MallaResultados from "./MallaResults";
 import { calcularMalla} from "./mallaCalculations";
 import { useMallaStore } from "@/src/stores/useMalla";
+import { useSharedStore } from "@/src/stores/useSharedStore";
 import { usePDFStore } from "@/src/stores/usePDF";
 
 export default function MallaSection() {
 
+  const { alturaBanco, setTonelajePerforado: setSharedTonelaje } = useSharedStore();
+
   const {
-    alturaBanco,
     densidadMaterial,
     factorPotencia,
     diametroTaladro,
@@ -67,7 +69,9 @@ export default function MallaSection() {
     setAlturaCarga(resultados.alturaCarga);
     setCostoMinadoProyectado(costoMinadoProyectado);
     setCostoMinado(costoMinado);
-
+    
+    // Sincronizar tonelajePerforado con el store compartido
+    setSharedTonelaje(resultados.tonelajePerforado);
 
   }, [
     resultados.burden,
@@ -86,6 +90,7 @@ export default function MallaSection() {
     costoMinado,
     setCostoMinadoProyectado,
     setCostoMinado,
+    setSharedTonelaje,
   ]);
 
 

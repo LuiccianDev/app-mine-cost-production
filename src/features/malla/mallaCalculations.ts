@@ -1,7 +1,11 @@
-import { type MallaData as MallaFormData, type MallaResultados} from "@/src/types/malla.types";
+import { type MallaData, type MallaResultados} from "@/src/types/malla.types";
+import { type SharedData } from "@/src/types/shared.types";
+
+// Tipo combinado para los cálculos
+type MallaCalculationData = MallaData & Pick<SharedData, 'alturaBanco'>;
 
 // Función para calcular la malla usando los datos del formulario
-export function calcularMalla(data: MallaFormData): MallaResultados {
+export function calcularMalla(data: MallaCalculationData): MallaResultados {
   const { alturaBanco, densidadMaterial, factorPotencia, diametroTaladro, densidadAnfo } = data;
 
   // Convert to meters and kg/m3 where needed

@@ -1,6 +1,10 @@
-import { type CostoVoladuraData as CostoVoladuraInputsData, type CostoVoladuraResultsData } from '@/src/types/costoVoladura.types';
+import { type CostoVoladuraData, type CostoVoladuraResultsData } from '@/src/types/costoVoladura.types';
+import { type SharedData } from '@/src/types/shared.types';
 
-export function calculateCostoVoladura(inputs: CostoVoladuraInputsData): CostoVoladuraResultsData {
+// Tipo combinado para los cálculos
+type CostoVoladuraCalculationData = CostoVoladuraData & Pick<SharedData, 'tonelajePerforado'>;
+
+export function calculateCostoVoladura(inputs: CostoVoladuraCalculationData): CostoVoladuraResultsData {
   // Los consumos vienen de cálculos previos de la malla
   // Para este ejemplo, usaremos valores fijos basados en la imagen
   // En producción, estos vendrían de los cálculos de malla

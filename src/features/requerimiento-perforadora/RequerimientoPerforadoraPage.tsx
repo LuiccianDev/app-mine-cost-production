@@ -1,6 +1,7 @@
 "use client";
 
 import { useRequerimientoPerforadoraStore } from "@/src/stores/useMalla";
+import { useSharedStore } from "@/src/stores/useSharedStore";
 import RequerimientoPerforadoraInputs from "./RequerimientoPerforadoraInputs";
 import RequerimientoPerforadoraResults from "./RequerimientoPerforadoraResults";
 import { calcularRequerimientoPerforadora } from "./requerimientoPerforadoraCalculations";
@@ -12,10 +13,13 @@ export default function RequerimientoPerforadoraPage() {
   const {
     produccionMina,
     alturaBanco,
-    longuitudTaladro,
     tonelajePerforado,
     rendimientoBroca,
     tiempoPerforacion,
+  } = useSharedStore();
+
+  const {
+    longuitudTaladro,
     horasProgramadas,
     horasTrabajadas,
     eficienciaPerforadora,

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FormField from "../../components/ui/FormField";
 import { useMallaStore } from "@/src/stores/useMalla";
+import { useSharedStore } from "@/src/stores/useSharedStore";
 
 type MallaFormProps = {
   resultsComponent?: React.ReactNode;
@@ -8,10 +9,12 @@ type MallaFormProps = {
 
 export default function MallaForm({resultsComponent}: MallaFormProps) {
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const {alturaBanco, densidadMaterial, factorPotencia, diametroTaladro, densidadAnfo,
-          setAlturaBanco, setDensidadMaterial, setFactorPotencia, setDiametroTaladro, setDensidadAnfo
+  const { alturaBanco, setAlturaBanco } = useSharedStore();
+
+  const { densidadMaterial, factorPotencia, diametroTaladro, densidadAnfo,
+          setDensidadMaterial, setFactorPotencia, setDiametroTaladro, setDensidadAnfo
   } = useMallaStore()
 
   const  handleClick = () => {
@@ -54,6 +57,7 @@ export default function MallaForm({resultsComponent}: MallaFormProps) {
           value={alturaBanco}
           onChange={(e) => setAlturaBanco(parseFloat(e.target.value) || 0)}
           unit="pies"
+
         />
         <FormField
           label="Densidad del Material"

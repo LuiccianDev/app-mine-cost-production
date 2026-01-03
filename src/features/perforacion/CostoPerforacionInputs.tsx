@@ -1,4 +1,5 @@
 import { useCostosPerforacionStore } from '@/src/stores/useMalla';
+import { useSharedStore } from '@/src/stores/useSharedStore';
 import FormField from '../../components/ui/FormField';
 import { useState } from "react";
 
@@ -9,24 +10,27 @@ type CostoPerforacionInputsProps = {
 
 export default function CostoPerforacionInputs({ resultsComponent, }: CostoPerforacionInputsProps) {
   
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
     const  handleClick = () => {
     setIsOpen(!isOpen);
   };
 
   const {costoBrocaAccesorios,
           costoEquipoPerforacion,
-          tiempoPerforacion,
-          rendimientoBroca,
-          tonelajePerforado,
-          alturaBanco, //! se repite
           setCostoBrocaAccesorios,
           setCostoEquipoPerforacion,
-          setTiempoPerforacion,
-          setRendimientoBroca,
-          setTonelajePerforado,
-          setAlturaBanco //! se repite
   } = useCostosPerforacionStore();
+
+  const {
+    tiempoPerforacion,
+    rendimientoBroca,
+    tonelajePerforado,
+    alturaBanco,
+    setTiempoPerforacion,
+    setRendimientoBroca,
+    setTonelajePerforado,
+    setAlturaBanco,
+  } = useSharedStore();
   
   return (
     <div className="border border-gray-200 rounded-xl p-6  shadow-sm">

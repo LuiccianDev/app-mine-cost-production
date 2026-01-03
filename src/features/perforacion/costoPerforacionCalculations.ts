@@ -1,6 +1,10 @@
-import { type CostoPerforacionData as CostoPerforacionFormData , type CostoPerforacionResultados } from '@/src/types/costoPerforacion.tyes';
+import { type CostoPerforacionData, type CostoPerforacionResultados } from '@/src/types/costoPerforacion.tyes';
+import { type SharedData } from '@/src/types/shared.types';
 
-export function calcularCostoPerforacion(data: CostoPerforacionFormData): CostoPerforacionResultados {
+// Tipo combinado para los cálculos
+type CostoPerforacionCalculationData = CostoPerforacionData & Pick<SharedData, 'tiempoPerforacion' | 'rendimientoBroca' | 'tonelajePerforado' | 'alturaBanco'>;
+
+export function calcularCostoPerforacion(data: CostoPerforacionCalculationData): CostoPerforacionResultados {
   const { 
     costoBrocaAccesorios, 
     costoEquipoPerforacion, 

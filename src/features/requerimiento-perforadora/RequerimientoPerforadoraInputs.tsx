@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import FormField from '../../components/ui/FormField';
 import { useRequerimientoPerforadoraStore } from '@/src/stores/useMalla';
+import { useSharedStore } from '@/src/stores/useSharedStore';
 
 type RequerimientoPerforadoraInputsProps = {
   resultsComponent?: React.ReactNode;
@@ -8,7 +9,7 @@ type RequerimientoPerforadoraInputsProps = {
 
 export default function RequerimientoPerforadoraInputs({ resultsComponent}: RequerimientoPerforadoraInputsProps) {
   
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const  handleClick = () => {
       setIsOpen(!isOpen);
     };
@@ -16,10 +17,18 @@ export default function RequerimientoPerforadoraInputs({ resultsComponent}: Requ
   const {
     produccionMina,
     alturaBanco,
-    longuitudTaladro,
     tonelajePerforado,
     rendimientoBroca,
     tiempoPerforacion,
+    setProduccionMina,
+    setAlturaBanco,
+    setTonelajePerforado,
+    setRendimientoBroca,
+    setTiempoPerforacion,
+  } = useSharedStore();
+
+  const {
+    longuitudTaladro,
     horasProgramadas,
     horasTrabajadas,
     eficienciaPerforadora,
@@ -27,12 +36,7 @@ export default function RequerimientoPerforadoraInputs({ resultsComponent}: Requ
     diasOperacion,
     produccionTPD,
 
-    setProduccionMina,
-    setAlturaBanco,
     setLonguitudTaladro,
-    setTonelajePerforado,
-    setRendimientoBroca,
-    setTiempoPerforacion,
     setHorasProgramadas,
     setHorasTrabajadas,
     setEficienciaPerforadora,
@@ -89,6 +93,7 @@ export default function RequerimientoPerforadoraInputs({ resultsComponent}: Requ
           value={tonelajePerforado}
           onChange={(e) => setTonelajePerforado(parseFloat(e.target.value) || 0)}
           unit="Ton/taladro"
+          decimals={2}
         />
         <FormField
           label="Rendimiento Broca"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCarguioStore } from "@/src/stores/useMalla";
+import { useSharedStore } from "@/src/stores/useSharedStore";
 import CarguioInputs from "./CarguioInputs";
 import CarguioResults from "./CarguioResults";
 import { calcularCarguio } from "./carguioCalculations";
@@ -8,8 +9,9 @@ import { usePDFStore } from "@/src/stores/usePDF";
 import { useEffect } from "react";
 
 export default function CarguioPage() {
+  const { produccionMina } = useSharedStore();
+
   const {
-    produccionMina,
     ratioDM,
     produccionDesmonte,
     mineralMasDesmonte,

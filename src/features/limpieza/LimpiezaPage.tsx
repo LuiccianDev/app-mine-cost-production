@@ -1,6 +1,7 @@
 "use client";
 
 import { useLimpiezaStore } from "@/src/stores/useMalla";
+import { useSharedStore } from "@/src/stores/useSharedStore";
 import LimpiezaInputs from "./LimpiezaInputs";
 import LimpiezaResults from "./LimpiezaResults";
 import { calcularLimpieza } from "./limpiezaCalculations";
@@ -8,8 +9,9 @@ import { usePDFStore } from "@/src/stores/usePDF";
 import { useEffect } from "react";
 
 export default function LimpiezaPage() {
+  const { produccionMina } = useSharedStore();
+
   const {
-    produccionMina,
     produccionDesmonte,
     mineralMasDesmonte,
     capacidadCuchara,
