@@ -1,13 +1,11 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function NotFound() {
   return (
-    <div className="relative min-h-screen  flex items-start justify-between p-8 md:p-16">
-
-
+    <div className="relative flex min-h-screen items-start justify-between p-8 md:p-16">
       {/* Contenido principal */}
       <div className="flex-1 pt-16 md:pt-24">
-        <h1 className="text-9xl font-title font-bold text-black tracking-tight ">
+        <h1 className="font-title text-9xl font-bold tracking-tight text-black">
           PAGE
           <br />
           NOT
@@ -18,7 +16,7 @@ export default function NotFound() {
         {/* Botón Back Home */}
         <Link
           href="/"
-          className="inline-block mt-12 px-6 py-3 bg-gray-100 text-black text-sm font-normal hover:bg-gray-200 transition-colors rounded-sm"
+          className="mt-12 inline-block rounded-sm bg-gray-100 px-6 py-3 text-sm font-normal text-black transition-colors hover:bg-gray-200"
         >
           Back Home
         </Link>
@@ -26,8 +24,8 @@ export default function NotFound() {
 
       {/* 404 abajo derecha */}
       <div className="self-end text-right">
-        <span className="text-2xl md:text-3xl font-bold text-black">404</span>
+        <span className="text-2xl font-bold text-black md:text-3xl">404</span>
       </div>
     </div>
-  );
+  )
 }

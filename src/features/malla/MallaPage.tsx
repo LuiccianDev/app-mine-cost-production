@@ -1,23 +1,17 @@
-"use client";
+'use client'
 
-import { useEffect } from "react";
-import MallaForm from "./MallaInputs";
-import MallaResultados from "./MallaResults";
-import { calcularMalla} from "./mallaCalculations";
-import { useMallaStore } from "@/src/stores/useMalla";
-import { useSharedStore } from "@/src/stores/useSharedStore";
-import { usePDFStore } from "@/src/stores/usePDF";
+import { useEffect } from 'react'
+import MallaForm from './MallaInputs'
+import MallaResultados from './MallaResults'
+import { calcularMalla } from './mallaCalculations'
+import { useMallaStore } from '@/src/stores/useMalla'
+import { useSharedStore } from '@/src/stores/useSharedStore'
+import { usePDFStore } from '@/src/stores/usePDF'
 
 export default function MallaSection() {
+  const { alturaBanco, setTonelajePerforado: setSharedTonelaje } = useSharedStore()
 
-  const { alturaBanco, setTonelajePerforado: setSharedTonelaje } = useSharedStore();
-
-  const {
-    densidadMaterial,
-    factorPotencia,
-    diametroTaladro,
-    densidadAnfo,
-  } = useMallaStore();
+  const { densidadMaterial, factorPotencia, diametroTaladro, densidadAnfo } = useMallaStore()
 
   /*  */
 
@@ -27,15 +21,14 @@ export default function MallaSection() {
     factorPotencia,
     diametroTaladro,
     densidadAnfo,
-  });
-
+  })
 
   /* guardar los resulatdo con Zustand*/
 
   const {
-    setBurden, 
-    setEspaciamiento, 
-    setVolumenRotaTaladro, 
+    setBurden,
+    setEspaciamiento,
+    setVolumenRotaTaladro,
     setTonelajePerforado,
     setLibrasAnfo,
     setAlturaCarga,
@@ -51,28 +44,32 @@ export default function MallaSection() {
 
     setCostoMinadoProyectado,
     setCostoMinado,
-
-
-  } = usePDFStore();
+  } = usePDFStore()
 
   /* suma conto total de minado */
   const costoMinadoProyectado = 11.92
-  const costoMinado = costoPerforacionTon + costoVoladura + costoLimpieza + costoCarguio + costoTransporte + costoTotalRelleno35 + costoTotalRellenoRD;
+  const costoMinado =
+    costoPerforacionTon +
+    costoVoladura +
+    costoLimpieza +
+    costoCarguio +
+    costoTransporte +
+    costoTotalRelleno35 +
+    costoTotalRellenoRD
 
   // CORRECTO: Actualiza Zustand solo cuando cambian los resultados
   useEffect(() => {
-    setBurden(resultados.burden);
-    setEspaciamiento(resultados.espaciamiento);
-    setVolumenRotaTaladro(resultados.volumenRotaTaladro);
-    setTonelajePerforado(resultados.tonelajePerforado);
-    setLibrasAnfo(resultados.librasAnfo);
-    setAlturaCarga(resultados.alturaCarga);
-    setCostoMinadoProyectado(costoMinadoProyectado);
-    setCostoMinado(costoMinado);
-    
-    // Sincronizar tonelajePerforado con el store compartido
-    setSharedTonelaje(resultados.tonelajePerforado);
+    setBurden(resultados.burden)
+    setEspaciamiento(resultados.espaciamiento)
+    setVolumenRotaTaladro(resultados.volumenRotaTaladro)
+    setTonelajePerforado(resultados.tonelajePerforado)
+    setLibrasAnfo(resultados.librasAnfo)
+    setAlturaCarga(resultados.alturaCarga)
+    setCostoMinadoProyectado(costoMinadoProyectado)
+    setCostoMinado(costoMinado)
 
+    // Sincronizar tonelajePerforado con el store compartido
+    setSharedTonelaje(resultados.tonelajePerforado)
   }, [
     resultados.burden,
     resultados.espaciamiento,
@@ -91,16 +88,13 @@ export default function MallaSection() {
     setCostoMinadoProyectado,
     setCostoMinado,
     setSharedTonelaje,
-  ]);
-
+  ])
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="w-full p-6 min-w-0">
-        <MallaForm
-          resultsComponent={<MallaResultados resultados={resultados} />}
-        />
+    <div className="flex w-full flex-col">
+      <div className="w-full min-w-0 p-6">
+        <MallaForm resultsComponent={<MallaResultados resultados={resultados} />} />
       </div>
     </div>
-  );
+  )
 }

@@ -1,6 +1,11 @@
-import {type RellenoDetriticoData as RellenoDetriticoFormData, type RellenoDetriticoResultados} from '@/src/types/rellenoDentritico.types';
+import {
+  type RellenoDetriticoData as RellenoDetriticoFormData,
+  type RellenoDetriticoResultados,
+} from '@/src/types/rellenoDentritico.types'
 
-export function calcularRellenoDetritico(data: RellenoDetriticoFormData): RellenoDetriticoResultados {
+export function calcularRellenoDetritico(
+  data: RellenoDetriticoFormData,
+): RellenoDetriticoResultados {
   const {
     capacidadCuchara,
     densidadRotaMaterialRelleno,
@@ -14,32 +19,38 @@ export function calcularRellenoDetritico(data: RellenoDetriticoFormData): Rellen
     costoHoraEquipo,
     costoPreparacionAgregados,
     costoTransporteDesmonte,
-    densidadMineral
-  } = data;
+    densidadMineral,
+  } = data
 
   // TONELADA POR PASE (SCOOP) = Yd3/Pase × Densid.rota × Factor Cuchara
-  const toneladaPorPase = capacidadCuchara * densidadRotaMaterialRelleno * factorCuchara * 0.765 /100;
+  const toneladaPorPase =
+    (capacidadCuchara * densidadRotaMaterialRelleno * factorCuchara * 0.765) / 100
 
   // Nº DE PASES POR HORA = 1 Hr / Tiempo de 1 pase
-  const numeroPasesPorHora = 60 / (tiempoDeUnPase / 60);
+  const numeroPasesPorHora = 60 / (tiempoDeUnPase / 60)
 
   // PRODUCCION (Ton/Hr) = Ton/Pase × Pases/Hr × Disponib.Mecanica × Disponib.Operativa
-  const produccionTonPorHora = toneladaPorPase * numeroPasesPorHora * (disponibilidadMecanica / 100) * (disponibilidadOperativa / 100);
+  const produccionTonPorHora =
+    toneladaPorPase *
+    numeroPasesPorHora *
+    (disponibilidadMecanica / 100) *
+    (disponibilidadOperativa / 100)
 
   // PRODUCCION (Ton/Dia) = Produccion (Ton/Hr) × (Hr/Guardia) × (Nº guardia/dia)
-  const produccionTonPorDia = produccionTonPorHora * numeroHorasPorGuardia * numeroGuardiasPorDia;
+  const produccionTonPorDia = produccionTonPorHora * numeroHorasPorGuardia * numeroGuardiasPorDia
 
   // REQUERIMIENTO DE SCOOP = (Material Ton/dia) / (Produccion Ton/dia)
-  const requerimientoScoop = produccionRelleno / produccionTonPorDia;
+  const requerimientoScoop = produccionRelleno / produccionTonPorDia
 
   // COSTO DE TRANSPORTE (US$/Ton) = (Costo por Hr del Equipo) / (Produccion Ton/Hr)
-  const costoTransporte = costoHoraEquipo / produccionTonPorHora;
+  const costoTransporte = costoHoraEquipo / produccionTonPorHora
 
   // COSTO MATERIAL RELLENO (US$/Ton) = Costo de preparacion relleno / densidad de mineral
-  const costoMaterialRelleno = (costoPreparacionAgregados + costoTransporteDesmonte) / densidadMineral;
+  const costoMaterialRelleno =
+    (costoPreparacionAgregados + costoTransporteDesmonte) / densidadMineral
 
   // COSTO TOTAL RELLENO (US$/Ton)
-  const costoTotalRelleno = costoMaterialRelleno + costoTransporte;
+  const costoTotalRelleno = costoMaterialRelleno + costoTransporte
 
   return {
     toneladaPorPase,
@@ -49,6 +60,6 @@ export function calcularRellenoDetritico(data: RellenoDetriticoFormData): Rellen
     requerimientoScoop,
     costoTransporte,
     costoMaterialRelleno,
-    costoTotalRelleno
-  };
+    costoTotalRelleno,
+  }
 }

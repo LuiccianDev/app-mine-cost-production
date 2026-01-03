@@ -1,21 +1,19 @@
-import FormField from "../../components/ui/FormField";
-import { useState } from "react";
-import { useLimpiezaStore } from "@/src/stores/useMalla";
-import { useSharedStore } from "@/src/stores/useSharedStore";
+import FormField from '../../components/ui/FormField'
+import { useState } from 'react'
+import { useLimpiezaStore } from '@/src/stores/useMalla'
+import { useSharedStore } from '@/src/stores/useSharedStore'
 
 type LimpiezaInputsProps = {
-  resultsComponent?: React.ReactNode;
-};
+  resultsComponent?: React.ReactNode
+}
 
-export default function LimpiezaInputs({
-  resultsComponent,
-}: LimpiezaInputsProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function LimpiezaInputs({ resultsComponent }: LimpiezaInputsProps) {
+  const [isOpen, setIsOpen] = useState(false)
   const handleClick = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
 
-  const { produccionMina, setProduccionMina } = useSharedStore();
+  const { produccionMina, setProduccionMina } = useSharedStore()
 
   const {
     produccionDesmonte,
@@ -41,31 +39,24 @@ export default function LimpiezaInputs({
     setNumeroHorasPorGuardia,
     setNumeroGuardiasPorDia,
     setCostoHoraDeEquipo,
-  } = useLimpiezaStore();
+  } = useLimpiezaStore()
 
   return (
-    <div className="border border-gray-200 rounded-xl p-6  shadow-sm">
+    <div className="rounded-xl border border-gray-200 p-6 shadow-sm">
       <div className="mb-5 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">Limpieza</h2>
         <button
           onClick={handleClick}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+          className="flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
         >
-          <span>{isOpen ? "Cerrar Resultados" : "Ver Resultados"}</span>
+          <span>{isOpen ? 'Cerrar Resultados' : 'Ver Resultados'}</span>
           <svg
-            className={`w-4 h-4 transition-transform ${
-              isOpen ? "rotate-180" : ""
-            }`}
+            className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </button>
       </div>
@@ -81,18 +72,14 @@ export default function LimpiezaInputs({
           label="Producción Desmonte"
           name="produccionDesmonte"
           value={produccionDesmonte}
-          onChange={(e) =>
-            setProduccionDesmonte(parseFloat(e.target.value) || 0)
-          }
+          onChange={(e) => setProduccionDesmonte(parseFloat(e.target.value) || 0)}
           unit="TPD"
         />
         <FormField
           label="Mineral + Desmonte"
           name="mineralMasDesmonte"
           value={mineralMasDesmonte}
-          onChange={(e) =>
-            setMineralMasDesmonte(parseFloat(e.target.value) || 0)
-          }
+          onChange={(e) => setMineralMasDesmonte(parseFloat(e.target.value) || 0)}
           unit="TPD"
         />
         <FormField
@@ -113,9 +100,7 @@ export default function LimpiezaInputs({
           label="Densidad rota material"
           name="densidadRotaMaterial"
           value={densidadRotaMineral}
-          onChange={(e) =>
-            setDensidadRotaMineral(parseFloat(e.target.value) || 0)
-          }
+          onChange={(e) => setDensidadRotaMineral(parseFloat(e.target.value) || 0)}
           unit="Ton/m3"
         />
         <FormField
@@ -129,54 +114,42 @@ export default function LimpiezaInputs({
           label="Disponibilidad Mecánica"
           name="disponibilidadMecanica"
           value={disponibilidadMecanica}
-          onChange={(e) =>
-            setDisponibilidadMecanica(parseFloat(e.target.value) || 0)
-          }
+          onChange={(e) => setDisponibilidadMecanica(parseFloat(e.target.value) || 0)}
           unit="%"
         />
         <FormField
           label="Disponibilidad Operativa"
           name="disponibilidadOperativa"
           value={disponibilidadOperativa}
-          onChange={(e) =>
-            setDisponibilidadOperativa(parseFloat(e.target.value) || 0)
-          }
+          onChange={(e) => setDisponibilidadOperativa(parseFloat(e.target.value) || 0)}
           unit="%"
         />
         <FormField
           label="Nº de Horas por Guardia"
           name="horasPorGuardia"
           value={numeroHorasPorGuardia}
-          onChange={(e) =>
-            setNumeroHorasPorGuardia(parseFloat(e.target.value) || 0)
-          }
+          onChange={(e) => setNumeroHorasPorGuardia(parseFloat(e.target.value) || 0)}
           unit="Hr/guardia"
         />
         <FormField
           label="Nº Guardia por Día"
           name="numeroGuardiasPorDia"
           value={numeroGuardiasPorDia}
-          onChange={(e) =>
-            setNumeroGuardiasPorDia(parseFloat(e.target.value) || 0)
-          }
+          onChange={(e) => setNumeroGuardiasPorDia(parseFloat(e.target.value) || 0)}
           unit="guardias/día"
         />
         <FormField
           label="Costo por Hr del Equipo"
           name="costoHoraEquipo"
           value={costoHoraDeEquipo}
-          onChange={(e) =>
-            setCostoHoraDeEquipo(parseFloat(e.target.value) || 0)
-          }
+          onChange={(e) => setCostoHoraDeEquipo(parseFloat(e.target.value) || 0)}
           unit="US$/Hr"
         />
       </div>
 
       {isOpen && resultsComponent && (
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          {resultsComponent}
-        </div>
+        <div className="mt-6 border-t border-gray-200 pt-6">{resultsComponent}</div>
       )}
     </div>
-  );
+  )
 }

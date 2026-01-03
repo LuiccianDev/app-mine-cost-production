@@ -1,11 +1,11 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @font-face {
   font-family: Roboto-flex;
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url("/fonts/Roboto_Flex/RobotoFlex.woff2") format("woff2");
+  src: url('/fonts/Roboto_Flex/RobotoFlex.woff2') format('woff2');
 }
 
 @font-face {
@@ -13,7 +13,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("/fonts/Roboto_Flex/RobotoFlex.woff2") format("woff2");
+  src: url('/fonts/Roboto_Flex/RobotoFlex.woff2') format('woff2');
 }
 
 @theme {
@@ -44,7 +44,8 @@ body {
   height: 0;
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
 }
 

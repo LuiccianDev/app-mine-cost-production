@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import { useEffect } from "react";
-import RellenoCementadoInputs from "./RellenoCementadoInputs";
-import RellenoCementadoResults from "./RellenoCementadoResults";
-import { calcularRellenoCementado } from "./rellenoCementadoCalculations";
-import { useRellenoCementadoStore } from "@/src/stores/useMalla";
-import { usePDFStore } from "@/src/stores/usePDF";
+import { useEffect } from 'react'
+import RellenoCementadoInputs from './RellenoCementadoInputs'
+import RellenoCementadoResults from './RellenoCementadoResults'
+import { calcularRellenoCementado } from './rellenoCementadoCalculations'
+import { useRellenoCementadoStore } from '@/src/stores/useMalla'
+import { usePDFStore } from '@/src/stores/usePDF'
 
 export default function RellenoCementadoPage() {
   const {
@@ -25,7 +25,7 @@ export default function RellenoCementadoPage() {
     costoPreparacionPlantaConcreto,
     costoTransporteRelaveChura,
     costoCemento,
-  } = useRellenoCementadoStore();
+  } = useRellenoCementadoStore()
 
   const resultados = calcularRellenoCementado({
     produccionMineral,
@@ -44,9 +44,9 @@ export default function RellenoCementadoPage() {
     costoPreparacionPlantaConcreto,
     costoTransporteRelaveChura,
     costoCemento,
-  });
+  })
 
-    /* guardar los resulatdo con Zustand*/
+  /* guardar los resulatdo con Zustand*/
 
   const {
     /* Add sum total scoops */
@@ -61,21 +61,21 @@ export default function RellenoCementadoPage() {
     setCostoTotalRelleno30,
     setRequerimientoScoopRelleno,
     setTotalScoops,
-  } = usePDFStore();
+  } = usePDFStore()
 
   const totalScoops =
     requerimientoPerforadora +
     requerimientoScoopsLimpieza +
     requerimientoScoopsCarguio +
-    requerimientoScoopRelleno;
+    requerimientoScoopRelleno
 
   useEffect(() => {
-    setCostoTransporteRC(resultados.costoTransporte);
-    setCostoMaterialRelleno(resultados.costoMaterialRelleno35);
-    setCostoTotalRelleno35(resultados.costoTotalRelleno35);
-    setCostoTotalRelleno30(resultados.costoTotalRelleno30);
-    setRequerimientoScoopRelleno(resultados.requerimientoScoop); // Section two Requerimiento Equipos
-    setTotalScoops(totalScoops);
+    setCostoTransporteRC(resultados.costoTransporte)
+    setCostoMaterialRelleno(resultados.costoMaterialRelleno35)
+    setCostoTotalRelleno35(resultados.costoTotalRelleno35)
+    setCostoTotalRelleno30(resultados.costoTotalRelleno30)
+    setRequerimientoScoopRelleno(resultados.requerimientoScoop) // Section two Requerimiento Equipos
+    setTotalScoops(totalScoops)
   }, [
     resultados.costoTransporte,
     resultados.costoMaterialRelleno35,
@@ -89,16 +89,15 @@ export default function RellenoCementadoPage() {
     setCostoTotalRelleno35,
     setCostoTotalRelleno30,
     setRequerimientoScoopRelleno,
-  ]);
-
+  ])
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="w-full p-6 min-w-0">
+    <div className="flex w-full flex-col">
+      <div className="w-full min-w-0 p-6">
         <RellenoCementadoInputs
           resultsComponent={<RellenoCementadoResults resultados={resultados} />}
         />
       </div>
     </div>
-  );
+  )
 }

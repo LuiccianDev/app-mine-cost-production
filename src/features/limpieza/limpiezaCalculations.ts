@@ -1,8 +1,8 @@
-import { type LimpiezaData, type LimpiezaResultados } from "@/src/types/limpieza.types";
-import { type SharedData } from "@/src/types/shared.types";
+import { type LimpiezaData, type LimpiezaResultados } from '@/src/types/limpieza.types'
+import { type SharedData } from '@/src/types/shared.types'
 
 // Tipo combinado para los cálculos
-type LimpiezaCalculationData = LimpiezaData & Pick<SharedData, 'produccionMina'>;
+type LimpiezaCalculationData = LimpiezaData & Pick<SharedData, 'produccionMina'>
 
 export function calcularLimpieza(data: LimpiezaCalculationData): LimpiezaResultados {
   const {
@@ -15,26 +15,30 @@ export function calcularLimpieza(data: LimpiezaCalculationData): LimpiezaResulta
     numeroHorasPorGuardia,
     numeroGuardiasPorDia,
     mineralMasDesmonte,
-    costoHoraDeEquipo
-  } = data;
+    costoHoraDeEquipo,
+  } = data
 
   // TONELADA POR PASE (SCOOP) = Yd3/Pase × Densid.rota × Factor Cuchara
-  const toneladaPorPase = capacidadCuchara * densidadRotaMineral * factorCuchara * 0.765 /100;
+  const toneladaPorPase = (capacidadCuchara * densidadRotaMineral * factorCuchara * 0.765) / 100
 
   // Nº DE PASES POR HORA = 1 Hr / Tiempo de 1 pase
-  const numeroPasesPorHora = 60 / (tiempoDeUnPase / 60);
+  const numeroPasesPorHora = 60 / (tiempoDeUnPase / 60)
 
   // PRODUCCION (Ton/Hr) = Ton/Pase × Pases/Hr × Disponib.Mecanica × Disponib.Operativa
-  const produccionTonPorHora = toneladaPorPase * numeroPasesPorHora * (disponibilidadMecanica / 100) * (disponibilidadOperativa / 100);
+  const produccionTonPorHora =
+    toneladaPorPase *
+    numeroPasesPorHora *
+    (disponibilidadMecanica / 100) *
+    (disponibilidadOperativa / 100)
 
   // PRODUCCION (Ton/Dia) = Produccion (Ton/Hr) × (Hr/Guardia) × (Nº guardia/dia)
-  const produccionTonPorDia = produccionTonPorHora * numeroHorasPorGuardia * numeroGuardiasPorDia;
+  const produccionTonPorDia = produccionTonPorHora * numeroHorasPorGuardia * numeroGuardiasPorDia
 
   // REQUERIMIENTO DE SCOOPS = (Material Ton/dia) / (Produccion Ton/dia)
-  const requerimientoScoops = mineralMasDesmonte / produccionTonPorDia;
+  const requerimientoScoops = mineralMasDesmonte / produccionTonPorDia
 
   // COSTO DE LIMPIEZA (US$/Ton) = (Costo por Hr del Equipo) / (Produccion Ton/Hr)
-  const costoLimpieza = costoHoraDeEquipo / produccionTonPorHora;
+  const costoLimpieza = costoHoraDeEquipo / produccionTonPorHora
 
   return {
     toneladaPorPase,
@@ -42,6 +46,6 @@ export function calcularLimpieza(data: LimpiezaCalculationData): LimpiezaResulta
     produccionTonPorHora,
     produccionTonPorDia,
     requerimientoScoops,
-    costoLimpieza
-  };
+    costoLimpieza,
+  }
 }

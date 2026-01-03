@@ -1,18 +1,19 @@
-import { useState } from 'react';
-import FormField from '../../components/ui/FormField';
-import { useRequerimientoPerforadoraStore } from '@/src/stores/useMalla';
-import { useSharedStore } from '@/src/stores/useSharedStore';
+import { useState } from 'react'
+import FormField from '../../components/ui/FormField'
+import { useRequerimientoPerforadoraStore } from '@/src/stores/useMalla'
+import { useSharedStore } from '@/src/stores/useSharedStore'
 
 type RequerimientoPerforadoraInputsProps = {
-  resultsComponent?: React.ReactNode;
-};
+  resultsComponent?: React.ReactNode
+}
 
-export default function RequerimientoPerforadoraInputs({ resultsComponent}: RequerimientoPerforadoraInputsProps) {
-  
-  const [isOpen, setIsOpen] = useState(false);
-  const  handleClick = () => {
-      setIsOpen(!isOpen);
-    };
+export default function RequerimientoPerforadoraInputs({
+  resultsComponent,
+}: RequerimientoPerforadoraInputsProps) {
+  const [isOpen, setIsOpen] = useState(false)
+  const handleClick = () => {
+    setIsOpen(!isOpen)
+  }
 
   const {
     produccionMina,
@@ -25,7 +26,7 @@ export default function RequerimientoPerforadoraInputs({ resultsComponent}: Requ
     setTonelajePerforado,
     setRendimientoBroca,
     setTiempoPerforacion,
-  } = useSharedStore();
+  } = useSharedStore()
 
   const {
     longuitudTaladro,
@@ -43,20 +44,19 @@ export default function RequerimientoPerforadoraInputs({ resultsComponent}: Requ
     setProduccionTPM,
     setDiasOperacion,
     setProduccionTPD,
+  } = useRequerimientoPerforadoraStore()
 
-  }  = useRequerimientoPerforadoraStore();  
-  
   return (
-    <div className="border border-gray-200 rounded-xl p-6  shadow-sm">
+    <div className="rounded-xl border border-gray-200 p-6 shadow-sm">
       <div className="mb-5 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">Requerimiento de Perforadora</h2>
         <button
           onClick={handleClick}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+          className="flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
         >
           <span>{isOpen ? 'Cerrar Resultados' : 'Ver Resultados'}</span>
           <svg
-            className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+            className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -152,12 +152,10 @@ export default function RequerimientoPerforadoraInputs({ resultsComponent}: Requ
           unit="Ton/Día"
         />
       </div>
-      
+
       {isOpen && resultsComponent && (
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          {resultsComponent}
-        </div>
+        <div className="mt-6 border-t border-gray-200 pt-6">{resultsComponent}</div>
       )}
     </div>
-  );
+  )
 }

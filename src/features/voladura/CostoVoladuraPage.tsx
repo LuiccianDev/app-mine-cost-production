@@ -1,16 +1,15 @@
-"use client";
+'use client'
 
-import { useEffect } from "react";
-import CostoVoladuraInputs from "./CostoVoladuraInputs";
-import CostoVoladuraResults from "./CostoVoladuraResults";
-import { calculateCostoVoladura } from "./costoVoladuraCalculations";
-import { useCostosVoladurasStore } from "@/src/stores/useMalla";
-import { useSharedStore } from "@/src/stores/useSharedStore";
-import { usePDFStore } from "@/src/stores/usePDF";
+import { useEffect } from 'react'
+import CostoVoladuraInputs from './CostoVoladuraInputs'
+import CostoVoladuraResults from './CostoVoladuraResults'
+import { calculateCostoVoladura } from './costoVoladuraCalculations'
+import { useCostosVoladurasStore } from '@/src/stores/useMalla'
+import { useSharedStore } from '@/src/stores/useSharedStore'
+import { usePDFStore } from '@/src/stores/usePDF'
 
 export default function CostoVoladuraPage() {
-
-  const { tonelajePerforado } = useSharedStore();
+  const { tonelajePerforado } = useSharedStore()
 
   /* Get values  */
   const {
@@ -26,7 +25,7 @@ export default function CostoVoladuraPage() {
     mechaRapidaEmpleada,
     numeroHombresCarguio,
     tiempoEmpleadoCarguio,
-  } = useCostosVoladurasStore();
+  } = useCostosVoladurasStore()
 
   /* Get resultt */
   const resultados = calculateCostoVoladura({
@@ -43,23 +42,21 @@ export default function CostoVoladuraPage() {
     mechaRapidaEmpleada,
     numeroHombresCarguio,
     tiempoEmpleadoCarguio,
-  });
+  })
 
   /* guardar los resulatdo con Zustand*/
 
-  const { setCostoVoladura } = usePDFStore();
+  const { setCostoVoladura } = usePDFStore()
 
   useEffect(() => {
-    setCostoVoladura(resultados.costoVoladuraPorTonelada);
-  }   , [resultados.costoVoladuraPorTonelada, setCostoVoladura]);
+    setCostoVoladura(resultados.costoVoladuraPorTonelada)
+  }, [resultados.costoVoladuraPorTonelada, setCostoVoladura])
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="w-full p-6 min-w-0">
-        <CostoVoladuraInputs
-          resultsComponent={<CostoVoladuraResults resultados={resultados} />}
-        />
+    <div className="flex w-full flex-col">
+      <div className="w-full min-w-0 p-6">
+        <CostoVoladuraInputs resultsComponent={<CostoVoladuraResults resultados={resultados} />} />
       </div>
     </div>
-  );
+  )
 }

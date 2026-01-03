@@ -1,22 +1,16 @@
-"use client";
+'use client'
 
-import { useRequerimientoPerforadoraStore } from "@/src/stores/useMalla";
-import { useSharedStore } from "@/src/stores/useSharedStore";
-import RequerimientoPerforadoraInputs from "./RequerimientoPerforadoraInputs";
-import RequerimientoPerforadoraResults from "./RequerimientoPerforadoraResults";
-import { calcularRequerimientoPerforadora } from "./requerimientoPerforadoraCalculations";
-import { usePDFStore } from "@/src/stores/usePDF";
-import { useEffect } from "react";
-
+import { useRequerimientoPerforadoraStore } from '@/src/stores/useMalla'
+import { useSharedStore } from '@/src/stores/useSharedStore'
+import RequerimientoPerforadoraInputs from './RequerimientoPerforadoraInputs'
+import RequerimientoPerforadoraResults from './RequerimientoPerforadoraResults'
+import { calcularRequerimientoPerforadora } from './requerimientoPerforadoraCalculations'
+import { usePDFStore } from '@/src/stores/usePDF'
+import { useEffect } from 'react'
 
 export default function RequerimientoPerforadoraPage() {
-  const {
-    produccionMina,
-    alturaBanco,
-    tonelajePerforado,
-    rendimientoBroca,
-    tiempoPerforacion,
-  } = useSharedStore();
+  const { produccionMina, alturaBanco, tonelajePerforado, rendimientoBroca, tiempoPerforacion } =
+    useSharedStore()
 
   const {
     longuitudTaladro,
@@ -26,7 +20,7 @@ export default function RequerimientoPerforadoraPage() {
     produccionTPM,
     diasOperacion,
     produccionTPD,
-  } = useRequerimientoPerforadoraStore();
+  } = useRequerimientoPerforadoraStore()
 
   const resultados = calcularRequerimientoPerforadora({
     produccionMina,
@@ -41,31 +35,29 @@ export default function RequerimientoPerforadoraPage() {
     produccionTPM,
     diasOperacion,
     produccionTPD,
-  });
+  })
 
   /* guardar los resulatdo con Zustand*/
-  const {setNumeroPerforadoras, setMetrosPerforado, setRequerimientoPerforadora} = usePDFStore();
+  const { setNumeroPerforadoras, setMetrosPerforado, setRequerimientoPerforadora } = usePDFStore()
   useEffect(() => {
-    setNumeroPerforadoras(resultados.numeroPerforadoras);
-    setMetrosPerforado(resultados.metrosPerforadosPorDia);
-    setRequerimientoPerforadora(resultados.numeroPerforadoras);// Section two Reqiiuerimiento Equipos
+    setNumeroPerforadoras(resultados.numeroPerforadoras)
+    setMetrosPerforado(resultados.metrosPerforadosPorDia)
+    setRequerimientoPerforadora(resultados.numeroPerforadoras) // Section two Reqiiuerimiento Equipos
   }, [
     resultados.numeroPerforadoras,
     resultados.metrosPerforadosPorDia,
     setNumeroPerforadoras,
     setMetrosPerforado,
     setRequerimientoPerforadora,
-  ]);
+  ])
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="w-full p-6 min-w-0">
+    <div className="flex w-full flex-col">
+      <div className="w-full min-w-0 p-6">
         <RequerimientoPerforadoraInputs
-          resultsComponent={
-            <RequerimientoPerforadoraResults resultados={resultados} />
-          }
+          resultsComponent={<RequerimientoPerforadoraResults resultados={resultados} />}
         />
       </div>
     </div>
-  );
+  )
 }

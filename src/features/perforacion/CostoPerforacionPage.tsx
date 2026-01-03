@@ -1,17 +1,16 @@
-"use client";
+'use client'
 
-import { useEffect } from 'react';
-import CostoPerforacionInputs from './CostoPerforacionInputs';
-import CostoPerforacionResults from './CostoPerforacionResults';
-import { calcularCostoPerforacion} from './costoPerforacionCalculations';
-import { useCostosPerforacionStore } from '@/src/stores/useMalla';
-import { useSharedStore } from '@/src/stores/useSharedStore';
-import { usePDFStore } from "@/src/stores/usePDF";
+import { useEffect } from 'react'
+import CostoPerforacionInputs from './CostoPerforacionInputs'
+import CostoPerforacionResults from './CostoPerforacionResults'
+import { calcularCostoPerforacion } from './costoPerforacionCalculations'
+import { useCostosPerforacionStore } from '@/src/stores/useMalla'
+import { useSharedStore } from '@/src/stores/useSharedStore'
+import { usePDFStore } from '@/src/stores/usePDF'
 
 export default function CostoPerforacionPage() {
-
-  const { costoBrocaAccesorios, costoEquipoPerforacion } = useCostosPerforacionStore();
-  const { tiempoPerforacion, rendimientoBroca, tonelajePerforado, alturaBanco } = useSharedStore();
+  const { costoBrocaAccesorios, costoEquipoPerforacion } = useCostosPerforacionStore()
+  const { tiempoPerforacion, rendimientoBroca, tonelajePerforado, alturaBanco } = useSharedStore()
 
   const resultados = calcularCostoPerforacion({
     costoBrocaAccesorios,
@@ -20,32 +19,28 @@ export default function CostoPerforacionPage() {
     rendimientoBroca,
     tonelajePerforado,
     alturaBanco,
-  });
+  })
 
-  /* guardar los resulatdo con Zustand*/ 
-  const { 
-    setCostoPerforacionMetro,
-    setCostoPerforacionTon,
-  } = usePDFStore();
+  /* guardar los resulatdo con Zustand*/
+  const { setCostoPerforacionMetro, setCostoPerforacionTon } = usePDFStore()
 
   useEffect(() => {
-    setCostoPerforacionMetro(resultados.costoPerforacionPorMetro);
-    setCostoPerforacionTon(resultados.costoPerforacionPorTon);
+    setCostoPerforacionMetro(resultados.costoPerforacionPorMetro)
+    setCostoPerforacionTon(resultados.costoPerforacionPorTon)
   }, [
     resultados.costoPerforacionPorMetro,
     resultados.costoPerforacionPorTon,
     setCostoPerforacionMetro,
     setCostoPerforacionTon,
-  ]);
-
+  ])
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="w-full p-6 min-w-0">
-        <CostoPerforacionInputs 
+    <div className="flex w-full flex-col">
+      <div className="w-full min-w-0 p-6">
+        <CostoPerforacionInputs
           resultsComponent={<CostoPerforacionResults resultados={resultados} />}
         />
       </div>
     </div>
-  );
+  )
 }
