@@ -11,6 +11,8 @@ export type PDFData = {
     // Perforación
     costoPerforacionMetro: number;
     costoPerforacionTon: number;
+
+    // Requerimiento perforadora
     numeroPerforadoras: number;
     metrosPerforado: number;
 
@@ -30,13 +32,14 @@ export type PDFData = {
     produccionFlotaCamiones: number;
     costoTransporte: number;
 
-    // Requerimiento Equipos
-    requerimientoPerforadora: number;
-    requerimientoScoopsLimpieza: number;
-    requerimientoScoopsCarguio: number;
-    requerimientoScoopRelleno: number;
-    totalScoops: number;
-    flotaCamionesTransporte: number;
+    //* Requerimiento Equipos
+    //! iguala to 
+    requerimientoPerforadora: number; /* numeroPerforadoras */
+    requerimientoScoopsLimpieza: number;/* limpieza */
+    requerimientoScoopsCarguio: number;/* Cargui */
+    requerimientoScoopRelleno: number; /* releno cementado  */
+    totalScoops: number; /* suma de requerimientoScoopsLimpieza, requerimientoScoopsCarguio y requerimientoScoopRelleno */
+    flotaCamionesTransporte: number; /* flota camiones transporte  */
 
     // Relleno Cementado
     costoTransporteRC: number;
