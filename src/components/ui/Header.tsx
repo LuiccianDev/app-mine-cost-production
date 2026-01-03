@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { motion } from 'motion/react'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -9,7 +10,12 @@ export default function Header() {
   return (
     <header className="relative w-full border-b border-slate-200/50 bg-white/80 backdrop-blur-md">
       <nav className="container mx-auto px-8 py-6">
-        <div className="flex items-center justify-between">
+        <motion.div
+          className="flex items-center justify-between"
+          initial={{ y: 60, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+        >
           {/* Logo */}
           <Link href="/" className="text-2xl font-bold tracking-tight text-slate-900">
             LUICCIAN
@@ -74,7 +80,7 @@ export default function Header() {
               )}
             </button>
           </div>
-        </div>
+        </motion.div>
       </nav>
     </header>
   )

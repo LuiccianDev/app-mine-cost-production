@@ -1,4 +1,7 @@
+'use client'
+
 import Image from 'next/image'
+import { motion } from 'motion/react'
 
 export default function About() {
   return (
@@ -9,15 +12,25 @@ export default function About() {
         </div>
 
         <div className="mb-8">
-          <p className="max-w-3xl text-4xl leading-tight font-light">
+          <motion.p
+            className="max-w-3xl text-4xl leading-tight font-light"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             I collaborate with businesses of all sizes worldwide, using the latest technologies. My
             designs have also earned multiple awards.
-          </p>
+          </motion.p>
         </div>
 
         <div className="flex flex-col items-center justify-center gap-8 lg:flex-row lg:gap-12 lg:pl-40 xl:pl-80">
           <div className="relative w-full max-w-sm">
-            <div className="aspect-4/5 overflow-hidden rounded-lg bg-gray-200">
+            <motion.div
+              className="aspect-4/5 overflow-hidden rounded-lg bg-gray-200"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
               <Image
                 src="/img/logo.webp"
                 alt="About"
@@ -26,14 +39,19 @@ export default function About() {
                 className="h-full w-full object-cover"
                 priority
               />
-            </div>
+            </motion.div>
           </div>
 
           <div className="max-w-xl space-y-3">
-            <p className="text-xl leading-relaxed text-gray-700 sm:text-2xl">
+            <motion.p
+              className="text-xl leading-relaxed text-gray-700 sm:text-2xl"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
               I&apos;m dedicated to crafting beautiful and highly functional designs that seamlessly
               align with my clients&apos; unique needs and long-term goals.
-            </p>
+            </motion.p>
           </div>
         </div>
       </div>
