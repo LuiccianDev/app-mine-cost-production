@@ -36,7 +36,7 @@ export default function MallaSection() {
     setVolumenRotaTaladro, 
     setTonelajePerforado,
     setLibrasAnfo,
-    setAlturaBanco,
+    setAlturaCarga,
 
     /* Suma de costo total de minado  */
     costoPerforacionTon,
@@ -64,7 +64,7 @@ export default function MallaSection() {
     setVolumenRotaTaladro(resultados.volumenRotaTaladro);
     setTonelajePerforado(resultados.tonelajePerforado);
     setLibrasAnfo(resultados.librasAnfo);
-    setAlturaBanco(resultados.alturaBanco);
+    setAlturaCarga(resultados.alturaCarga);
     setCostoMinadoProyectado(costoMinadoProyectado);
     setCostoMinado(costoMinado);
 
@@ -75,13 +75,13 @@ export default function MallaSection() {
     resultados.volumenRotaTaladro,
     resultados.tonelajePerforado,
     resultados.librasAnfo,
-    resultados.alturaBanco,
+    resultados.alturaCarga,
     setBurden,
     setEspaciamiento,
     setVolumenRotaTaladro,
     setTonelajePerforado,
     setLibrasAnfo,
-    setAlturaBanco,
+    setAlturaCarga,
     costoMinadoProyectado,
     costoMinado,
     setCostoMinadoProyectado,

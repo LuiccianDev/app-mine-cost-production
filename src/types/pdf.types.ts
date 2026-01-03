@@ -6,7 +6,7 @@ export type PDFData = {
     volumenRotaTaladro: number;
     tonelajePerforado: number;
     librasAnfo: number;
-    alturaBanco: number;
+    alturaCarga: number;
 
     // Perforación
     costoPerforacionMetro: number;
@@ -65,7 +65,7 @@ export const defaultPDFDataValues: PDFData = {
     volumenRotaTaladro: 0,
     tonelajePerforado: 0,
     librasAnfo: 0,
-    alturaBanco: 0,
+    alturaCarga: 0,
     // Perforación
     costoPerforacionMetro: 0,
     costoPerforacionTon: 0,

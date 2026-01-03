@@ -15,7 +15,7 @@ export default function CostoPerforacionPage() {
           tiempoPerforacion,
           rendimientoBroca,
           tonelajePerforado,
-          alturaBanco,
+          alturaBanco, //! se repite 
   } = useCostosPerforacionStore();
 
   const resultados = calcularCostoPerforacion({costoBrocaAccesorios,
@@ -23,7 +23,8 @@ export default function CostoPerforacionPage() {
           tiempoPerforacion,
           rendimientoBroca,
           tonelajePerforado,
-          alturaBanco,});
+          alturaBanco, //! se repite
+        });
 
   /* guardar los resulatdo con Zustand*/ 
   const { 

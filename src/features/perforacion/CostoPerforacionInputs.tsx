@@ -19,13 +19,13 @@ export default function CostoPerforacionInputs({ resultsComponent, }: CostoPerfo
           tiempoPerforacion,
           rendimientoBroca,
           tonelajePerforado,
-          alturaBanco,
+          alturaBanco, //! se repite
           setCostoBrocaAccesorios,
           setCostoEquipoPerforacion,
           setTiempoPerforacion,
           setRendimientoBroca,
           setTonelajePerforado,
-          setAlturaBanco
+          setAlturaBanco //! se repite
   } = useCostosPerforacionStore();
   
   return (

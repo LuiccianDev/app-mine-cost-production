@@ -10,7 +10,7 @@ interface PDFState extends PDFData {
     setVolumenRotaTaladro: (volumen: number) => void;
     setTonelajePerforado: (tonelaje: number) => void;
     setLibrasAnfo: (libras: number) => void;
-    setAlturaBanco: (altura: number) => void;
+    setAlturaCarga: (altura: number) => void;
     setCostoPerforacionMetro: (costo: number) => void;
     setCostoPerforacionTon: (costo: number) => void;
     setNumeroPerforadoras: (numero: number) => void;
@@ -51,7 +51,7 @@ export const usePDFStore = create<PDFState>((set) => ({
     setVolumenRotaTaladro: (volumen: number) => set({ volumenRotaTaladro: volumen }),
     setTonelajePerforado: (tonelaje: number) => set({ tonelajePerforado: tonelaje }),
     setLibrasAnfo: (libras: number) => set({ librasAnfo: libras }),
-    setAlturaBanco: (altura: number) => set({ alturaBanco: altura }),
+    setAlturaCarga: (altura: number) => set({ alturaCarga: altura }),
     setCostoPerforacionMetro: (costo: number) => set({ costoPerforacionMetro: costo }),
     setCostoPerforacionTon: (costo: number) => set({ costoPerforacionTon: costo }),
     setNumeroPerforadoras: (numero: number) => set({ numeroPerforadoras: numero }),

@@ -17,7 +17,7 @@ export default function Preview({ onBack }: PreviewProps) {
     volumenRotaTaladro,
     tonelajePerforado,
     librasAnfo,
-    alturaBanco,
+    alturaCarga,
     costoPerforacionMetro,
     costoPerforacionTon,
     numeroPerforadoras,
@@ -99,7 +99,7 @@ export default function Preview({ onBack }: PreviewProps) {
       { label: "Volumen ( Rotura x Taladro )", value: volumenRotaTaladro, unit: "m3" },
       { label: "Tonelaje", value: tonelajePerforado, unit: "Ton/Tal" },
       { label: "Libras de anfo", value: librasAnfo, unit: "lib anfo/Talad" },
-      { label: "Altura de carga", value: alturaBanco, unit: "m" },
+      { label: "Altura de carga", value: alturaCarga, unit: "m" },
     ]);
 
     // Perforación
@@ -239,7 +239,7 @@ export default function Preview({ onBack }: PreviewProps) {
             <ReportRow label="Volumen ( Rotura x Taladro )" value={volumenRotaTaladro} unit="m3" />
             <ReportRow label="Tonelaje" value={tonelajePerforado} unit="Ton/Tal" />
             <ReportRow label="Libras de anfo" value={librasAnfo} unit="lib anfo/Talad" />
-            <ReportRow label="Altura de carga" value={alturaBanco} unit="m" />
+            <ReportRow label="Altura de carga" value={alturaCarga} unit="m" />
           </tbody>
         </table>
       </section>
