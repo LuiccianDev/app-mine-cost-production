@@ -40,15 +40,17 @@ export default function RequerimientoPerforadoraPage() {
   });
 
   /* guardar los resulatdo con Zustand*/
-  const {setNumeroPerforadoras, setMetrosPerforado} = usePDFStore();
+  const {setNumeroPerforadoras, setMetrosPerforado, setRequerimientoPerforadora} = usePDFStore();
   useEffect(() => {
     setNumeroPerforadoras(resultados.numeroPerforadoras);
     setMetrosPerforado(resultados.metrosPerforadosPorDia);
+    setRequerimientoPerforadora(resultados.numeroPerforadoras);// Section two Reqiiuerimiento Equipos
   }, [
     resultados.numeroPerforadoras,
     resultados.metrosPerforadosPorDia,
     setNumeroPerforadoras,
     setMetrosPerforado,
+    setRequerimientoPerforadora,
   ]);
 
   return (

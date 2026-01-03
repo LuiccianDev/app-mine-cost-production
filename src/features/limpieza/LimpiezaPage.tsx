@@ -40,16 +40,18 @@ export default function LimpiezaPage() {
 
   /* guardar los resulatdo con Zustand*/
 
-  const { setRequerimientoScoops, setCostoLimpieza } = usePDFStore();
+  const { setRequerimientoScoops, setCostoLimpieza , setRequerimientoScoopsLimpieza} = usePDFStore();
 
   useEffect(() => {
     setRequerimientoScoops(resultados.requerimientoScoops);
     setCostoLimpieza(resultados.costoLimpieza);
+    setRequerimientoScoopsLimpieza(resultados.requerimientoScoops); // Section two Requerimiento Equipos
   }, [
     resultados.requerimientoScoops,
     resultados.costoLimpieza,
     setRequerimientoScoops,
     setCostoLimpieza,
+    setRequerimientoScoopsLimpieza,
   ]);
 
   return (

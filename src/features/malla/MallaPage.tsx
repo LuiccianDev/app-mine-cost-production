@@ -36,8 +36,26 @@ export default function MallaSection() {
     setVolumenRotaTaladro, 
     setTonelajePerforado,
     setLibrasAnfo,
-    setAlturaBanco
+    setAlturaBanco,
+
+    /* Suma de costo total de minado  */
+    costoPerforacionTon,
+    costoVoladura,
+    costoLimpieza,
+    costoCarguio,
+    costoTransporte,
+    costoTotalRelleno35,
+    costoTotalRellenoRD,
+
+    setCostoMinadoProyectado,
+    setCostoMinado,
+
+
   } = usePDFStore();
+
+  /* suma conto total de minado */
+  const costoMinadoProyectado = 11.92
+  const costoMinado = costoPerforacionTon + costoVoladura + costoLimpieza + costoCarguio + costoTransporte + costoTotalRelleno35 + costoTotalRellenoRD;
 
   // CORRECTO: Actualiza Zustand solo cuando cambian los resultados
   useEffect(() => {
@@ -47,6 +65,10 @@ export default function MallaSection() {
     setTonelajePerforado(resultados.tonelajePerforado);
     setLibrasAnfo(resultados.librasAnfo);
     setAlturaBanco(resultados.alturaBanco);
+    setCostoMinadoProyectado(costoMinadoProyectado);
+    setCostoMinado(costoMinado);
+
+
   }, [
     resultados.burden,
     resultados.espaciamiento,
@@ -60,6 +82,10 @@ export default function MallaSection() {
     setTonelajePerforado,
     setLibrasAnfo,
     setAlturaBanco,
+    costoMinadoProyectado,
+    costoMinado,
+    setCostoMinadoProyectado,
+    setCostoMinado,
   ]);
 
 

@@ -42,13 +42,14 @@ export default function TransportePage() {
 
   /* guardar los resulatdo con Zustand*/
 
-  const { setFlotaCamiones, setProduccionFlotaCamiones, setCostoTransporte } =
+  const { setFlotaCamiones, setProduccionFlotaCamiones, setCostoTransporte , setFlotaCamionesTransporte} =
     usePDFStore();
 
     useEffect(() => {
     setFlotaCamiones(resultados.flotaCamiones);
     setProduccionFlotaCamiones(resultados.produccionFlotaCamiones);
     setCostoTransporte(resultados.costoTransporte);
+    setFlotaCamionesTransporte(resultados.flotaCamiones);
     }, [
       resultados.flotaCamiones,
       resultados.produccionFlotaCamiones,
@@ -56,8 +57,13 @@ export default function TransportePage() {
       setFlotaCamiones,
       setProduccionFlotaCamiones,
       setCostoTransporte,
+      setFlotaCamionesTransporte,
     ]);
 
+
+
+    /* Auxilir para poner los Requerimentio equioi sections
+     */
   return (
     <div className="flex flex-col w-full">
       <div className="w-full p-6 min-w-0">

@@ -43,16 +43,18 @@ export default function CarguioPage() {
 
   /* guardar los resulatdo con Zustand*/
 
-  const { setRequerimientoScoop, setCostoCarguio } = usePDFStore();
+  const { setRequerimientoScoop, setCostoCarguio , setRequerimientoScoopsCarguio} = usePDFStore();
 
   useEffect(() => {
     setRequerimientoScoop(resultados.requerimientoScoop);
     setCostoCarguio(resultados.costoCarguio);
+    setRequerimientoScoopsCarguio(resultados.requerimientoScoop); // Section two Requerimiento Equipos
   }, [
     resultados.requerimientoScoop,
     resultados.costoCarguio,
     setRequerimientoScoop,
     setCostoCarguio,
+    setRequerimientoScoopsCarguio,
   ]);
 
   return (
