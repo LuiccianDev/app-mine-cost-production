@@ -1,4 +1,4 @@
-import type { LimpiezaResultados } from './limpiezaCalculations';
+import  { type LimpiezaResultados } from "@/src/types/limpieza.types";
 
 type LimpiezaResultsProps = {
   resultados: LimpiezaResultados;

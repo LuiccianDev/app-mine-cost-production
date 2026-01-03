@@ -15,6 +15,10 @@ import CalculatorPreview from "./CalculatorPreview";
 export default function CalculatorLayout() {
   const [showPreview, setShowPreview] = useState(false);
 
+
+
+
+
   return (
 <>
       {showPreview ? (

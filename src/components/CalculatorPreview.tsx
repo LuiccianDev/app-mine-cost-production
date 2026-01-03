@@ -1,135 +1,51 @@
 "use client";
 import { jsPDF } from "jspdf";
-import { useCalculations } from '../context/CalculationContext';
+import { usePDFStore } from "@/src/stores/usePDF";
 
-export type PreviewData = {
-  projectCode?: string;
-  // Malla de Perforación
-  burden?: number;
-  espaciamiento?: number;
-  volumenRotaTaladro?: number;
-  tonelaje?: number;
-  librasAnfo?: number;
-  alturaCarga?: number;
-  
-  // Perforación
-  costoPerforacionMetro?: number;
-  costoPerforacionTon?: number;
-  numeroPerforadoras?: number;
-  metrosPerforado?: number;
-  
-  // Voladura
-  costoVoladura?: number;
-  
-  // Limpieza
-  requerimientoScoops?: number;
-  costoLimpieza?: number;
-  
-  // Carguio
-  requerimientoScoop?: number;
-  costoCarguio?: number;
-  
-  // Transporte
-  flotaCamiones?: number;
-  produccionFlotaCamiones?: number;
-  costoTransporte?: number;
-  
-  // Requerimiento Equipos
-  requerimientoPerforadora?: number;
-  requerimientoScoopsLimpieza?: number;
-  requerimientoScoopsCarguio?: number;
-  requerimientoScoopRelleno?: number;
-  totalScoops?: number;
-  flotaCamionesTransporte?: number;
-  
-  // Relleno Cementado
-  costoTransporteRC?: number;
-  costoMaterialRelleno?: number;
-  costoTotalRelleno35?: number;
-  costoTotalRelleno30?: number;
-  
-  // Relleno Detrítico
-  costoTransporteRD?: number;
-  costoMaterialRellenoRD?: number;
-  costoTotalRellenoRD?: number;
-  
-  // Costos Finales
-  costoMinadoProyectado?: number;
-  costoMinado?: number;
-};
 
-type PreviewProps = {
-  data?: PreviewData;
+export type PreviewProps = {
+
   onBack?: () => void;
 };
 
-export default function Preview({ data = {}, onBack }: PreviewProps) {
-  const { 
-    mallaResults, 
-    costoPerforacionResults, 
-    costoVoladuraResults,
-    limpiezaResults,
-    carguioResults,
-    transporteResults,
-    rellenoCementadoResults,
-    rellenoDetriticoResults
-  } = useCalculations();
+export default function Preview({ onBack }: PreviewProps) {
 
-  // Usar datos del contexto si están disponibles, sino usar valores por defecto
-  const projectCode = data.projectCode || "EXP01";
-  
-  // Malla de Perforación
-  const burden = mallaResults?.burden ?? data.burden ?? 1.62;
-  const espaciamiento = mallaResults?.espaciamiento ?? data.espaciamiento ?? 2.03;
-  const volumenRotaTaladro = mallaResults?.volumenRotaTaladro ?? data.volumenRotaTaladro ?? 32.65;
-  const tonelaje = mallaResults?.tonelaje ?? data.tonelaje ?? 122.45;
-  const librasAnfo = mallaResults?.librasAnfo ?? data.librasAnfo ?? 48.98;
-  const alturaCarga = mallaResults?.alturaCarga ?? data.alturaCarga ?? 8.77;
-  
-  // Perforación
-  const costoPerforacionMetro = costoPerforacionResults?.costoPerforacionPorMetro ?? data.costoPerforacionMetro ?? 1.59;
-  const costoPerforacionTon = costoPerforacionResults?.costoPerforacionPorTon ?? data.costoPerforacionTon ?? 0.13;
-  const numeroPerforadoras = data.numeroPerforadoras ?? 1.09;
-  const metrosPerforado = data.metrosPerforado ?? 117.44;
-  
-  // Voladura
-  const costoVoladura = costoVoladuraResults?.costoVoladuraPorTonelada ?? data.costoVoladura ?? 0.16;
-  
-  // Limpieza
-  const requerimientoScoops = limpiezaResults?.requerimientoScoops ?? data.requerimientoScoops ?? 1.95;
-  const costoLimpieza = limpiezaResults?.costoLimpieza ?? data.costoLimpieza ?? 1.61;
-  
-  // Carguio
-  const requerimientoScoop = carguioResults?.requerimientoScoop ?? data.requerimientoScoop ?? 0.77;
-  const costoCarguio = carguioResults?.costoCarguio ?? data.costoCarguio ?? 0.63;
-  
-  // Transporte
-  const flotaCamiones = transporteResults?.flotaCamiones ?? data.flotaCamiones ?? 4.13;
-  const produccionFlotaCamiones = transporteResults?.produccionFlotaCamiones ?? data.produccionFlotaCamiones ?? 178.05;
-  const costoTransporte = transporteResults?.costoTransporte ?? data.costoTransporte ?? 1.39;
-  
-  // Requerimiento Equipos
-  const requerimientoPerforadora = data.requerimientoPerforadora ?? 1.09;
-  const requerimientoScoopsLimpieza = data.requerimientoScoopsLimpieza ?? 1.95;
-  const requerimientoScoopsCarguio = data.requerimientoScoopsCarguio ?? 0.77;
-  const requerimientoScoopRelleno = data.requerimientoScoopRelleno ?? 1.19;
-  const totalScoops = data.totalScoops ?? 3.91;
-  const flotaCamionesTransporte = data.flotaCamionesTransporte ?? 4.13;
-  
-  // Relleno Cementado
-  const costoTransporteRC = rellenoCementadoResults?.costoTransporte ?? data.costoTransporteRC ?? 3.63;
-  const costoMaterialRelleno = rellenoCementadoResults?.costoMaterialRelleno35 ?? data.costoMaterialRelleno ?? 4.69;
-  const costoTotalRelleno35 = rellenoCementadoResults?.costoTotalRelleno35 ?? data.costoTotalRelleno35 ?? 8.33;
-  const costoTotalRelleno30 = rellenoCementadoResults?.costoTotalRelleno30 ?? data.costoTotalRelleno30 ?? 8.00;
-  
-  // Relleno Detrítico
-  const costoTransporteRD = rellenoDetriticoResults?.costoTransporte ?? data.costoTransporteRD ?? 2.20;
-  const costoMaterialRellenoRD = rellenoDetriticoResults?.costoMaterialRelleno ?? data.costoMaterialRellenoRD ?? 0.50;
-  const costoTotalRellenoRD = rellenoDetriticoResults?.costoTotalRelleno ?? data.costoTotalRellenoRD ?? 2.70;
-  
-  // Costos Finales
-  const costoMinadoProyectado = data.costoMinadoProyectado ?? 11.82;
-  const costoMinado = data.costoMinado ?? 12.25;
+  const {
+    projectCode,
+    burden,
+    espaciamiento,
+    volumenRotaTaladro,
+    tonelajePerforado,
+    librasAnfo,
+    alturaBanco,
+    costoPerforacionMetro,
+    costoPerforacionTon,
+    numeroPerforadoras,
+    metrosPerforado,
+    costoVoladura,
+    requerimientoScoops,
+    costoLimpieza,
+    requerimientoScoop,
+    costoCarguio,
+    flotaCamiones,
+    produccionFlotaCamiones,
+    costoTransporte,
+    requerimientoPerforadora,
+    requerimientoScoopsLimpieza,
+    requerimientoScoopsCarguio,
+    requerimientoScoopRelleno,
+    totalScoops,
+    flotaCamionesTransporte,
+    costoTransporteRC,
+    costoMaterialRelleno,
+    costoTotalRelleno35,
+    costoTotalRelleno30,
+    costoTransporteRD,
+    costoMaterialRellenoRD,
+    costoTotalRellenoRD,
+    costoMinadoProyectado,
+    costoMinado,
+  } = usePDFStore();
 
   const generatePDF = () => {
     const doc = new jsPDF();
@@ -181,9 +97,9 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
       { label: "Burden", value: burden, unit: "m" },
       { label: "Espaciamiento", value: espaciamiento, unit: "m" },
       { label: "Volumen ( Rotura x Taladro )", value: volumenRotaTaladro, unit: "m3" },
-      { label: "Tonelaje", value: tonelaje, unit: "Ton/Tal" },
+      { label: "Tonelaje", value: tonelajePerforado, unit: "Ton/Tal" },
       { label: "Libras de anfo", value: librasAnfo, unit: "lib anfo/Talad" },
-      { label: "Altura de carga", value: alturaCarga, unit: "m" },
+      { label: "Altura de carga", value: alturaBanco, unit: "m" },
     ]);
 
     // Perforación
@@ -321,9 +237,9 @@ export default function Preview({ data = {}, onBack }: PreviewProps) {
             <ReportRow label="Burden" value={burden} unit="m" />
             <ReportRow label="Espaciamiento" value={espaciamiento} unit="m" />
             <ReportRow label="Volumen ( Rotura x Taladro )" value={volumenRotaTaladro} unit="m3" />
-            <ReportRow label="Tonelaje" value={tonelaje} unit="Ton/Tal" />
+            <ReportRow label="Tonelaje" value={tonelajePerforado} unit="Ton/Tal" />
             <ReportRow label="Libras de anfo" value={librasAnfo} unit="lib anfo/Talad" />
-            <ReportRow label="Altura de carga" value={alturaCarga} unit="m" />
+            <ReportRow label="Altura de carga" value={alturaBanco} unit="m" />
           </tbody>
         </table>
       </section>

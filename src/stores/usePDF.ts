@@ -8,9 +8,9 @@ interface PDFState extends PDFData {
     setBurden: (burden: number) => void;
     setEspaciamiento: (espaciamiento: number) => void;
     setVolumenRotaTaladro: (volumen: number) => void;
-    setTonelaje: (tonelaje: number) => void;
+    setTonelajePerforado: (tonelaje: number) => void;
     setLibrasAnfo: (libras: number) => void;
-    setAlturaCarga: (altura: number) => void;
+    setAlturaBanco: (altura: number) => void;
     setCostoPerforacionMetro: (costo: number) => void;
     setCostoPerforacionTon: (costo: number) => void;
     setNumeroPerforadoras: (numero: number) => void;
@@ -49,9 +49,9 @@ export const usePDFStore = create<PDFState>((set) => ({
     setBurden: (burden: number) => set({ burden: burden }),
     setEspaciamiento: (espaciamiento: number) => set({ espaciamiento: espaciamiento }),
     setVolumenRotaTaladro: (volumen: number) => set({ volumenRotaTaladro: volumen }),
-    setTonelaje: (tonelaje: number) => set({ tonelaje: tonelaje }),
+    setTonelajePerforado: (tonelaje: number) => set({ tonelajePerforado: tonelaje }),
     setLibrasAnfo: (libras: number) => set({ librasAnfo: libras }),
-    setAlturaCarga: (altura: number) => set({ alturaCarga: altura }),
+    setAlturaBanco: (altura: number) => set({ alturaBanco: altura }),
     setCostoPerforacionMetro: (costo: number) => set({ costoPerforacionMetro: costo }),
     setCostoPerforacionTon: (costo: number) => set({ costoPerforacionTon: costo }),
     setNumeroPerforadoras: (numero: number) => set({ numeroPerforadoras: numero }),

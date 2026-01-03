@@ -1,9 +1,11 @@
 "use client";
 
+import {useEffect } from "react";
 import TransporteInputs from "./TransporteInputs";
 import TransporteResults from "./TransporteResults";
 import { calcularTransporte } from "./transporteCalculations";
 import { useTransporteStore } from "@/src/stores/useMalla";
+import { usePDFStore } from "@/src/stores/usePDF";
 
 export default function TransportePage() {
   const {
@@ -37,6 +39,24 @@ export default function TransportePage() {
     costoMantenimientoCamion,
     tiempoCarguioCamionTolva,
   });
+
+  /* guardar los resulatdo con Zustand*/
+
+  const { setFlotaCamiones, setProduccionFlotaCamiones, setCostoTransporte } =
+    usePDFStore();
+
+    useEffect(() => {
+    setFlotaCamiones(resultados.flotaCamiones);
+    setProduccionFlotaCamiones(resultados.produccionFlotaCamiones);
+    setCostoTransporte(resultados.costoTransporte);
+    }, [
+      resultados.flotaCamiones,
+      resultados.produccionFlotaCamiones,
+      resultados.costoTransporte,
+      setFlotaCamiones,
+      setProduccionFlotaCamiones,
+      setCostoTransporte,
+    ]);
 
   return (
     <div className="flex flex-col w-full">

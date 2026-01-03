@@ -4,6 +4,8 @@ import { useCarguioStore } from "@/src/stores/useMalla";
 import CarguioInputs from "./CarguioInputs";
 import CarguioResults from "./CarguioResults";
 import { calcularCarguio } from "./carguioCalculations";
+import { usePDFStore } from "@/src/stores/usePDF";
+import { useEffect } from "react";
 
 export default function CarguioPage() {
   const {
@@ -37,6 +39,21 @@ export default function CarguioPage() {
     numeroGuardiasPorDia,
     costoHoraDeEquipo,
   });
+
+
+  /* guardar los resulatdo con Zustand*/
+
+  const { setRequerimientoScoop, setCostoCarguio } = usePDFStore();
+
+  useEffect(() => {
+    setRequerimientoScoop(resultados.requerimientoScoop);
+    setCostoCarguio(resultados.costoCarguio);
+  }, [
+    resultados.requerimientoScoop,
+    resultados.costoCarguio,
+    setRequerimientoScoop,
+    setCostoCarguio,
+  ]);
 
   return (
     <div className="flex flex-col w-full">

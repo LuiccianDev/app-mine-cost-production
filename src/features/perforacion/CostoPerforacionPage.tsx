@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect } from 'react';
 import CostoPerforacionInputs from './CostoPerforacionInputs';
 import CostoPerforacionResults from './CostoPerforacionResults';
 import { calcularCostoPerforacion} from './costoPerforacionCalculations';
 import { useCostosPerforacionStore } from '@/src/stores/useMalla';
+import { usePDFStore } from "@/src/stores/usePDF";
 
 export default function CostoPerforacionPage() {
 
@@ -22,6 +24,23 @@ export default function CostoPerforacionPage() {
           rendimientoBroca,
           tonelajePerforado,
           alturaBanco,});
+
+  /* guardar los resulatdo con Zustand*/ 
+  const { 
+    setCostoPerforacionMetro,
+    setCostoPerforacionTon,
+  } = usePDFStore();
+
+  useEffect(() => {
+    setCostoPerforacionMetro(resultados.costoPerforacionPorMetro);
+    setCostoPerforacionTon(resultados.costoPerforacionPorTon);
+  }, [
+    resultados.costoPerforacionPorMetro,
+    resultados.costoPerforacionPorTon,
+    setCostoPerforacionMetro,
+    setCostoPerforacionTon,
+  ]);
+
 
   return (
     <div className="flex flex-col w-full">

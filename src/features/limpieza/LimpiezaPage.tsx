@@ -4,6 +4,8 @@ import { useLimpiezaStore } from "@/src/stores/useMalla";
 import LimpiezaInputs from "./LimpiezaInputs";
 import LimpiezaResults from "./LimpiezaResults";
 import { calcularLimpieza } from "./limpiezaCalculations";
+import { usePDFStore } from "@/src/stores/usePDF";
+import { useEffect } from "react";
 
 export default function LimpiezaPage() {
   const {
@@ -35,6 +37,20 @@ export default function LimpiezaPage() {
     numeroGuardiasPorDia,
     costoHoraDeEquipo,
   });
+
+  /* guardar los resulatdo con Zustand*/
+
+  const { setRequerimientoScoops, setCostoLimpieza } = usePDFStore();
+
+  useEffect(() => {
+    setRequerimientoScoops(resultados.requerimientoScoops);
+    setCostoLimpieza(resultados.costoLimpieza);
+  }, [
+    resultados.requerimientoScoops,
+    resultados.costoLimpieza,
+    setRequerimientoScoops,
+    setCostoLimpieza,
+  ]);
 
   return (
     <div className="flex flex-col w-full">

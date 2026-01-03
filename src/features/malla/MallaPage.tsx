@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect } from "react";
 import MallaForm from "./MallaInputs";
 import MallaResultados from "./MallaResults";
 import { calcularMalla} from "./mallaCalculations";
 import { useMallaStore } from "@/src/stores/useMalla";
+import { usePDFStore } from "@/src/stores/usePDF";
 
 export default function MallaSection() {
 
@@ -15,6 +17,8 @@ export default function MallaSection() {
     densidadAnfo,
   } = useMallaStore();
 
+  /*  */
+
   const resultados = calcularMalla({
     alturaBanco,
     densidadMaterial,
@@ -22,6 +26,41 @@ export default function MallaSection() {
     diametroTaladro,
     densidadAnfo,
   });
+
+
+  /* guardar los resulatdo con Zustand*/
+
+  const {
+    setBurden, 
+    setEspaciamiento, 
+    setVolumenRotaTaladro, 
+    setTonelajePerforado,
+    setLibrasAnfo,
+    setAlturaBanco
+  } = usePDFStore();
+
+  // CORRECTO: Actualiza Zustand solo cuando cambian los resultados
+  useEffect(() => {
+    setBurden(resultados.burden);
+    setEspaciamiento(resultados.espaciamiento);
+    setVolumenRotaTaladro(resultados.volumenRotaTaladro);
+    setTonelajePerforado(resultados.tonelajePerforado);
+    setLibrasAnfo(resultados.librasAnfo);
+    setAlturaBanco(resultados.alturaBanco);
+  }, [
+    resultados.burden,
+    resultados.espaciamiento,
+    resultados.volumenRotaTaladro,
+    resultados.tonelajePerforado,
+    resultados.librasAnfo,
+    resultados.alturaBanco,
+    setBurden,
+    setEspaciamiento,
+    setVolumenRotaTaladro,
+    setTonelajePerforado,
+    setLibrasAnfo,
+    setAlturaBanco,
+  ]);
 
 
   return (

@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect } from "react";
 import RellenoDetriticoInputs from "./RellenoDetriticoInputs";
 import RellenoDetriticoResults from "./RellenoDetriticoResults";
 import { calcularRellenoDetritico } from "./rellenoDetriticoCalculations";
 import { useRellenoDetriticoStore } from "@/src/stores/useMalla";
+import { usePDFStore } from "@/src/stores/usePDF";
 
 export default function RellenoDetriticoPage() {
   const {
@@ -39,6 +41,29 @@ export default function RellenoDetriticoPage() {
     costoPreparacionAgregados,
     costoTransporteDesmonte,
   });
+
+
+    /* guardar los resulatdo con Zustand*/
+
+  const {
+    setCostoTransporteRD,
+    setCostoMaterialRellenoRD,
+    setCostoTotalRellenoRD,
+  } = usePDFStore();
+
+
+  useEffect(() => {
+    setCostoTransporteRD(resultados.costoTransporte);
+    setCostoMaterialRellenoRD(resultados.costoMaterialRelleno);
+    setCostoTotalRellenoRD(resultados.costoTotalRelleno);
+  }, [
+    resultados.costoTransporte,
+    resultados.costoMaterialRelleno,
+    resultados.costoTotalRelleno,
+    setCostoTransporteRD,
+    setCostoMaterialRellenoRD,
+    setCostoTotalRellenoRD,
+  ]);
 
   return (
     <div className="flex flex-col w-full">

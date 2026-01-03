@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect } from "react";
 import RellenoCementadoInputs from "./RellenoCementadoInputs";
 import RellenoCementadoResults from "./RellenoCementadoResults";
 import { calcularRellenoCementado } from "./rellenoCementadoCalculations";
 import { useRellenoCementadoStore } from "@/src/stores/useMalla";
+import { usePDFStore } from "@/src/stores/usePDF";
 
 export default function RellenoCementadoPage() {
   const {
@@ -43,6 +45,32 @@ export default function RellenoCementadoPage() {
     costoTransporteRelaveChura,
     costoCemento,
   });
+
+    /* guardar los resulatdo con Zustand*/
+
+  const {
+    setCostoTransporteRC,
+    setCostoMaterialRelleno,
+    setCostoTotalRelleno35,
+    setCostoTotalRelleno30,
+  } = usePDFStore();
+
+  useEffect(() => {
+    setCostoTransporteRC(resultados.costoTransporte);
+    setCostoMaterialRelleno(resultados.costoMaterialRelleno35);
+    setCostoTotalRelleno35(resultados.costoTotalRelleno35);
+    setCostoTotalRelleno30(resultados.costoTotalRelleno30);
+  }, [
+    resultados.costoTransporte,
+    resultados.costoMaterialRelleno35,
+    resultados.costoTotalRelleno35,
+    resultados.costoTotalRelleno30,
+    setCostoTransporteRC,
+    setCostoMaterialRelleno,
+    setCostoTotalRelleno35,
+    setCostoTotalRelleno30,
+  ]);
+
 
   return (
     <div className="flex flex-col w-full">

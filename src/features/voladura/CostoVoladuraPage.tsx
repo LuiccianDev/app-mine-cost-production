@@ -1,12 +1,15 @@
 "use client";
 
+import { useEffect } from "react";
 import CostoVoladuraInputs from "./CostoVoladuraInputs";
 import CostoVoladuraResults from "./CostoVoladuraResults";
-import {calculateCostoVoladura,} from "./costoVoladuraCalculations";
+import { calculateCostoVoladura } from "./costoVoladuraCalculations";
 import { useCostosVoladurasStore } from "@/src/stores/useMalla";
-
+import { usePDFStore } from "@/src/stores/usePDF";
 
 export default function CostoVoladuraPage() {
+
+  /* Get values  */
   const {
     costoAnfo,
     costoDinamita,
@@ -23,6 +26,7 @@ export default function CostoVoladuraPage() {
     tiempoEmpleadoCarguio,
   } = useCostosVoladurasStore();
 
+  /* Get resultt */
   const resultados = calculateCostoVoladura({
     costoAnfo,
     costoDinamita,
@@ -38,6 +42,14 @@ export default function CostoVoladuraPage() {
     numeroHombresCarguio,
     tiempoEmpleadoCarguio,
   });
+
+  /* guardar los resulatdo con Zustand*/
+
+  const { setCostoVoladura } = usePDFStore();
+
+  useEffect(() => {
+    setCostoVoladura(resultados.costoVoladuraPorTonelada);
+  }   , [resultados.costoVoladuraPorTonelada, setCostoVoladura]);
 
   return (
     <div className="flex flex-col w-full">
