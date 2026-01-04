@@ -3,6 +3,8 @@ import FormField from '../../components/ui/FormField'
 import { useMallaStore } from '@/src/stores/useMalla'
 import { useSharedStore } from '@/src/stores/useSharedStore'
 
+import { motion, AnimatePresence } from 'motion/react'
+
 type MallaFormProps = {
   resultsComponent?: React.ReactNode
 }
@@ -84,9 +86,21 @@ export default function MallaForm({ resultsComponent }: MallaFormProps) {
         />
       </div>
 
-      {isOpen && resultsComponent && (
-        <div className="mt-6 border-t border-gray-200 pt-6">{resultsComponent}</div>
-      )}
+      <AnimatePresence initial={false} mode="wait">
+        {isOpen && resultsComponent && (
+          <motion.div
+            key="results"
+            layout
+            className="mt-6 border-t border-gray-200 pt-6"
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.1, ease: 'easeInOut' }}
+          >
+            {resultsComponent}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

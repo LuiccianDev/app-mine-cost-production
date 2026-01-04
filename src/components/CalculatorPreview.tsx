@@ -1,6 +1,8 @@
 'use client'
 import { jsPDF } from 'jspdf'
 import { usePDFStore } from '@/src/stores/usePDF'
+import { motion, press, animate } from 'motion/react'
+import { useEffect } from 'react'
 
 export type PreviewProps = {
   onBack?: () => void
@@ -216,6 +218,20 @@ export default function Preview({ onBack }: PreviewProps) {
     doc.save(`Costos_Produccion_${projectCode}_${new Date().toISOString().split('T')[0]}.pdf`)
   }
 
+  useEffect(() => {
+    press('.button-press-onBack', (element) => {
+      animate(element, { scale: 0.95 }, { type: 'spring', stiffness: 1000 })
+      return () => animate(element, { scale: 1 }, { type: 'spring', stiffness: 500 })
+    })
+  }, [])
+
+  useEffect(() => {
+    press('.button-press-generatePDF', (element) => {
+      animate(element, { scale: 0.95 }, { type: 'spring', stiffness: 1000 })
+      return () => animate(element, { scale: 1 }, { type: 'spring', stiffness: 500 })
+    })
+  }, [])
+
   return (
     <div className="w-full">
       {/* Header con botones */}
@@ -223,33 +239,66 @@ export default function Preview({ onBack }: PreviewProps) {
         <h1 className="text-2xl font-bold text-gray-900">Reporte Preview</h1>
         <div className="flex items-center gap-3">
           {onBack && (
-            <button
-              onClick={onBack}
-              className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-5 py-2.5 font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50"
+            <motion.div
+              className="button-press-onBack"
+              whileHover={{
+                scale: [null, 1.03],
+                transition: {
+                  duration: 0.5,
+                  times: [0, 0.6],
+                  ease: ['easeInOut'],
+                },
+              }}
+              transition={{
+                duration: 0.5,
+                ease: 'easeOut',
+              }}
             >
-              Back to Edit
-            </button>
+              <button
+                onClick={onBack}
+                className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-5 py-2.5 font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50"
+              >
+                Back to Edit
+              </button>
+            </motion.div>
           )}
-          <button
-            onClick={generatePDF}
-            className="flex items-center gap-2 rounded-lg bg-gray-900 px-5 py-2.5 font-medium text-white shadow-sm transition-all hover:bg-gray-800"
+
+          <motion.div
+            className="button-press-generatePDF"
+            whileHover={{
+              scale: [null, 1.03],
+              transition: {
+                duration: 0.5,
+                times: [0, 0.6],
+                ease: ['easeInOut'],
+              },
+            }}
+            transition={{
+              duration: 0.5,
+              ease: 'easeOut',
+            }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="h-4 w-4"
+            <button
+              onClick={generatePDF}
+              className="flex items-center gap-2 rounded-lg bg-gray-900 px-5 py-2.5 font-medium text-white shadow-sm transition-all hover:bg-gray-800"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
-              />
-            </svg>
-            Download PDF
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="h-4 w-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+                />
+              </svg>
+              Download PDF
+            </button>
+          </motion.div>
         </div>
       </div>
 

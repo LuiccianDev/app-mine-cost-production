@@ -1,9 +1,16 @@
 'use client'
 
 import Image from 'next/image'
-import { motion } from 'motion/react'
+import { motion, press, animate } from 'motion/react'
+import { useEffect } from 'react'
 
 export default function Hero() {
+  useEffect(() => {
+    press('.button-press-hero', (element) => {
+      animate(element, { scale: 0.95 }, { type: 'spring', stiffness: 1000 })
+      return () => animate(element, { scale: 1 }, { type: 'spring', stiffness: 500 })
+    })
+  }, [])
   return (
     <section className="relative h-[calc(100vh-5rem)] w-full">
       <div className="container mx-auto flex h-full flex-col justify-between px-8 pt-10 pb-20">
@@ -86,7 +93,7 @@ export default function Hero() {
 
             <motion.a
               href="/calculadora"
-              className="inline-flex items-center gap-2 rounded bg-slate-900 px-8 py-3 text-sm font-medium text-white shadow-lg transition-colors hover:bg-slate-800"
+              className="button-press-hero inline-flex items-center gap-2 rounded bg-slate-900 px-8 py-3 text-sm font-medium text-white shadow-lg transition-colors hover:bg-slate-800"
               initial={{ y: 60, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.9, ease: 'easeOut' }}

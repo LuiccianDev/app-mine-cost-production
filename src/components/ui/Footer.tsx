@@ -1,7 +1,16 @@
 'use client'
+import { motion, press, animate } from 'motion/react'
+import { useEffect } from 'react'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+
+  useEffect(() => {
+    press('.button-press', (element) => {
+      animate(element, { scale: 0.95 }, { type: 'spring', stiffness: 1000 })
+      return () => animate(element, { scale: 1 }, { type: 'spring', stiffness: 500 })
+    })
+  }, [])
 
   return (
     <footer className="relative flex h-screen w-full flex-col bg-black px-8 py-12 text-white md:px-16 lg:px-20">
@@ -51,14 +60,37 @@ export default function Footer() {
           </h2>
 
           <div className="flex flex-wrap items-center gap-6 pt-2">
-            <a
+            <motion.a
+              whileHover={{
+                scale: [null, 1.05],
+                transition: {
+                  duration: 0.5,
+                  times: [0, 0.6],
+                  ease: ['easeInOut'],
+                },
+              }}
+              transition={{
+                duration: 0.3,
+                ease: 'easeOut',
+              }}
               href="/contact"
-              className="rounded-sm bg-white px-6 py-3 text-sm font-normal text-black transition-colors hover:bg-gray-200"
+              className="button-press rounded-sm bg-white px-6 py-3 text-sm font-normal text-black transition-colors"
             >
               Get in Touch
-            </a>
+            </motion.a>
             <div className="flex items-center gap-2 text-sm font-light">
-              <span className="h-2 w-2 rounded-full bg-white"></span>
+              <motion.span
+                className="size-3 rounded-full"
+                animate={{
+                  opacity: [1, 0.4, 1],
+                  backgroundColor: ['#00fff2', '#00fff2', '#00fff2'],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              />
               <span>Available For Work</span>
             </div>
           </div>
