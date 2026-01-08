@@ -8,8 +8,6 @@ type MallaCalculationData = MallaData & Pick<SharedData, 'alturaBanco'>
 export function calcularMalla(data: MallaCalculationData): MallaResultados {
   const { alturaBanco, densidadMaterial, factorPotencia, diametroTaladro, densidadAnfo } = data
 
-  // Convert to meters and kg/m3 where needed
-  const alturaBanco_m = alturaBanco * 0.3048 // Pies to metros (Altura de Banco)
   const diametroTaladro_m = diametroTaladro * 0.0254 // Pulgadas a metros
   const radio_m = diametroTaladro_m / 2
 
@@ -18,7 +16,7 @@ export function calcularMalla(data: MallaCalculationData): MallaResultados {
   // Espaciamiento = 1.25 B
 
   // PASO 1: Cálculos iniciales en términos de B²
-  const Volumen = alturaBanco_m * 1.25 // Volumen
+  const Volumen = alturaBanco * 1.25 // Volumen
 
   const Tonelaje = Volumen * densidadMaterial // Tonelaje = Volumen × Densidad (Ton)
 
@@ -39,7 +37,7 @@ export function calcularMalla(data: MallaCalculationData): MallaResultados {
 
   const a = AlturaCargaAnfo // Coeficiente de B²
   const b = 0.7 // Coeficiente de B (negativo porque es -0.3B)
-  const c = -alturaBanco_m // Término independiente (negativo porque es -H)
+  const c = -alturaBanco // Término independiente (negativo porque es -H)
 
   // Fórmula cuadrática: B = (-b ± √(b² - 4ac)) / (2a)
   const discriminante = Math.sqrt(b * b - 4 * a * c)
@@ -51,7 +49,7 @@ export function calcularMalla(data: MallaCalculationData): MallaResultados {
   const espaciamientoFinal = 1.25 * burden // 1.25 × B (m)
 
   // PASO 5: Recalcular todos los valores con el Burden final
-  const volumenRotaTaladro = alturaBanco_m * burden * espaciamientoFinal // H × B × E (m³)
+  const volumenRotaTaladro = alturaBanco * burden * espaciamientoFinal // H × B × E (m³)
   const tonelajeFinal = volumenRotaTaladro * densidadMaterial // Tonelaje por taladro (Ton/Tal)
   const librasAnfoFinal = tonelajeFinal * factorPotencia // Libras ANFO por taladro (lib/Tal)
   const alturaCargaFinal = librasAnfoFinal / CapacidadAnfoPorMetro // Altura de carga final (m)
@@ -63,6 +61,6 @@ export function calcularMalla(data: MallaCalculationData): MallaResultados {
     tonelajePerforado: tonelajeFinal,
     librasAnfo: librasAnfoFinal,
     alturaCarga: alturaCargaFinal,
-    alturaBanco: alturaBanco_m, // Guardar altura de banco en metros
+    alturaBanco: alturaBanco, // Guardar altura de banco en metros
   }
 }

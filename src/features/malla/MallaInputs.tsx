@@ -54,7 +54,7 @@ export default function MallaForm({ resultsComponent }: MallaFormProps) {
           name="alturaBanco"
           value={alturaBanco}
           onChange={(e) => setAlturaBanco(parseFloat(e.target.value) || 0)}
-          unit="pies"
+          unit="m"
         />
         <FormField
           label="Densidad del Material"
