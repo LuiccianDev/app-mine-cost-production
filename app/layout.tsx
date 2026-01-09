@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     description: 'Mining cost and production calculator for mining operations.',
     images: [
       {
-        url: '/SEO.png',
+        url: '/img/SEO.png',
         width: 1200,
         height: 630,
         alt: 'Mining Costs and Production SEO Image',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Mining Costs and Production | Mining Calculator',
     description: 'Mining cost and production calculator for mining operations.',
-    images: ['/SEO.png'],
+    images: ['/img/SEO.png'],
   },
 }
 
@@ -45,18 +45,20 @@ export default function RootLayout({
     <html lang="en" className="scrollbar-hide overflow-y-scroll">
       <head>
         {/* SEO meta tags adicionales */}
+        <meta name="description" content="Mining cost and production calculator for mining operations. Optimize your processes and maximize profitability." />
         <meta name="author" content="Mining Costs and Production Team" />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#1a202c" />
+        <meta name="language" content="English" />
         <link rel="canonical" href="https://app-mine-cost-production.vercel.app" />
         {/* Facebook Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://app-mine-cost-production.vercel.app" />
-        <meta property="og:image" content="/SEO.png" />
+        <meta property="og:image" content="/img/SEO.png" />
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="/SEO.png" />
+        <meta name="twitter:image" content="/img/SEO.png" />
         {/* Structured Data */}
         <script
           type="application/ld+json"

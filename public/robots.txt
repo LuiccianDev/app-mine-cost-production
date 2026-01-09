@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /*/
+
 Sitemap: https://app-mine-cost-production.vercel.app/sitemap.xml
