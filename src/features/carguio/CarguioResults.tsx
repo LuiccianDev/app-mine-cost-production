@@ -1,4 +1,4 @@
-import type { CarguioResultados } from './carguioCalculations'
+import type { CarguioResultados } from '@/src/types/carguio.types'
 
 type CarguioResultsProps = {
   resultados: CarguioResultados

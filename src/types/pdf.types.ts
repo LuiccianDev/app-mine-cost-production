@@ -58,7 +58,7 @@ export type PDFData = {
 }
 
 export const defaultPDFDataValues: PDFData = {
-  projectCode: 'TEXT',
+  projectCode: 'EXP-001',
   // Malla de Perforación
   burden: 0,
   espaciamiento: 0,

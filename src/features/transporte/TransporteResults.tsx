@@ -1,4 +1,4 @@
-import type { TransporteResultados } from './transporteCalculations'
+import type { TransporteResultados } from '@/src/types/transporte.types'
 
 type TransporteResultsProps = {
   resultados: TransporteResultados

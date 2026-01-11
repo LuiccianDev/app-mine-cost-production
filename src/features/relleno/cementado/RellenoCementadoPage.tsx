@@ -50,7 +50,6 @@ export default function RellenoCementadoPage() {
 
   const {
     /* Add sum total scoops */
-    requerimientoPerforadora,
     requerimientoScoopsLimpieza,
     requerimientoScoopsCarguio,
     requerimientoScoopRelleno,
@@ -64,10 +63,7 @@ export default function RellenoCementadoPage() {
   } = usePDFStore()
 
   const totalScoops =
-    requerimientoPerforadora +
-    requerimientoScoopsLimpieza +
-    requerimientoScoopsCarguio +
-    requerimientoScoopRelleno
+    requerimientoScoopsLimpieza + requerimientoScoopsCarguio + requerimientoScoopRelleno
 
   useEffect(() => {
     setCostoTransporteRC(resultados.costoTransporte)

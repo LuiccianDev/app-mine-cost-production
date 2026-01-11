@@ -1,4 +1,4 @@
-import type { RellenoDetriticoResultados } from './rellenoDetriticoCalculations'
+import type { RellenoDetriticoResultados } from '@/src/types/rellenoDentritico.types'
 
 type RellenoDetriticoResultsProps = {
   resultados: RellenoDetriticoResultados

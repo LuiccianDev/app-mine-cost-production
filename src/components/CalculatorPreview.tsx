@@ -140,32 +140,6 @@ export default function Preview({ onBack }: PreviewProps) {
       { label: 'Costo de transporte ( US$ / Ton )', value: costoTransporte, unit: 'US$ / Ton' },
     ])
 
-    // Requerimiento Equipos
-    addSection('REQUERIMIENTO EQUIPOS', [
-      { label: 'Nº perforadora', value: requerimientoPerforadora, unit: 'Perforadoras' },
-      {
-        label: 'Requerimiento de scoops - limpieza',
-        value: requerimientoScoopsLimpieza,
-        unit: 'Scoop',
-      },
-      {
-        label: 'Requerimiento de scoops - carguio',
-        value: requerimientoScoopsCarguio,
-        unit: 'Scoop',
-      },
-      {
-        label: 'Requerimiento de scoop - relleno',
-        value: requerimientoScoopRelleno,
-        unit: 'Scoop',
-      },
-      { label: 'Total scoops', value: totalScoops, unit: 'Scoop' },
-      {
-        label: 'Flota de camiones - transporte',
-        value: flotaCamionesTransporte,
-        unit: 'Camiones en Operacion',
-      },
-    ])
-
     // Relleno Cementado
     addSection('RELLENO CEMENTADO', [
       { label: 'Costo de transporte ( US$ / Ton )', value: costoTransporteRC, unit: 'US$/Ton' },
@@ -195,24 +169,55 @@ export default function Preview({ onBack }: PreviewProps) {
       ])
     }
 
-    // Costos Finales
-    yPos += 10
-    doc.setFontSize(10)
-    doc.setFont('helvetica', 'normal')
-    doc.text('Costo minado proyectado ( US$ / Ton )', 22, yPos)
-    doc.text('=', 120, yPos)
-    doc.setFont('helvetica', 'bold')
-    doc.text(costoMinadoProyectado.toFixed(2), 150, yPos, { align: 'right' })
-    doc.setFont('helvetica', 'normal')
-    doc.text('US$ / Ton', 155, yPos)
-    yPos += 7
+    // Costos Finales - Nueva sección
+    addSection('COSTOS TOTALES', [
+      {
+        label: 'Costo minado proyectado ( US$ / Ton )',
+        value: costoMinadoProyectado,
+        unit: 'US$ / Ton',
+      },
+      { label: 'Costo minado ( US$ / Ton )', value: costoMinado, unit: 'US$ / Ton' },
+    ])
 
-    doc.text('Costo minado ( US$ / Ton )', 22, yPos)
-    doc.text('=', 120, yPos)
+    // Nueva página para Requerimientos de Equipos
+    doc.addPage()
+    yPos = 20
+
+    // Header Requerimientos
+    doc.setFontSize(16)
     doc.setFont('helvetica', 'bold')
-    doc.text(costoMinado.toFixed(2), 150, yPos, { align: 'right' })
-    doc.setFont('helvetica', 'normal')
-    doc.text('US$ / Ton', 155, yPos)
+    doc.text('Requerimientos de Equipos', 20, yPos)
+    doc.text(projectCode, pageWidth - 40, yPos, { align: 'right' })
+    yPos += 10
+    doc.setLineWidth(0.5)
+    doc.line(20, yPos, pageWidth - 20, yPos)
+    yPos += 10
+
+    // Requerimiento Equipos
+    addSection('REQUERIMIENTO EQUIPOS', [
+      { label: 'Nº perforadora', value: requerimientoPerforadora, unit: 'Perforadoras' },
+      {
+        label: 'Requerimiento de scoops - limpieza',
+        value: requerimientoScoopsLimpieza,
+        unit: 'Scoop',
+      },
+      {
+        label: 'Requerimiento de scoops - carguio',
+        value: requerimientoScoopsCarguio,
+        unit: 'Scoop',
+      },
+      {
+        label: 'Requerimiento de scoop - relleno',
+        value: requerimientoScoopRelleno,
+        unit: 'Scoop',
+      },
+      { label: 'Total scoops', value: totalScoops, unit: 'Scoop' },
+      {
+        label: 'Flota de camiones - transporte',
+        value: flotaCamionesTransporte,
+        unit: 'Camiones en Operacion',
+      },
+    ])
 
     // Save PDF
     doc.save(`Costos_Produccion_${projectCode}_${new Date().toISOString().split('T')[0]}.pdf`)
@@ -448,12 +453,12 @@ export default function Preview({ onBack }: PreviewProps) {
                 unit="US$/Ton"
               />
               <ReportRow
-                label="Costo total relleno 3.5% ( US$ / Ton ) Minado Hz"
+                label="Costo total relleno 3.5% ( US$ / Ton )"
                 value={costoTotalRelleno35}
                 unit="US$/Ton"
               />
               <ReportRow
-                label="Costo total relleno 3.0% ( US$ / Ton ) Minado VT"
+                label="Costo total relleno 3.0% ( US$ / Ton )"
                 value={costoTotalRelleno30}
                 unit="US$/Ton"
               />
@@ -487,8 +492,11 @@ export default function Preview({ onBack }: PreviewProps) {
           </table>
         </section>
 
-        {/* Costos Finales */}
+        {/* Costos Totales */}
         <section className="mt-10 mb-8">
+          <h2 className="mb-0 px-4 py-2.5 text-xs font-bold tracking-wider text-gray-700 uppercase">
+            COSTOS TOTALES
+          </h2>
           <table className="w-full border-collapse bg-white">
             <tbody>
               <ReportRow
@@ -519,23 +527,23 @@ export default function Preview({ onBack }: PreviewProps) {
                 unit="Perforadoras"
               />
               <ReportRow
-                label="Requerimiento de scoops"
+                label="Requerimiento de scoops - limpieza"
                 value={requerimientoScoopsLimpieza}
                 unit="Scoop"
               />
               <ReportRow
-                label="Requerimiento de scoops"
+                label="Requerimiento de scoops - carguio"
                 value={requerimientoScoopsCarguio}
                 unit="Scoop"
               />
               <ReportRow
-                label="Requerimiento de scoop"
+                label="Requerimiento de scoop - relleno"
                 value={requerimientoScoopRelleno}
                 unit="Scoop"
               />
               <ReportRow label="Total scoops" value={totalScoops} unit="Scoop" />
               <ReportRow
-                label="Flota de camiones"
+                label="Flota de camiones - transporte"
                 value={flotaCamionesTransporte}
                 unit="Camiones en Operacion"
               />

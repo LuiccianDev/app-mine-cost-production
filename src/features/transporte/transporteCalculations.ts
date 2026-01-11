@@ -36,7 +36,7 @@ export function calcularTransporte(data: TransporteFormData): TransporteResultad
   // FLOTA DE CAMIONES = Nº de camiones por Pala × Nº Pala + 20 % Stand By de # Camiones
   const camionesBase = numeroCamionesPorTolva * requerimientoScoop
   const camionesStandBy = camionesBase * 0.2
-  const flotaCamiones = camionesBase + camionesStandBy
+  const flotaCamiones = camionesBase //! Se elimino el de de l asusm de cmaniones standby para sus suma de flta de cmanies totales
 
   // Camiones en operación y stand by
   const camionesOperacion = Math.floor(camionesBase)
