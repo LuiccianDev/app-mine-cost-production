@@ -7,9 +7,9 @@ export default function Products() {
     <section className="flex min-h-screen items-center py-16">
       <div className="container mx-auto w-full px-8">
         <div className="mb-12">
-          <h2 className="mb-4 text-2xl font-light">feature.</h2>
+          <h2 className="mb-4 text-3xl font-light">feature.</h2>
           <motion.p
-            className="max-w-md text-4xl text-gray-600"
+            className="max-w-md text-2xl text-gray-600  "
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -37,10 +37,10 @@ export default function Products() {
                 />
               </motion.div>
             </div>
-            <div className="max-w-2xl space-y-3 pl-20 text-xl">
-              <h3 className="font-light text-gray-900">Accurate Calculations</h3>
+            <div className="max-w-2xl space-y-3 pl-20 text-2xl">
+              <h3 className="text-gray-900">Accurate Calculations</h3>
               <motion.p
-                className="leading-relaxed text-gray-600"
+                className="leading-tight text-gray-600"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
@@ -68,10 +68,10 @@ export default function Products() {
                 />
               </motion.div>
             </div>
-            <div className="max-w-2xl space-y-3 pr-20 text-xl">
-              <h3 className="font-light text-gray-900">Easy Export</h3>
+            <div className="max-w-2xl space-y-3 pr-20 text-2xl">
+              <h3 className="text-gray-900">Easy Export</h3>
               <motion.p
-                className="leading-relaxed text-gray-600"
+                className="leading-tight text-gray-600"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}

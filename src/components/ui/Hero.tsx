@@ -48,7 +48,7 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <Image
-              src="/img/logo.webp"
+              src="/img/perfil.webp" //! change img for your photo
               alt="Luiccian Mine"
               fill
               className="object-cover"
@@ -82,7 +82,7 @@ export default function Hero() {
           {/* Descripción derecha abajo */}
           <div className="max-w-xl space-y-4 text-right">
             <motion.p
-              className="text-3xl text-slate-900"
+              className="text-3xl leading-tight text-slate-900"
               initial={{ y: 60, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}

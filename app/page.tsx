@@ -5,6 +5,7 @@ import About from '@/src/components/ui/About'
 import Products from '@/src/components/ui/Feature'
 import Faq from '@/src/components/ui/Faq'
 import BackToTop from '@/src/components/ui/BackToTop'
+import Sponsors from '@/src/components/ui/Sponsors'
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <Hero />
       <Products />
       <About />
+      <Sponsors />
       <Faq />
       <Footer />
       <BackToTop />

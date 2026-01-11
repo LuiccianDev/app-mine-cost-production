@@ -51,23 +51,23 @@ export default function Faq() {
       <div className="container mx-auto w-full px-8">
         <div className="grid items-start gap-20 md:grid-cols-2">
           <div className="item-center flex justify-center">
-            <h2 className="text-9xl font-light">FAQ.</h2>
+            <h2 className="text-9xl">FAQ.</h2>
           </div>
 
           <div className="max-w-2xl space-y-1">
             {faqData.map((faq, index) => (
-              <div key={index} className="border-b border-gray-200">
+              <div key={index} className="border-b border-gray-200 text-xl">
                 <button
                   onClick={() => toggleFaq(index)}
                   className="flex w-full items-center justify-between py-4 text-left transition-opacity hover:opacity-70"
                 >
-                  <span className="pr-4 text-base text-gray-900">{faq.question}</span>
-                  <span className="shrink-0 text-xl text-gray-400">
+                  <span className="pr-4 text-2xl text-gray-900">{faq.question}</span>
+                  <span className="shrink-0 text-2xl text-gray-400">
                     {openIndex === index ? '−' : '+'}
                   </span>
                 </button>
                 {openIndex === index && (
-                  <div className="pb-4 text-sm leading-relaxed text-gray-600">{faq.answer}</div>
+                  <div className="pb-4 text-xl leading-relaxed text-gray-600">{faq.answer}</div>
                 )}
               </div>
             ))}

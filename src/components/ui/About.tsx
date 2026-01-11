@@ -8,12 +8,12 @@ export default function About() {
     <section className="flex min-h-screen items-center py-10">
       <div className="container mx-auto w-full px-4 sm:px-8">
         <div className="mb-6 flex items-start justify-between">
-          <h2 className="text-2xl font-light">about.</h2>
+          <h2 className="text-3xl font-light">about.</h2>
         </div>
 
         <div className="mb-8">
           <motion.p
-            className="max-w-3xl text-4xl leading-tight font-light"
+            className="max-w-3xl text-2xl leading-tight font-light"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -32,7 +32,7 @@ export default function About() {
               transition={{ duration: 0.6 }}
             >
               <Image
-                src="/img/logo.webp"
+                src="/img/perfil.webp" //! change img for your photo
                 alt="About"
                 width={350}
                 height={467}
@@ -44,7 +44,7 @@ export default function About() {
 
           <div className="max-w-xl space-y-3">
             <motion.p
-              className="text-xl leading-relaxed text-gray-700 sm:text-2xl"
+              className="text-2xl leading-tight text-gray-700"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
