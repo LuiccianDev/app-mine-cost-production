@@ -30,7 +30,7 @@ A comprehensive web application for calculating costs and production parameters 
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - pnpm 10.8.0+
 
 ### Installation
@@ -103,15 +103,19 @@ public/                 # Static assets
 ## Key Features
 
 ### Real-time Calculations
+
 All calculations update instantly as you modify input values, providing immediate feedback.
 
 ### Persistent Storage
+
 Your calculations are automatically saved to browser local storage, so you never lose your work.
 
 ### Professional Reports
+
 Generate PDF reports with all your calculations formatted professionally.
 
 ### Responsive Design
+
 Works seamlessly on desktop, tablet, and mobile devices.
 
 ## Contributing

@@ -1,102 +1,46 @@
-"use client";
-import { useState, useMemo } from 'react';
-import CostoPerforacionInputs from './CostoPerforacionInputs';
-import CostoPerforacionResults from './CostoPerforacionResults';
-import { calcularCostoPerforacion, defaultCostoPerforacionValues } from './costoPerforacionCalculations';
-import { useCalculations } from '../../context/CalculationContext';
-import { STORAGE_KEYS } from '../../lib/storageKeys';
-import { usePersistedState } from '../../lib/hooks/usePersistedState';
-import { useDirtyFields } from '../../lib/hooks/useDirtyFields';
-import { useDerivedValue } from '../../lib/hooks/useDerivedValue';
-import { useSyncToContext } from '../../lib/hooks/useSyncToContext';
-import { useClientOnly } from '../../lib/hooks/useClientOnly';
+'use client'
+
+import { useEffect } from 'react'
+import CostoPerforacionInputs from './CostoPerforacionInputs'
+import CostoPerforacionResults from './CostoPerforacionResults'
+import { calcularCostoPerforacion } from './costoPerforacionCalculations'
+import { useCostosPerforacionStore } from '@/src/stores/useMalla'
+import { useSharedStore } from '@/src/stores/useSharedStore'
+import { usePDFStore } from '@/src/stores/usePDF'
 
 export default function CostoPerforacionPage() {
-  const { mallaResults, setCostoPerforacionResults } = useCalculations();
-  
-  // Use custom hooks for state management
-  const [inputValues, setInputValues] = usePersistedState(
-    STORAGE_KEYS.COSTO_PERFORACION_INPUTS,
-    defaultCostoPerforacionValues
-  );
+  const { costoBrocaAccesorios, costoEquipoPerforacion } = useCostosPerforacionStore()
+  const { tiempoPerforacion, rendimientoBroca, tonelajePerforado, alturaBanco } = useSharedStore()
 
-  const { dirtyFields, markDirty, clearDirty } = useDirtyFields(
-    STORAGE_KEYS.COSTO_PERFORACION_DIRTY
-  );
+  const resultados = calcularCostoPerforacion({
+    costoBrocaAccesorios,
+    costoEquipoPerforacion,
+    tiempoPerforacion,
+    rendimientoBroca,
+    tonelajePerforado,
+    alturaBanco,
+  })
 
-  const [showResults, setShowResults] = useState(false);
-  const isClient = useClientOnly();
+  /* guardar los resulatdo con Zustand*/
+  const { setCostoPerforacionMetro, setCostoPerforacionTon } = usePDFStore()
 
-  // Calculate derived values using the custom hook
-  const finalTonelaje = useDerivedValue(
-    mallaResults?.tonelaje 
-      ? parseFloat(mallaResults.tonelaje.toFixed(2))
-      : null,
-    inputValues.tonelaje,
-    'tonelaje',
-    dirtyFields
-  );
-
-  const finalAlturaBanco = useDerivedValue(
-    mallaResults?.alturaBanco 
-      ? parseFloat(mallaResults.alturaBanco.toFixed(2))
-      : null,
-    inputValues.alturaBanco,
-    'alturaBanco',
-    dirtyFields
-  );
-
-  // Valores finales con los campos derivados
-  const finalInputValues = useMemo(() => ({
-    ...inputValues,
-    tonelaje: finalTonelaje,
-    alturaBanco: finalAlturaBanco
-  }), [inputValues, finalTonelaje, finalAlturaBanco]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fieldName = e.target.name;
-    markDirty(fieldName);
-    setInputValues((prev: typeof defaultCostoPerforacionValues) => ({ 
-      ...prev, 
-      [fieldName]: parseFloat(e.target.value) || 0 
-    }));
-  };
-
-  const handleResetField = (fieldName: string) => {
-    clearDirty(fieldName);
-    
-    if (fieldName === 'tonelaje' && mallaResults?.tonelaje) {
-      setInputValues((prev: typeof defaultCostoPerforacionValues) => ({ 
-        ...prev, 
-        tonelaje: parseFloat(mallaResults.tonelaje.toFixed(2)) 
-      }));
-    } else if (fieldName === 'alturaBanco' && mallaResults?.alturaBanco) {
-      setInputValues((prev: typeof defaultCostoPerforacionValues) => ({ 
-        ...prev, 
-        alturaBanco: parseFloat(mallaResults.alturaBanco.toFixed(2)) 
-      }));
-    }
-  };
-
-  const resultados = useMemo(() => calcularCostoPerforacion(finalInputValues), [finalInputValues]);
-
-  // Sync results to context using custom hook
-  useSyncToContext(resultados, setCostoPerforacionResults);
+  useEffect(() => {
+    setCostoPerforacionMetro(resultados.costoPerforacionPorMetro)
+    setCostoPerforacionTon(resultados.costoPerforacionPorTon)
+  }, [
+    resultados.costoPerforacionPorMetro,
+    resultados.costoPerforacionPorTon,
+    setCostoPerforacionMetro,
+    setCostoPerforacionTon,
+  ])
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="w-full p-6 min-w-0">
-        <CostoPerforacionInputs 
-          inputValues={finalInputValues} 
-          onChange={handleChange}
-          showResults={showResults}
-          onToggleResults={() => setShowResults(!showResults)}
+    <div className="flex w-full flex-col">
+      <div className="w-full min-w-0 p-6">
+        <CostoPerforacionInputs
           resultsComponent={<CostoPerforacionResults resultados={resultados} />}
-          isAutoFilled={isClient && !!(mallaResults?.tonelaje && mallaResults?.alturaBanco)}
-          dirtyFields={dirtyFields}
-          onResetField={handleResetField}
         />
       </div>
     </div>
-  );
+  )
 }

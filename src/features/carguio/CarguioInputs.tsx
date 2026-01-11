@@ -1,37 +1,59 @@
-import FormField from '../../components/ui/FormField';
-
+import { useState } from 'react'
+import FormField from '../../components/ui/FormField'
+import { useCarguioStore } from '@/src/stores/useMalla'
+import { useSharedStore } from '@/src/stores/useSharedStore'
+import { motion, AnimatePresence } from 'motion/react'
 type CarguioInputsProps = {
-  inputValues: Record<string, number>;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  showResults: boolean;
-  onToggleResults: () => void;
-  resultsComponent?: React.ReactNode;
-  isAutoFilled?: boolean;
-  dirtyFields?: Set<string>;
-  onResetField?: (fieldName: string) => void;
-};
+  resultsComponent?: React.ReactNode
+}
 
-export default function CarguioInputs({ 
-  inputValues, 
-  onChange, 
-  showResults, 
-  onToggleResults, 
-  resultsComponent, 
-  isAutoFilled = false,
-  dirtyFields = new Set(),
-  onResetField
-}: CarguioInputsProps) {
+export default function CarguioInputs({ resultsComponent }: CarguioInputsProps) {
+  const [isOpen, setIsOpen] = useState(false)
+  const handleClick = () => {
+    setIsOpen(!isOpen)
+  }
+
+  const { produccionMina, setProduccionMina } = useSharedStore()
+
+  const {
+    ratioDM,
+    produccionDesmonte,
+    mineralMasDesmonte,
+    capacidadCuchara,
+    factorCuchara,
+    densidadRotaMineral,
+    tiempoDeUnPase,
+    disponibilidadMecanica,
+    disponibilidadOperativa,
+    numeroHorasPorGuardia,
+    numeroGuardiasPorDia,
+    costoHoraDeEquipo,
+
+    setRatioDM,
+    setProduccionDesmonte,
+    setMineralMasDesmonte,
+    setCapacidadCuchara,
+    setFactorCuchara,
+    setDensidadRotaMineral,
+    setTiempoDeUnPase,
+    setDisponibilidadMecanica,
+    setDisponibilidadOperativa,
+    setNumeroHorasPorGuardia,
+    setNumeroGuardiasPorDia,
+    setCostoHoraDeEquipo,
+  } = useCarguioStore()
+
   return (
-    <div className="border border-gray-200 rounded-xl p-6  shadow-sm">
+    <div className="rounded-xl border border-gray-200 p-6 shadow-sm">
       <div className="mb-5 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">Carguío</h2>
         <button
-          onClick={onToggleResults}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+          onClick={handleClick}
+          className="flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
         >
-          <span>{showResults ? 'Cerrar Resultados' : 'Ver Resultados'}</span>
+          <span>{isOpen ? 'Cerrar Resultados' : 'Ver Resultados'}</span>
           <svg
-            className={`w-4 h-4 transition-transform ${showResults ? 'rotate-180' : ''}`}
+            className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -44,105 +66,111 @@ export default function CarguioInputs({
         <FormField
           label="Producción Mineral"
           name="produccionMineral"
-          value={inputValues.produccionMineral}
-          onChange={onChange}
+          value={produccionMina}
+          onChange={(e) => setProduccionMina(parseFloat(e.target.value) || 0)}
           unit="TPD"
-          decimals={2}
-          isAutoFilled={isAutoFilled}
-          isDirty={dirtyFields.has('produccionMineral')}
-          onResetToCalculated={onResetField ? () => onResetField('produccionMineral') : undefined}
         />
         <FormField
           label="Ratio D / M"
           name="ratioDesmonteMineral"
-          value={inputValues.ratioDesmonteMineral}
-          onChange={onChange}
+          value={ratioDM}
+          onChange={(e) => setRatioDM(parseFloat(e.target.value) || 0)}
           unit="TPD"
         />
         <FormField
           label="Producción Desmonte"
           name="produccionDesmonte"
-          value={inputValues.produccionDesmonte}
-          onChange={onChange}
+          value={produccionDesmonte}
+          onChange={(e) => setProduccionDesmonte(parseFloat(e.target.value) || 0)}
           unit="TPD"
         />
         <FormField
           label="Mineral + Desmonte"
           name="mineralMasDesmonte"
-          value={inputValues.mineralMasDesmonte}
-          onChange={onChange}
+          value={mineralMasDesmonte}
+          onChange={(e) => setMineralMasDesmonte(parseFloat(e.target.value) || 0)}
           unit="TPD"
         />
         <FormField
           label="Capacidad de Cuchara"
           name="capacidadCuchara"
-          value={inputValues.capacidadCuchara}
-          onChange={onChange}
+          value={capacidadCuchara}
+          onChange={(e) => setCapacidadCuchara(parseFloat(e.target.value) || 0)}
           unit="yd³/pase"
         />
         <FormField
           label="Factor de Cuchara"
           name="factorCuchara"
-          value={inputValues.factorCuchara}
-          onChange={onChange}
+          value={factorCuchara}
+          onChange={(e) => setFactorCuchara(parseFloat(e.target.value) || 0)}
           unit="%"
         />
         <FormField
           label="Densidad rota material"
           name="densidadRotaMaterial"
-          value={inputValues.densidadRotaMaterial}
-          onChange={onChange}
+          value={densidadRotaMineral}
+          onChange={(e) => setDensidadRotaMineral(parseFloat(e.target.value) || 0)}
           unit="Ton/m3"
         />
         <FormField
           label="Tiempo de 1 pase"
-          name="tiempoPase"
-          value={inputValues.tiempoPase}
-          onChange={onChange}
+          name="tiempoDePase"
+          value={tiempoDeUnPase}
+          onChange={(e) => setTiempoDeUnPase(parseFloat(e.target.value) || 0)}
           unit="Seg/pase"
         />
         <FormField
           label="Disponibilidad Mecánica"
           name="disponibilidadMecanica"
-          value={inputValues.disponibilidadMecanica}
-          onChange={onChange}
+          value={disponibilidadMecanica}
+          onChange={(e) => setDisponibilidadMecanica(parseFloat(e.target.value) || 0)}
           unit="%"
         />
         <FormField
           label="Disponibilidad Operativa"
           name="disponibilidadOperativa"
-          value={inputValues.disponibilidadOperativa}
-          onChange={onChange}
+          value={disponibilidadOperativa}
+          onChange={(e) => setDisponibilidadOperativa(parseFloat(e.target.value) || 0)}
           unit="%"
         />
         <FormField
           label="Nº de Horas por Guardia"
           name="horasPorGuardia"
-          value={inputValues.horasPorGuardia}
-          onChange={onChange}
+          value={numeroHorasPorGuardia}
+          onChange={(e) => setNumeroHorasPorGuardia(parseFloat(e.target.value) || 0)}
           unit="Hr/guardia"
         />
         <FormField
           label="Nº Guardias / día"
           name="numeroGuardiasPorDia"
-          value={inputValues.numeroGuardiasPorDia}
-          onChange={onChange}
+          value={numeroGuardiasPorDia}
+          onChange={(e) => setNumeroGuardiasPorDia(parseFloat(e.target.value) || 0)}
           unit="guardias/día"
         />
         <FormField
           label="Costo por Hr del Equipo"
           name="costoHoraEquipo"
-          value={inputValues.costoHoraEquipo}
-          onChange={onChange}
+          value={costoHoraDeEquipo}
+          onChange={(e) => setCostoHoraDeEquipo(parseFloat(e.target.value) || 0)}
           unit="US$/Hr"
         />
       </div>
-      
-      {showResults && resultsComponent && (
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          {resultsComponent}
-        </div>
-      )}
+
+      <AnimatePresence initial={false} mode="wait">
+        {isOpen && resultsComponent && (
+          <motion.div
+            key="results"
+            layout
+            className="mt-6 border-t border-gray-200 pt-6"
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.1, ease: 'easeInOut' }}
+          >
+            {resultsComponent}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
-  );
+  )
 }

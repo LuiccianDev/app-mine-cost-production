@@ -1,0 +1,14 @@
+node_modules
+dist
+build
+coverage
+.next
+out
+public/fonts
+public/img
+*.lock
+*.tsbuildinfo
+.vercel
+packages.json
+pnpm-lock.yaml
+README.md

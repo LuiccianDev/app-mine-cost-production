@@ -1,11 +1,11 @@
-import type { RellenoCementadoResultados } from './rellenoCementadoCalculations';
+import type { RellenoCementadoResultados } from '@/src/types/rellenoCementado.types'
 
 type RellenoCementadoResultsProps = {
-  resultados: RellenoCementadoResultados;
-};
+  resultados: RellenoCementadoResultados
+}
 
 export default function RellenoCementadoResults({ resultados }: RellenoCementadoResultsProps) {
-  const isValid = (value: number) => !isNaN(value) && isFinite(value);
+  const isValid = (value: number) => !isNaN(value) && isFinite(value)
 
   return (
     <div>
@@ -13,47 +13,83 @@ export default function RellenoCementadoResults({ resultados }: RellenoCementado
         <h3 className="text-base font-semibold text-gray-900">Resultados</h3>
       </div>
       <div className="grid grid-cols-3 gap-x-4">
-        <div className="flex justify-between items-center py-2">
-          <span className="text-gray-600 text-sm">Tonelada por Pase</span>
-          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.toneladaPorPase) ? resultados.toneladaPorPase.toFixed(2) : '-'}</span>
+        <div className="flex items-center justify-between py-2">
+          <span className="text-sm text-gray-600">Tonelada por Pase</span>
+          <span className="text-sm font-medium text-gray-900">
+            {isValid(resultados.toneladaPorPase) ? resultados.toneladaPorPase.toFixed(2) : '-'}
+          </span>
         </div>
-        <div className="flex justify-between items-center py-2">
-          <span className="text-gray-600 text-sm">Nº de Pases por Hora</span>
-          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.numeroPasesPorHora) ? resultados.numeroPasesPorHora.toFixed(2) : '-'}</span>
+        <div className="flex items-center justify-between py-2">
+          <span className="text-sm text-gray-600">Nº de Pases por Hora</span>
+          <span className="text-sm font-medium text-gray-900">
+            {isValid(resultados.numeroPasesPorHora)
+              ? resultados.numeroPasesPorHora.toFixed(2)
+              : '-'}
+          </span>
         </div>
-        <div className="flex justify-between items-center py-2">
-          <span className="text-gray-600 text-sm">Producción (Ton/Hr)</span>
-          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.produccionTonPorHora) ? resultados.produccionTonPorHora.toFixed(2) : '-'}</span>
+        <div className="flex items-center justify-between py-2">
+          <span className="text-sm text-gray-600">Producción (Ton/Hr)</span>
+          <span className="text-sm font-medium text-gray-900">
+            {isValid(resultados.produccionTonPorHora)
+              ? resultados.produccionTonPorHora.toFixed(2)
+              : '-'}
+          </span>
         </div>
-        <div className="flex justify-between items-center py-2">
-          <span className="text-gray-600 text-sm">Producción (Ton/día)</span>
-          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.produccionTonPorDia) ? resultados.produccionTonPorDia.toFixed(2) : '-'}</span>
+        <div className="flex items-center justify-between py-2">
+          <span className="text-sm text-gray-600">Producción (Ton/día)</span>
+          <span className="text-sm font-medium text-gray-900">
+            {isValid(resultados.produccionTonPorDia)
+              ? resultados.produccionTonPorDia.toFixed(2)
+              : '-'}
+          </span>
         </div>
-        <div className="flex justify-between items-center py-2">
-          <span className="text-gray-600 text-sm">Requerimiento de Scoop</span>
-          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.requerimientoScoop) ? resultados.requerimientoScoop.toFixed(2) : '-'}</span>
+        <div className="flex items-center justify-between py-2">
+          <span className="text-sm text-gray-600">Requerimiento de Scoop</span>
+          <span className="text-sm font-medium text-gray-900">
+            {isValid(resultados.requerimientoScoop)
+              ? resultados.requerimientoScoop.toFixed(2)
+              : '-'}
+          </span>
         </div>
-        <div className="flex justify-between items-center py-2">
-          <span className="text-gray-600 text-sm">Costo de Transporte (US$/Ton)</span>
-          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.costoTransporte) ? resultados.costoTransporte.toFixed(2) : '-'}</span>
+        <div className="flex items-center justify-between py-2">
+          <span className="text-sm text-gray-600">Costo de Transporte (US$/Ton)</span>
+          <span className="text-sm font-medium text-gray-900">
+            {isValid(resultados.costoTransporte) ? resultados.costoTransporte.toFixed(2) : '-'}
+          </span>
         </div>
-        <div className="flex justify-between items-center py-2">
-          <span className="text-gray-600 text-sm">Costo Material Relleno 2.5%</span>
-          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.costoMaterialRelleno35) ? resultados.costoMaterialRelleno35.toFixed(2) : '-'}</span>
+        <div className="flex items-center justify-between py-2">
+          <span className="text-sm text-gray-600">Costo Material Relleno 2.5%</span>
+          <span className="text-sm font-medium text-gray-900">
+            {isValid(resultados.costoMaterialRelleno35)
+              ? resultados.costoMaterialRelleno35.toFixed(2)
+              : '-'}
+          </span>
         </div>
-        <div className="flex justify-between items-center py-2">
-          <span className="text-gray-600 text-sm">Costo Total Relleno 2.5%</span>
-          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.costoTotalRelleno35) ? resultados.costoTotalRelleno35.toFixed(2) : '-'}</span>
+        <div className="flex items-center justify-between py-2">
+          <span className="text-sm text-gray-600">Costo Total Relleno 2.5%</span>
+          <span className="text-sm font-medium text-gray-900">
+            {isValid(resultados.costoTotalRelleno35)
+              ? resultados.costoTotalRelleno35.toFixed(2)
+              : '-'}
+          </span>
         </div>
-        <div className="flex justify-between items-center py-2">
-          <span className="text-gray-600 text-sm">Costo Material Relleno 3.0%</span>
-          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.costoMaterialRelleno30) ? resultados.costoMaterialRelleno30.toFixed(2) : '-'}</span>
+        <div className="flex items-center justify-between py-2">
+          <span className="text-sm text-gray-600">Costo Material Relleno 3.0%</span>
+          <span className="text-sm font-medium text-gray-900">
+            {isValid(resultados.costoMaterialRelleno30)
+              ? resultados.costoMaterialRelleno30.toFixed(2)
+              : '-'}
+          </span>
         </div>
-        <div className="flex justify-between items-center py-2">
-          <span className="text-gray-600 text-sm">Costo Total Relleno 3.0%</span>
-          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.costoTotalRelleno30) ? resultados.costoTotalRelleno30.toFixed(2) : '-'}</span>
+        <div className="flex items-center justify-between py-2">
+          <span className="text-sm text-gray-600">Costo Total Relleno 3.0%</span>
+          <span className="text-sm font-medium text-gray-900">
+            {isValid(resultados.costoTotalRelleno30)
+              ? resultados.costoTotalRelleno30.toFixed(2)
+              : '-'}
+          </span>
         </div>
       </div>
     </div>
-  );
+  )
 }

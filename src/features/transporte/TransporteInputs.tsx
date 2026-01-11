@@ -1,25 +1,58 @@
-import FormField from '../../components/ui/FormField';
-
+import { useTransporteStore } from '@/src/stores/useMalla'
+import FormField from '../../components/ui/FormField'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 type TransporteInputsProps = {
-  inputValues: Record<string, number>;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  showResults: boolean;
-  onToggleResults: () => void;
-  resultsComponent?: React.ReactNode;
-};
+  resultsComponent?: React.ReactNode
+}
 
-export default function TransporteInputs({ inputValues, onChange, showResults, onToggleResults, resultsComponent }: TransporteInputsProps) {
+export default function TransporteInputs({ resultsComponent }: TransporteInputsProps) {
+  const [isOpen, setIsOpen] = useState(false)
+  const handleClick = () => {
+    setIsOpen(!isOpen)
+  }
+
+  const {
+    capacidadCamion,
+    eficienciaLlenado,
+    tiempoAcarreo,
+    tiempoRetorno,
+    tiempoCargaDescarga,
+    tiempoCarguio,
+    cicloCamion,
+    disponibilidadOperativaCamion,
+    disponibilidadMecanicaCamion,
+    requerimientoScoop,
+    costoHoraCamion,
+    costoMantenimientoCamion,
+    tiempoCarguioCamionTolva,
+
+    setCapacidadCamion,
+    setEficienciaLlenado,
+    setTiempoAcarreo,
+    setTiempoRetorno,
+    setTiempoCargaDescarga,
+    setTiempoCarguio,
+    setCicloCamion,
+    setDisponibilidadOperativaCamion,
+    setDisponibilidadMecanicaCamion,
+    setRequerimientoScoop,
+    setCostoHoraCamion,
+    setCostoMantenimientoCamion,
+    setTiempoCarguioCamionTolva,
+  } = useTransporteStore()
+
   return (
-    <div className="border border-gray-200 rounded-xl p-6  shadow-sm">
+    <div className="rounded-xl border border-gray-200 p-6 shadow-sm">
       <div className="mb-5 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">Transporte</h2>
         <button
-          onClick={onToggleResults}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+          onClick={handleClick}
+          className="flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
         >
-          <span>{showResults ? 'Cerrar Resultados' : 'Ver Resultados'}</span>
+          <span>{isOpen ? 'Cerrar Resultados' : 'Ver Resultados'}</span>
           <svg
-            className={`w-4 h-4 transition-transform ${showResults ? 'rotate-180' : ''}`}
+            className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -32,101 +65,111 @@ export default function TransporteInputs({ inputValues, onChange, showResults, o
         <FormField
           label="Capacidad de camion"
           name="capacidadCamion"
-          value={inputValues.capacidadCamion}
-          onChange={onChange}
+          value={capacidadCamion}
+          onChange={(e) => setCapacidadCamion(parseFloat(e.target.value) || 0)}
           unit="Ton"
         />
         <FormField
           label="Eficiencia de llenado"
           name="eficienciaLlenado"
-          value={inputValues.eficienciaLlenado}
-          onChange={onChange}
+          value={eficienciaLlenado}
+          onChange={(e) => setEficienciaLlenado(parseFloat(e.target.value) || 0)}
           unit="%"
         />
         <FormField
           label="Tiempo de Acarreo"
           name="tiempoAcarreo"
-          value={inputValues.tiempoAcarreo}
-          onChange={onChange}
+          value={tiempoAcarreo}
+          onChange={(e) => setTiempoAcarreo(parseFloat(e.target.value) || 0)}
           unit="min"
         />
         <FormField
           label="Tiempo de Retorno"
           name="tiempoRetorno"
-          value={inputValues.tiempoRetorno}
-          onChange={onChange}
+          value={tiempoRetorno}
+          onChange={(e) => setTiempoRetorno(parseFloat(e.target.value) || 0)}
           unit="min"
         />
         <FormField
           label="Tiempo de Carg y Descarga"
           name="tiempoCargaDescarga"
-          value={inputValues.tiempoCargaDescarga}
-          onChange={onChange}
+          value={tiempoCargaDescarga}
+          onChange={(e) => setTiempoCargaDescarga(parseFloat(e.target.value) || 0)}
           unit="min"
         />
         <FormField
           label="Tiempo para Carguirse"
           name="tiempoCarguio"
-          value={inputValues.tiempoCarguio}
-          onChange={onChange}
+          value={tiempoCarguio}
+          onChange={(e) => setTiempoCarguio(parseFloat(e.target.value) || 0)}
           unit="min"
         />
         <FormField
           label="Ciclo Camion"
           name="cicloCamion"
-          value={inputValues.cicloCamion}
-          onChange={onChange}
+          value={cicloCamion}
+          onChange={(e) => setCicloCamion(parseFloat(e.target.value) || 0)}
           unit="min"
         />
         <FormField
           label="Disponibilidad Operativa Camion"
           name="disponibilidadOperativaCamion"
-          value={inputValues.disponibilidadOperativaCamion}
-          onChange={onChange}
+          value={disponibilidadOperativaCamion}
+          onChange={(e) => setDisponibilidadOperativaCamion(parseFloat(e.target.value) || 0)}
           unit="%"
         />
         <FormField
           label="Disponibilidad Mecanica Camion"
           name="disponibilidadMecanicaCamion"
-          value={inputValues.disponibilidadMecanicaCamion}
-          onChange={onChange}
+          value={disponibilidadMecanicaCamion}
+          onChange={(e) => setDisponibilidadMecanicaCamion(parseFloat(e.target.value) || 0)}
           unit="%"
         />
         <FormField
           label="Requerimiento de Scoop"
           name="requerimientoScoop"
-          value={inputValues.requerimientoScoop}
-          onChange={onChange}
+          value={requerimientoScoop}
+          onChange={(e) => setRequerimientoScoop(parseFloat(e.target.value) || 0)}
           unit="Scoop"
         />
         <FormField
           label="Costo Hr de Camion"
           name="costoHoraCamion"
-          value={inputValues.costoHoraCamion}
-          onChange={onChange}
+          value={costoHoraCamion}
+          onChange={(e) => setCostoHoraCamion(parseFloat(e.target.value) || 0)}
           unit="US$/Hr"
         />
         <FormField
           label="Costo Mantenimiento Camion"
           name="costoMantenimientoCamion"
-          value={inputValues.costoMantenimientoCamion}
-          onChange={onChange}
+          value={costoMantenimientoCamion}
+          onChange={(e) => setCostoMantenimientoCamion(parseFloat(e.target.value) || 0)}
           unit="US$/Hr"
         />
         <FormField
           label="Tiempo Carguio Camion (Tolva)"
           name="tiempoCarguioCamionTolva"
-          value={inputValues.tiempoCarguioCamionTolva}
-          onChange={onChange}
+          value={tiempoCarguioCamionTolva}
+          onChange={(e) => setTiempoCarguioCamionTolva(parseFloat(e.target.value) || 0)}
           unit="minutos"
         />
       </div>
-      
-      {showResults && resultsComponent && (
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          {resultsComponent}
-        </div>
-      )}
+
+      <AnimatePresence initial={false} mode="wait">
+        {isOpen && resultsComponent && (
+          <motion.div
+            key="results"
+            layout
+            className="mt-6 border-t border-gray-200 pt-6"
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.1, ease: 'easeInOut' }}
+          >
+            {resultsComponent}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
-  );
+  )
 }

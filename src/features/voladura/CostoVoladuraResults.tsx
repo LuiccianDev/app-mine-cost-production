@@ -1,11 +1,11 @@
-import type { CostoVoladuraResultsData } from './costoVoladuraCalculations';
+import type { CostoVoladuraResultsData } from '@/src/types/costoVoladura.types'
 
 type CostoVoladuraResultsProps = {
-  resultados: CostoVoladuraResultsData;
-};
+  resultados: CostoVoladuraResultsData
+}
 
 export default function CostoVoladuraResults({ resultados }: CostoVoladuraResultsProps) {
-  const isValid = (value: number) => !isNaN(value) && isFinite(value);
+  const isValid = (value: number) => !isNaN(value) && isFinite(value)
 
   return (
     <div>
@@ -13,11 +13,15 @@ export default function CostoVoladuraResults({ resultados }: CostoVoladuraResult
         <h3 className="text-base font-semibold text-gray-900">Resultados</h3>
       </div>
       <div className="grid grid-cols-3 gap-x-4">
-        <div className="flex justify-between items-center py-2">
-          <span className="text-gray-600 text-sm">Costo de Voladura (US$/Ton)</span>
-          <span className="font-medium text-gray-900 text-sm">{isValid(resultados.costoVoladuraPorTonelada) ? resultados.costoVoladuraPorTonelada.toFixed(3) : '-'}</span>
+        <div className="flex items-center justify-between py-2">
+          <span className="text-sm text-gray-600">Costo de Voladura (US$/Ton)</span>
+          <span className="text-sm font-medium text-gray-900">
+            {isValid(resultados.costoVoladuraPorTonelada)
+              ? resultados.costoVoladuraPorTonelada.toFixed(3)
+              : '-'}
+          </span>
         </div>
       </div>
     </div>
-  );
+  )
 }

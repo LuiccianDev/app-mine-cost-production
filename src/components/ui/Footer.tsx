@@ -1,82 +1,122 @@
-"use client";
+'use client'
+import { motion, press, animate } from 'motion/react'
+import { useEffect } from 'react'
 
 export default function Footer() {
-    const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear()
 
-    return (
-        <footer className="relative w-full h-screen bg-black text-white flex flex-col py-12 px-8 md:px-16 lg:px-20">
-            <div className="w-full h-full flex flex-col justify-between">
-                {/* Top Section - Social Links */}
-                <div className="flex justify-end gap-6 md:gap-8 pt-8 text-white">
-                    <a
-                        href="https://www.linkedin.com/in/william-guevara-lazaro-79274b2a3"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className=" hover:text-gray-400 transition-colors text-sm font-light"
-                    >
-                        Linkedin
-                    </a>
-                    <a
-                        href="https://www.instagram.com/luiccian_dev"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className=" hover:text-gray-400 transition-colors text-sm font-light"
-                    >
-                        Instagram
-                    </a>
-                    <a
-                        href="https://github.com/LuiccianDev"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className=" hover:text-gray-400 transition-colors text-sm font-light"
-                    >
-                        Github
-                    </a>
-                    <a
-                        href="https://luiccian.blogspot.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className=" hover:text-gray-400 transition-colors text-sm font-light"
-                    >
-                        Blog
-                    </a>
-        
-                </div>
+  useEffect(() => {
+    press('.button-press', (element) => {
+      animate(element, { scale: 0.95 }, { type: 'spring', stiffness: 1000 })
+      return () => animate(element, { scale: 1 }, { type: 'spring', stiffness: 500 })
+    })
+  }, [])
 
-                {/* Middle Section - Main Text and CTA */}
-                <div className="flex-1 flex flex-col items-start justify-center max-w-5xl py-24">
-                    <h2 className="text-4xl font-light leading-tight mb-8">
-                        Curious about what we can create{" "}
-                        <span className="text-gray-500">together?</span>
-                        <br />
-                        Let&apos;s bring something{" "}
-                        <span className="text-gray-500">extraordinary</span> to life!
-                    </h2>
+  return (
+    <footer className="relative flex h-screen w-full flex-col bg-black px-8 py-12 text-white md:px-16 lg:px-20">
+      <div className="flex h-full w-full flex-col justify-between">
+        {/* Top Section - Social Links */}
+        <motion.div
+          className="flex justify-end gap-6 pt-8 text-white md:gap-8"
+          initial={{ y: 30, opacity: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
+          <a
+            href="https://www.linkedin.com/in/william-guevara-lazaro-79274b2a3"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-light transition-colors hover:text-gray-400"
+          >
+            Linkedin
+          </a>
+          <a
+            href="https://www.instagram.com/luiccian_dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-light transition-colors hover:text-gray-400"
+          >
+            Instagram
+          </a>
+          <a
+            href="https://github.com/LuiccianDev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-light transition-colors hover:text-gray-400"
+          >
+            Github
+          </a>
+          <a
+            href="https://luiccian.blogspot.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-light transition-colors hover:text-gray-400"
+          >
+            Blog
+          </a>
+        </motion.div>
 
-                    <div className="flex flex-wrap items-center gap-6 pt-2">
-                        <a
-                            href="/contact"
-                            className="px-6 py-3 bg-white text-black text-sm font-normal hover:bg-gray-200 transition-colors rounded-sm"
-                        >
-                            Get in Touch
-                        </a>
-                        <div className="flex items-center gap-2 text-sm font-light">
-                            <span className="w-2 h-2 bg-white rounded-full"></span>
-                            <span>Available For Work</span>
-                        </div>
-                    </div>
-                </div>
+        {/* Middle Section - Main Text and CTA */}
+        <div className="flex max-w-5xl flex-1 flex-col items-start justify-center py-24">
+          <motion.h2
+            className="mb-8 text-4xl leading-tight font-light"
+            initial={{ y: 60, opacity: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+          >
+            Curious about what we can create <span className="text-gray-500">together?</span>
+            <br />
+            Let&apos;s bring something <span className="text-gray-500">extraordinary</span> to life!
+          </motion.h2>
 
-                {/* Bottom Section - Footer Info */}
-                <div className="flex items-center justify-between md:grid-cols-3 gap-8 pb-8 text-sm font-light">
-
-                    {/* Center - Credits */}
-                    <div className="space-y-0.5">
-                        <p>Designed & Developed</p>
-                        <p>by Luiccian 香 {currentYear}</p>
-                    </div>
-                </div>
+          <div className="flex flex-wrap items-center gap-6 pt-2">
+            <motion.a
+              whileHover={{
+                scale: [null, 1.05],
+                transition: {
+                  duration: 0.5,
+                  times: [0, 0.6],
+                  ease: ['easeInOut'],
+                },
+              }}
+              transition={{
+                duration: 0.3,
+                ease: 'easeOut',
+              }}
+              href="/contact"
+              className="button-press rounded-sm bg-white px-6 py-3 text-sm font-normal text-black transition-colors"
+            >
+              Get in Touch
+            </motion.a>
+            <div className="flex items-center gap-2 text-sm font-light">
+              <motion.span
+                className="size-3 rounded-full"
+                animate={{
+                  opacity: [1, 0.4, 1],
+                  backgroundColor: ['#00fff2', '#00fff2', '#00fff2'],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              />
+              <span>Available For Work</span>
             </div>
-        </footer>
-    );
+          </div>
+        </div>
+
+        {/* Bottom Section - Footer Info */}
+        <div className="flex items-center justify-between gap-8 pb-8 text-sm font-light md:grid-cols-3">
+          {/* Center - Credits */}
+          <div className="space-y-0.5">
+            <p>Designed & Developed</p>
+            <p>by Luiccian 香 {currentYear}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
 }

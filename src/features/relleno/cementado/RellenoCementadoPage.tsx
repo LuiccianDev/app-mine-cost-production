@@ -1,87 +1,99 @@
-"use client";
-import { useState, useMemo } from 'react';
-import RellenoCementadoInputs from './RellenoCementadoInputs';
-import RellenoCementadoResults from './RellenoCementadoResults';
-import { calcularRellenoCementado, defaultRellenoCementadoValues } from './rellenoCementadoCalculations';
-import { useCalculations } from '../../../context/CalculationContext';
-import { STORAGE_KEYS } from '../../../lib/storageKeys';
-import { usePersistedState } from '../../../lib/hooks/usePersistedState';
-import { useDirtyFields } from '../../../lib/hooks/useDirtyFields';
-import { useDerivedValue } from '../../../lib/hooks/useDerivedValue';
-import { useSyncToContext } from '../../../lib/hooks/useSyncToContext';
-import { useClientOnly } from '../../../lib/hooks/useClientOnly';
+'use client'
+
+import { useEffect } from 'react'
+import RellenoCementadoInputs from './RellenoCementadoInputs'
+import RellenoCementadoResults from './RellenoCementadoResults'
+import { calcularRellenoCementado } from './rellenoCementadoCalculations'
+import { useRellenoCementadoStore } from '@/src/stores/useMalla'
+import { usePDFStore } from '@/src/stores/usePDF'
 
 export default function RellenoCementadoPage() {
-  const { requerimientoPerforadoraInputs, setRellenoCementadoResults } = useCalculations();
-  
-  // Use custom hooks for state management
-  const [inputValues, setInputValues] = usePersistedState(
-    STORAGE_KEYS.RELLENO_CEMENTADO_INPUTS,
-    defaultRellenoCementadoValues
-  );
+  const {
+    produccionMineral,
+    produccionRelleno,
+    capacidadCuchara,
+    factorCuchara,
+    densidadRotaMaterialRelleno,
+    tiempoDeUnPase,
+    disponibilidadMecanica,
+    disponibilidadOperativa,
+    numeroHorasPorGuardia,
+    numeroGuardiasPorDia,
+    costoHoraEquipo,
+    densidadMineral,
+    costoPreparacionAgregados,
+    costoPreparacionPlantaConcreto,
+    costoTransporteRelaveChura,
+    costoCemento,
+  } = useRellenoCementadoStore()
 
-  const { dirtyFields, markDirty, clearDirty } = useDirtyFields(
-    STORAGE_KEYS.RELLENO_CEMENTADO_DIRTY
-  );
+  const resultados = calcularRellenoCementado({
+    produccionMineral,
+    produccionRelleno,
+    capacidadCuchara,
+    factorCuchara,
+    densidadRotaMaterialRelleno,
+    tiempoDeUnPase,
+    disponibilidadMecanica,
+    disponibilidadOperativa,
+    numeroHorasPorGuardia,
+    numeroGuardiasPorDia,
+    costoHoraEquipo,
+    densidadMineral,
+    costoPreparacionAgregados,
+    costoPreparacionPlantaConcreto,
+    costoTransporteRelaveChura,
+    costoCemento,
+  })
 
-  const [showResults, setShowResults] = useState(false);
-  const isClient = useClientOnly();
+  /* guardar los resulatdo con Zustand*/
 
-  // Calculate derived value using the custom hook
-  const finalProduccionMineral = useDerivedValue(
-    requerimientoPerforadoraInputs?.produccionMina 
-      ? parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2))
-      : null,
-    inputValues.produccionMineral,
-    'produccionMineral',
-    dirtyFields
-  );
+  const {
+    /* Add sum total scoops */
+    requerimientoScoopsLimpieza,
+    requerimientoScoopsCarguio,
+    requerimientoScoopRelleno,
 
-  // Valores finales con el campo derivado
-  const finalInputValues = useMemo(() => ({
-    ...inputValues,
-    produccionMineral: finalProduccionMineral
-  }), [inputValues, finalProduccionMineral]);
+    setCostoTransporteRC,
+    setCostoMaterialRelleno,
+    setCostoTotalRelleno35,
+    setCostoTotalRelleno30,
+    setRequerimientoScoopRelleno,
+    setTotalScoops,
+  } = usePDFStore()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fieldName = e.target.name;
-    markDirty(fieldName);
-    setInputValues((prev: typeof defaultRellenoCementadoValues) => ({ 
-      ...prev, 
-      [fieldName]: parseFloat(e.target.value) || 0 
-    }));
-  };
+  const totalScoops =
+    requerimientoScoopsLimpieza + requerimientoScoopsCarguio + requerimientoScoopRelleno
 
-  const handleResetField = (fieldName: string) => {
-    clearDirty(fieldName);
-    
-    if (fieldName === 'produccionMineral' && requerimientoPerforadoraInputs?.produccionMina) {
-      setInputValues((prev: typeof defaultRellenoCementadoValues) => ({ 
-        ...prev, 
-        produccionMineral: parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2)) 
-      }));
-    }
-  };
-
-  const resultados = useMemo(() => calcularRellenoCementado(finalInputValues), [finalInputValues]);
-
-  // Sync results to context using custom hook
-  useSyncToContext(resultados, setRellenoCementadoResults);
+  useEffect(() => {
+    setCostoTransporteRC(resultados.costoTransporte)
+    setCostoMaterialRelleno(resultados.costoMaterialRelleno35)
+    setCostoTotalRelleno35(resultados.costoTotalRelleno35)
+    setCostoTotalRelleno30(resultados.costoTotalRelleno30)
+    setRequerimientoScoopRelleno(resultados.requerimientoScoop) // Section two Requerimiento Equipos
+    setTotalScoops(totalScoops)
+  }, [
+    resultados.costoTransporte,
+    resultados.costoMaterialRelleno35,
+    resultados.costoTotalRelleno35,
+    resultados.costoTotalRelleno30,
+    resultados.requerimientoScoop,
+    totalScoops, //! suma de los scoops
+    setTotalScoops, //* guardar en Zustand
+    setCostoTransporteRC,
+    setCostoMaterialRelleno,
+    setCostoTotalRelleno35,
+    setCostoTotalRelleno30,
+    setRequerimientoScoopRelleno,
+  ])
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="w-full p-6 min-w-0">
-        <RellenoCementadoInputs 
-          inputValues={finalInputValues} 
-          onChange={handleChange}
-          showResults={showResults}
-          onToggleResults={() => setShowResults(!showResults)}
+    <div className="flex w-full flex-col">
+      <div className="w-full min-w-0 p-6">
+        <RellenoCementadoInputs
           resultsComponent={<RellenoCementadoResults resultados={resultados} />}
-          isAutoFilled={isClient && !!requerimientoPerforadoraInputs?.produccionMina}
-          dirtyFields={dirtyFields}
-          onResetField={handleResetField}
         />
       </div>
     </div>
-  );
+  )
 }

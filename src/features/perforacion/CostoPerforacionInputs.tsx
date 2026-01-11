@@ -1,37 +1,47 @@
-import FormField from '../../components/ui/FormField';
-
+import { useCostosPerforacionStore } from '@/src/stores/useMalla'
+import { useSharedStore } from '@/src/stores/useSharedStore'
+import FormField from '../../components/ui/FormField'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 type CostoPerforacionInputsProps = {
-  inputValues: Record<string, number>;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  showResults: boolean;
-  onToggleResults: () => void;
-  resultsComponent?: React.ReactNode;
-  isAutoFilled?: boolean;
-  dirtyFields?: Set<string>;
-  onResetField?: (fieldName: string) => void;
-};
+  resultsComponent?: React.ReactNode
+}
 
-export default function CostoPerforacionInputs({ 
-  inputValues, 
-  onChange, 
-  showResults, 
-  onToggleResults, 
-  resultsComponent, 
-  isAutoFilled = false,
-  dirtyFields = new Set(),
-  onResetField
-}: CostoPerforacionInputsProps) {
+export default function CostoPerforacionInputs({ resultsComponent }: CostoPerforacionInputsProps) {
+  const [isOpen, setIsOpen] = useState(false)
+  const handleClick = () => {
+    setIsOpen(!isOpen)
+  }
+
+  const {
+    costoBrocaAccesorios,
+    costoEquipoPerforacion,
+    setCostoBrocaAccesorios,
+    setCostoEquipoPerforacion,
+  } = useCostosPerforacionStore()
+
+  const {
+    tiempoPerforacion,
+    rendimientoBroca,
+    tonelajePerforado,
+    alturaBanco,
+    setTiempoPerforacion,
+    setRendimientoBroca,
+    setTonelajePerforado,
+    setAlturaBanco,
+  } = useSharedStore()
+
   return (
-    <div className="border border-gray-200 rounded-xl p-6  shadow-sm">
+    <div className="rounded-xl border border-gray-200 p-6 shadow-sm">
       <div className="mb-5 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">Costo de Perforación</h2>
         <button
-          onClick={onToggleResults}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+          onClick={handleClick}
+          className="flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
         >
-          <span>{showResults ? 'Cerrar Resultados' : 'Ver Resultados'}</span>
+          <span>{isOpen ? 'Cerrar Resultados' : 'Ver Resultados'}</span>
           <svg
-            className={`w-4 h-4 transition-transform ${showResults ? 'rotate-180' : ''}`}
+            className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -44,60 +54,64 @@ export default function CostoPerforacionInputs({
         <FormField
           label="Costo Broca + Accesorios"
           name="costoBrocaAccesorios"
-          value={inputValues.costoBrocaAccesorios}
-          onChange={onChange}
+          value={costoBrocaAccesorios}
+          onChange={(e) => setCostoBrocaAccesorios(parseFloat(e.target.value) || 0)}
           unit="$/und"
         />
         <FormField
           label="Costo equipo Perforacion"
           name="costoEquipoPerforacion"
-          value={inputValues.costoEquipoPerforacion}
-          onChange={onChange}
+          value={costoEquipoPerforacion}
+          onChange={(e) => setCostoEquipoPerforacion(parseFloat(e.target.value) || 0)}
           unit="$/h"
         />
         <FormField
           label="Tiempo de Perforac. (Rend. Broca)"
           name="tiempoPerforacion"
-          value={inputValues.tiempoPerforacion}
-          onChange={onChange}
+          value={tiempoPerforacion}
+          onChange={(e) => setTiempoPerforacion(parseFloat(e.target.value) || 0)}
           unit="hr"
         />
         <FormField
           label="Rendimiento Broca"
           name="rendimientoBroca"
-          value={inputValues.rendimientoBroca}
-          onChange={onChange}
+          value={rendimientoBroca}
+          onChange={(e) => setRendimientoBroca(parseFloat(e.target.value) || 0)}
           unit="m /broca"
         />
         <FormField
           label="Tonelaje"
-          name="tonelaje"
-          value={inputValues.tonelaje}
-          onChange={onChange}
+          name="tonelajePerforado"
+          value={tonelajePerforado}
+          onChange={(e) => setTonelajePerforado(parseFloat(e.target.value) || 0)}
           unit="ton / taladro"
           decimals={2}
-          isAutoFilled={isAutoFilled}
-          isDirty={dirtyFields.has('tonelaje')}
-          onResetToCalculated={onResetField ? () => onResetField('tonelaje') : undefined}
         />
         <FormField
-          label="Altura de banco"
+          label="Altura de banco" /* misma  */
           name="alturaBanco"
-          value={inputValues.alturaBanco}
-          onChange={onChange}
+          value={alturaBanco}
+          onChange={(e) => setAlturaBanco(parseFloat(e.target.value) || 0)}
           unit="m"
           decimals={2}
-          isAutoFilled={isAutoFilled}
-          isDirty={dirtyFields.has('alturaBanco')}
-          onResetToCalculated={onResetField ? () => onResetField('alturaBanco') : undefined}
         />
       </div>
-      
-      {showResults && resultsComponent && (
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          {resultsComponent}
-        </div>
-      )}
+
+      <AnimatePresence initial={false} mode="wait">
+        {isOpen && resultsComponent && (
+          <motion.div
+            key="results"
+            layout
+            className="mt-6 border-t border-gray-200 pt-6"
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.1, ease: 'easeInOut' }}
+          >
+            {resultsComponent}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
-  );
+  )
 }

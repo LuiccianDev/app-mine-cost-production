@@ -1,94 +1,68 @@
-"use client";
-import { useState, useMemo } from 'react';
-import CarguioInputs from './CarguioInputs';
-import CarguioResults from './CarguioResults';
-import { calcularCarguio, defaultCarguioValues } from './carguioCalculations';
-import { useCalculations } from '../../context/CalculationContext';
-import { STORAGE_KEYS } from '../../lib/storageKeys';
-import { usePersistedState } from '../../lib/hooks/usePersistedState';
-import { useDirtyFields } from '../../lib/hooks/useDirtyFields';
-import { useDerivedValue } from '../../lib/hooks/useDerivedValue';
-import { useSyncToContext } from '../../lib/hooks/useSyncToContext';
-import { useClientOnly } from '../../lib/hooks/useClientOnly';
+'use client'
+
+import { useCarguioStore } from '@/src/stores/useMalla'
+import { useSharedStore } from '@/src/stores/useSharedStore'
+import CarguioInputs from './CarguioInputs'
+import CarguioResults from './CarguioResults'
+import { calcularCarguio } from './carguioCalculations'
+import { usePDFStore } from '@/src/stores/usePDF'
+import { useEffect } from 'react'
 
 export default function CarguioPage() {
-  const { requerimientoPerforadoraInputs, setCarguioInputs, setCarguioResults } = useCalculations();
-  
-  // Use custom hooks for state management
-  const [inputValues, setInputValues] = usePersistedState(
-    STORAGE_KEYS.CARGUIO_INPUTS,
-    defaultCarguioValues
-  );
+  const { produccionMina } = useSharedStore()
 
-  const { dirtyFields, markDirty, clearDirty } = useDirtyFields(
-    STORAGE_KEYS.CARGUIO_DIRTY
-  );
+  const {
+    ratioDM,
+    produccionDesmonte,
+    mineralMasDesmonte,
+    capacidadCuchara,
+    factorCuchara,
+    densidadRotaMineral,
+    tiempoDeUnPase,
+    disponibilidadMecanica,
+    disponibilidadOperativa,
+    numeroHorasPorGuardia,
+    numeroGuardiasPorDia,
+    costoHoraDeEquipo,
+  } = useCarguioStore()
 
-  const [showResults, setShowResults] = useState(false);
-  const isClient = useClientOnly();
+  const resultados = calcularCarguio({
+    produccionMina,
+    ratioDM,
+    produccionDesmonte,
+    mineralMasDesmonte,
+    capacidadCuchara,
+    factorCuchara,
+    densidadRotaMineral,
+    tiempoDeUnPase,
+    disponibilidadMecanica,
+    disponibilidadOperativa,
+    numeroHorasPorGuardia,
+    numeroGuardiasPorDia,
+    costoHoraDeEquipo,
+  })
 
-  // Calculate derived value for produccionMineral using the custom hook
-  const finalProduccionMineral = useDerivedValue(
-    requerimientoPerforadoraInputs?.produccionMina 
-      ? parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2))
-      : null,
-    inputValues.produccionMineral,
-    'produccionMineral',
-    dirtyFields
-  );
+  /* guardar los resulatdo con Zustand*/
 
-  // Valores finales con el campo derivado
-  const finalInputValues = useMemo(() => ({
-    ...inputValues,
-    produccionMineral: finalProduccionMineral
-  }), [inputValues, finalProduccionMineral]);
+  const { setRequerimientoScoop, setCostoCarguio, setRequerimientoScoopsCarguio } = usePDFStore()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fieldName = e.target.name;
-    markDirty(fieldName);
-    setInputValues((prev: typeof defaultCarguioValues) => ({ 
-      ...prev, 
-      [fieldName]: parseFloat(e.target.value) || 0 
-    }));
-  };
-
-  const handleResetField = (fieldName: string) => {
-    clearDirty(fieldName);
-    
-    if (fieldName === 'produccionMineral' && requerimientoPerforadoraInputs?.produccionMina) {
-      setInputValues((prev: typeof defaultCarguioValues) => ({ 
-        ...prev, 
-        produccionMineral: parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2)) 
-      }));
-    }
-  };
-
-  const resultados = useMemo(() => calcularCarguio(finalInputValues), [finalInputValues]);
-
-  // Sync densidadRotaMaterial to context using custom hook
-  const inputsForContext = useMemo(() => ({
-    densidadRotaMaterial: finalInputValues.densidadRotaMaterial
-  }), [finalInputValues.densidadRotaMaterial]);
-
-  useSyncToContext(inputsForContext, setCarguioInputs);
-
-  // Sync results to context using custom hook
-  useSyncToContext(resultados, setCarguioResults);
+  useEffect(() => {
+    setRequerimientoScoop(resultados.requerimientoScoop)
+    setCostoCarguio(resultados.costoCarguio)
+    setRequerimientoScoopsCarguio(resultados.requerimientoScoop) // Section two Requerimiento Equipos
+  }, [
+    resultados.requerimientoScoop,
+    resultados.costoCarguio,
+    setRequerimientoScoop,
+    setCostoCarguio,
+    setRequerimientoScoopsCarguio,
+  ])
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="w-full p-6 min-w-0">
-        <CarguioInputs 
-          inputValues={finalInputValues} 
-          onChange={handleChange}
-          showResults={showResults}
-          onToggleResults={() => setShowResults(!showResults)}
-          resultsComponent={<CarguioResults resultados={resultados} />}
-          isAutoFilled={isClient && !!requerimientoPerforadoraInputs?.produccionMina}
-          dirtyFields={dirtyFields}
-          onResetField={handleResetField}
-        />
+    <div className="flex w-full flex-col">
+      <div className="w-full min-w-0 p-6">
+        <CarguioInputs resultsComponent={<CarguioResults resultados={resultados} />} />
       </div>
     </div>
-  );
+  )
 }

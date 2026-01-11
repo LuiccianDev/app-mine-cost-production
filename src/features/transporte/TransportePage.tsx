@@ -1,54 +1,76 @@
-"use client";
-import { useState, useMemo } from 'react';
-import TransporteInputs from './TransporteInputs';
-import TransporteResults from './TransporteResults';
-import { calcularTransporte, defaultTransporteValues } from './transporteCalculations';
-import { useCalculations } from '../../context/CalculationContext';
-import { STORAGE_KEYS } from '../../lib/storageKeys';
-import { usePersistedState } from '../../lib/hooks/usePersistedState';
-import { useDirtyFields } from '../../lib/hooks/useDirtyFields';
-import { useSyncToContext } from '../../lib/hooks/useSyncToContext';
+'use client'
+
+import { useEffect } from 'react'
+import TransporteInputs from './TransporteInputs'
+import TransporteResults from './TransporteResults'
+import { calcularTransporte } from './transporteCalculations'
+import { useTransporteStore } from '@/src/stores/useMalla'
+import { usePDFStore } from '@/src/stores/usePDF'
 
 export default function TransportePage() {
-  const { setTransporteResults } = useCalculations();
-  
-  // Use custom hooks for state management
-  const [inputValues, setInputValues] = usePersistedState(
-    STORAGE_KEYS.TRANSPORTE_INPUTS,
-    defaultTransporteValues
-  );
+  const {
+    capacidadCamion,
+    eficienciaLlenado,
+    tiempoAcarreo,
+    tiempoRetorno,
+    tiempoCargaDescarga,
+    tiempoCarguio,
+    cicloCamion,
+    disponibilidadOperativaCamion,
+    disponibilidadMecanicaCamion,
+    requerimientoScoop,
+    costoHoraCamion,
+    costoMantenimientoCamion,
+    tiempoCarguioCamionTolva,
+  } = useTransporteStore()
 
-  const { markDirty } = useDirtyFields(
-    STORAGE_KEYS.TRANSPORTE_DIRTY
-  );
+  const resultados = calcularTransporte({
+    capacidadCamion,
+    eficienciaLlenado,
+    tiempoAcarreo,
+    tiempoRetorno,
+    tiempoCargaDescarga,
+    tiempoCarguio,
+    cicloCamion,
+    disponibilidadOperativaCamion,
+    disponibilidadMecanicaCamion,
+    requerimientoScoop,
+    costoHoraCamion,
+    costoMantenimientoCamion,
+    tiempoCarguioCamionTolva,
+  })
 
-  const [showResults, setShowResults] = useState(false);
+  /* guardar los resulatdo con Zustand*/
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fieldName = e.target.name;
-    markDirty(fieldName);
-    setInputValues((prev: typeof defaultTransporteValues) => ({ 
-      ...prev, 
-      [fieldName]: parseFloat(e.target.value) || 0 
-    }));
-  };
+  const {
+    setFlotaCamiones,
+    setProduccionFlotaCamiones,
+    setCostoTransporte,
+    setFlotaCamionesTransporte,
+  } = usePDFStore()
 
-  const resultados = useMemo(() => calcularTransporte(inputValues), [inputValues]);
+  useEffect(() => {
+    setFlotaCamiones(resultados.flotaCamiones)
+    setProduccionFlotaCamiones(resultados.produccionFlotaCamiones)
+    setCostoTransporte(resultados.costoTransporte)
+    setFlotaCamionesTransporte(resultados.flotaCamiones)
+  }, [
+    resultados.flotaCamiones,
+    resultados.produccionFlotaCamiones,
+    resultados.costoTransporte,
+    setFlotaCamiones,
+    setProduccionFlotaCamiones,
+    setCostoTransporte,
+    setFlotaCamionesTransporte,
+  ])
 
-  // Sync results to context using custom hook
-  useSyncToContext(resultados, setTransporteResults);
-
+  /* Auxilir para poner los Requerimentio equioi sections
+   */
   return (
-    <div className="flex flex-col w-full">
-      <div className="w-full p-6 min-w-0">
-        <TransporteInputs 
-          inputValues={inputValues} 
-          onChange={handleChange}
-          showResults={showResults}
-          onToggleResults={() => setShowResults(!showResults)}
-          resultsComponent={<TransporteResults resultados={resultados} />}
-        />
+    <div className="flex w-full flex-col">
+      <div className="w-full min-w-0 p-6">
+        <TransporteInputs resultsComponent={<TransporteResults resultados={resultados} />} />
       </div>
     </div>
-  );
+  )
 }

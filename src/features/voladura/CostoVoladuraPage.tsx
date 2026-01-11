@@ -1,83 +1,62 @@
-"use client";
-import { useState, useMemo } from 'react';
-import CostoVoladuraInputs from './CostoVoladuraInputs';
-import CostoVoladuraResults from './CostoVoladuraResults';
-import { calculateCostoVoladura, defaultCostoVoladuraValues } from './costoVoladuraCalculations';
-import { useCalculations } from '../../context/CalculationContext';
-import { STORAGE_KEYS } from '../../lib/storageKeys';
-import { usePersistedState } from '../../lib/hooks/usePersistedState';
-import { useDirtyFields } from '../../lib/hooks/useDirtyFields';
-import { useDerivedValue } from '../../lib/hooks/useDerivedValue';
-import { useClientOnly } from '../../lib/hooks/useClientOnly';
+'use client'
+
+import { useEffect } from 'react'
+import CostoVoladuraInputs from './CostoVoladuraInputs'
+import CostoVoladuraResults from './CostoVoladuraResults'
+import { calculateCostoVoladura } from './costoVoladuraCalculations'
+import { useCostosVoladurasStore } from '@/src/stores/useMalla'
+import { useSharedStore } from '@/src/stores/useSharedStore'
+import { usePDFStore } from '@/src/stores/usePDF'
 
 export default function CostoVoladuraPage() {
-  const { mallaResults } = useCalculations();
-  
-  // Use custom hooks for state management
-  const [inputValues, setInputValues] = usePersistedState(
-    STORAGE_KEYS.COSTO_VOLADURA_INPUTS,
-    defaultCostoVoladuraValues
-  );
+  const { tonelajePerforado } = useSharedStore()
 
-  const { dirtyFields, markDirty, clearDirty } = useDirtyFields(
-    STORAGE_KEYS.COSTO_VOLADURA_DIRTY
-  );
+  /* Get values  */
+  const {
+    costoAnfo,
+    costoDinamita,
+    costoRetardoFanel,
+    costoCordonDetonante,
+    costoCamionAnfoCar,
+    costoChispeo,
+    costoManoDeObra,
+    pentacordEmpleado,
+    tiempoCarguioAnfoCar,
+    mechaRapidaEmpleada,
+    numeroHombresCarguio,
+    tiempoEmpleadoCarguio,
+  } = useCostosVoladurasStore()
 
-  const [showResults, setShowResults] = useState(false);
-  const isClient = useClientOnly();
+  /* Get resultt */
+  const resultados = calculateCostoVoladura({
+    costoAnfo,
+    costoDinamita,
+    costoRetardoFanel,
+    costoCordonDetonante,
+    costoCamionAnfoCar,
+    costoChispeo,
+    costoManoDeObra,
+    tonelajePerforado,
+    pentacordEmpleado,
+    tiempoCarguioAnfoCar,
+    mechaRapidaEmpleada,
+    numeroHombresCarguio,
+    tiempoEmpleadoCarguio,
+  })
 
-  // Calculate derived value using the custom hook
-  const finalTonelajePorTaladro = useDerivedValue(
-    mallaResults?.tonelaje 
-      ? parseFloat(mallaResults.tonelaje.toFixed(2))
-      : null,
-    inputValues.tonelajePorTaladro,
-    'tonelajePorTaladro',
-    dirtyFields
-  );
+  /* guardar los resulatdo con Zustand*/
 
-  // Valores finales con el campo derivado
-  const finalInputValues = useMemo(() => ({
-    ...inputValues,
-    tonelajePorTaladro: finalTonelajePorTaladro
-  }), [inputValues, finalTonelajePorTaladro]);
+  const { setCostoVoladura } = usePDFStore()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fieldName = e.target.name;
-    markDirty(fieldName);
-    setInputValues((prev: typeof defaultCostoVoladuraValues) => ({ 
-      ...prev, 
-      [fieldName]: parseFloat(e.target.value) || 0 
-    }));
-  };
-
-  const handleResetField = (fieldName: string) => {
-    clearDirty(fieldName);
-    
-    if (fieldName === 'tonelajePorTaladro' && mallaResults?.tonelaje) {
-      setInputValues((prev: typeof defaultCostoVoladuraValues) => ({ 
-        ...prev, 
-        tonelajePorTaladro: parseFloat(mallaResults.tonelaje.toFixed(2)) 
-      }));
-    }
-  };
-
-  const resultados = useMemo(() => calculateCostoVoladura(finalInputValues), [finalInputValues]);
+  useEffect(() => {
+    setCostoVoladura(resultados.costoVoladuraPorTonelada)
+  }, [resultados.costoVoladuraPorTonelada, setCostoVoladura])
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="w-full p-6 min-w-0">
-        <CostoVoladuraInputs 
-          inputValues={finalInputValues} 
-          onChange={handleChange}
-          showResults={showResults}
-          onToggleResults={() => setShowResults(!showResults)}
-          resultsComponent={<CostoVoladuraResults resultados={resultados} />}
-          isAutoFilled={isClient && !!mallaResults?.tonelaje}
-          dirtyFields={dirtyFields}
-          onResetField={handleResetField}
-        />
+    <div className="flex w-full flex-col">
+      <div className="w-full min-w-0 p-6">
+        <CostoVoladuraInputs resultsComponent={<CostoVoladuraResults resultados={resultados} />} />
       </div>
     </div>
-  );
+  )
 }

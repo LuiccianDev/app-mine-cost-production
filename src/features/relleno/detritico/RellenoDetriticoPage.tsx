@@ -1,87 +1,71 @@
-"use client";
-import { useState, useMemo } from 'react';
-import RellenoDetriticoInputs from './RellenoDetriticoInputs';
-import RellenoDetriticoResults from './RellenoDetriticoResults';
-import { calcularRellenoDetritico, defaultRellenoDetriticoValues } from './rellenoDetriticoCalculations';
-import { useCalculations } from '../../../context/CalculationContext';
-import { STORAGE_KEYS } from '../../../lib/storageKeys';
-import { usePersistedState } from '../../../lib/hooks/usePersistedState';
-import { useDirtyFields } from '../../../lib/hooks/useDirtyFields';
-import { useDerivedValue } from '../../../lib/hooks/useDerivedValue';
-import { useSyncToContext } from '../../../lib/hooks/useSyncToContext';
-import { useClientOnly } from '../../../lib/hooks/useClientOnly';
+'use client'
+
+import { useEffect } from 'react'
+import RellenoDetriticoInputs from './RellenoDetriticoInputs'
+import RellenoDetriticoResults from './RellenoDetriticoResults'
+import { calcularRellenoDetritico } from './rellenoDetriticoCalculations'
+import { useRellenoDetriticoStore } from '@/src/stores/useMalla'
+import { usePDFStore } from '@/src/stores/usePDF'
 
 export default function RellenoDetriticoPage() {
-  const { requerimientoPerforadoraInputs, setRellenoDetriticoResults } = useCalculations();
-  
-  // Use custom hooks for state management
-  const [inputValues, setInputValues] = usePersistedState(
-    STORAGE_KEYS.RELLENO_DETRITICO_INPUTS,
-    defaultRellenoDetriticoValues
-  );
+  const {
+    produccionMineral,
+    produccionRelleno,
+    capacidadCuchara,
+    factorCuchara,
+    densidadRotaMaterialRelleno,
+    tiempoDeUnPase,
+    disponibilidadMecanica,
+    disponibilidadOperativa,
+    numeroHorasPorGuardia,
+    numeroGuardiasPorDia,
+    costoHoraEquipo,
+    densidadMineral,
+    costoPreparacionAgregados,
+    costoTransporteDesmonte,
+  } = useRellenoDetriticoStore()
 
-  const { dirtyFields, markDirty, clearDirty } = useDirtyFields(
-    STORAGE_KEYS.RELLENO_DETRITICO_DIRTY
-  );
+  const resultados = calcularRellenoDetritico({
+    produccionMineral,
+    produccionRelleno,
+    capacidadCuchara,
+    factorCuchara,
+    densidadRotaMaterialRelleno,
+    tiempoDeUnPase,
+    disponibilidadMecanica,
+    disponibilidadOperativa,
+    numeroHorasPorGuardia,
+    numeroGuardiasPorDia,
+    costoHoraEquipo,
+    densidadMineral,
+    costoPreparacionAgregados,
+    costoTransporteDesmonte,
+  })
 
-  const [showResults, setShowResults] = useState(false);
-  const isClient = useClientOnly();
+  /* guardar los resulatdo con Zustand*/
 
-  // Calculate derived value using the custom hook
-  const finalProduccionMineral = useDerivedValue(
-    requerimientoPerforadoraInputs?.produccionMina 
-      ? parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2))
-      : null,
-    inputValues.produccionMineral,
-    'produccionMineral',
-    dirtyFields
-  );
+  const { setCostoTransporteRD, setCostoMaterialRellenoRD, setCostoTotalRellenoRD } = usePDFStore()
 
-  // Valores finales con el campo derivado
-  const finalInputValues = useMemo(() => ({
-    ...inputValues,
-    produccionMineral: finalProduccionMineral
-  }), [inputValues, finalProduccionMineral]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fieldName = e.target.name;
-    markDirty(fieldName);
-    setInputValues((prev: typeof defaultRellenoDetriticoValues) => ({ 
-      ...prev, 
-      [fieldName]: parseFloat(e.target.value) || 0 
-    }));
-  };
-
-  const handleResetField = (fieldName: string) => {
-    clearDirty(fieldName);
-    
-    if (fieldName === 'produccionMineral' && requerimientoPerforadoraInputs?.produccionMina) {
-      setInputValues((prev: typeof defaultRellenoDetriticoValues) => ({ 
-        ...prev, 
-        produccionMineral: parseFloat(requerimientoPerforadoraInputs.produccionMina.toFixed(2)) 
-      }));
-    }
-  };
-
-  const resultados = useMemo(() => calcularRellenoDetritico(finalInputValues), [finalInputValues]);
-
-  // Sync results to context using custom hook
-  useSyncToContext(resultados, setRellenoDetriticoResults);
+  useEffect(() => {
+    setCostoTransporteRD(resultados.costoTransporte)
+    setCostoMaterialRellenoRD(resultados.costoMaterialRelleno)
+    setCostoTotalRellenoRD(resultados.costoTotalRelleno)
+  }, [
+    resultados.costoTransporte,
+    resultados.costoMaterialRelleno,
+    resultados.costoTotalRelleno,
+    setCostoTransporteRD,
+    setCostoMaterialRellenoRD,
+    setCostoTotalRellenoRD,
+  ])
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="w-full p-6 min-w-0">
-        <RellenoDetriticoInputs 
-          inputValues={finalInputValues} 
-          onChange={handleChange}
-          showResults={showResults}
-          onToggleResults={() => setShowResults(!showResults)}
+    <div className="flex w-full flex-col">
+      <div className="w-full min-w-0 p-6">
+        <RellenoDetriticoInputs
           resultsComponent={<RellenoDetriticoResults resultados={resultados} />}
-          isAutoFilled={isClient && !!requerimientoPerforadoraInputs?.produccionMina}
-          dirtyFields={dirtyFields}
-          onResetField={handleResetField}
         />
       </div>
     </div>
-  );
+  )
 }
