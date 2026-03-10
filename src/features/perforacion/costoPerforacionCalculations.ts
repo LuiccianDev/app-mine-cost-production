@@ -1,7 +1,7 @@
 import {
   type CostoPerforacionData,
   type CostoPerforacionResultados,
-} from '@/src/types/costoPerforacion.tyes'
+} from '@/src/types/costoPerforacion.types'
 import { type SharedData } from '@/src/types/shared.types'
 
 // Tipo combinado para los cálculos

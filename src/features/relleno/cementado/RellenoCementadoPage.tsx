@@ -4,8 +4,7 @@ import { useEffect } from 'react'
 import RellenoCementadoInputs from './RellenoCementadoInputs'
 import RellenoCementadoResults from './RellenoCementadoResults'
 import { calcularRellenoCementado } from './rellenoCementadoCalculations'
-import { useRellenoCementadoStore } from '@/src/stores/useMalla'
-import { usePDFStore } from '@/src/stores/usePDF'
+import { useRellenoCementadoStore, usePDFStore } from '@/src/stores'
 
 export default function RellenoCementadoPage() {
   const {

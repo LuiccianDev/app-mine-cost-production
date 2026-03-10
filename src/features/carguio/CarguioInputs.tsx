@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import FormField from '../../components/ui/FormField'
-import { useCarguioStore } from '@/src/stores/useMalla'
-import { useSharedStore } from '@/src/stores/useSharedStore'
+import { useCarguioStore, useSharedStore } from '@/src/stores'
 import { motion, AnimatePresence } from 'motion/react'
 type CarguioInputsProps = {
   resultsComponent?: React.ReactNode

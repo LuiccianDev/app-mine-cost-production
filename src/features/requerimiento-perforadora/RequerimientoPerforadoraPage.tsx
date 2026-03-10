@@ -1,12 +1,10 @@
 'use client'
 
-import { useRequerimientoPerforadoraStore } from '@/src/stores/useMalla'
-import { useSharedStore } from '@/src/stores/useSharedStore'
+import { useEffect } from 'react'
 import RequerimientoPerforadoraInputs from './RequerimientoPerforadoraInputs'
 import RequerimientoPerforadoraResults from './RequerimientoPerforadoraResults'
 import { calcularRequerimientoPerforadora } from './requerimientoPerforadoraCalculations'
-import { usePDFStore } from '@/src/stores/usePDF'
-import { useEffect } from 'react'
+import { useRequerimientoPerforadoraStore, useSharedStore, usePDFStore } from '@/src/stores'
 
 export default function RequerimientoPerforadoraPage() {
   const { produccionMina, alturaBanco, tonelajePerforado, rendimientoBroca, tiempoPerforacion } =

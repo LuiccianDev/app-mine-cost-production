@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import FormField from '../../components/ui/FormField'
-import { useMallaStore } from '@/src/stores/useMalla'
-import { useSharedStore } from '@/src/stores/useSharedStore'
+import { useMallaStore, useSharedStore } from '@/src/stores'
 
 import { motion, AnimatePresence } from 'motion/react'
 

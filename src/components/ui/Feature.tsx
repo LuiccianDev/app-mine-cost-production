@@ -9,7 +9,7 @@ export default function Products() {
         <div className="mb-12">
           <h2 className="mb-4 text-3xl font-light">feature.</h2>
           <motion.p
-            className="max-w-md text-2xl text-gray-600  "
+            className="max-w-md text-2xl text-gray-600"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
