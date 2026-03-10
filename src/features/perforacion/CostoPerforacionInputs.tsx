@@ -1,5 +1,4 @@
-import { useCostosPerforacionStore } from '@/src/stores/useMalla'
-import { useSharedStore } from '@/src/stores/useSharedStore'
+import { useCostosPerforacionStore, useSharedStore } from '@/src/stores'
 import FormField from '../../components/ui/FormField'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'

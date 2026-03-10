@@ -4,8 +4,7 @@ import { useEffect } from 'react'
 import TransporteInputs from './TransporteInputs'
 import TransporteResults from './TransporteResults'
 import { calcularTransporte } from './transporteCalculations'
-import { useTransporteStore } from '@/src/stores/useMalla'
-import { usePDFStore } from '@/src/stores/usePDF'
+import { useTransporteStore, usePDFStore } from '@/src/stores'
 
 export default function TransportePage() {
   const {

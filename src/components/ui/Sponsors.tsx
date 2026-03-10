@@ -8,9 +8,7 @@ export default function Sponsors() {
       <div className="mx-auto max-w-5xl">
         {/* Título de la sección */}
         <div className="mb-16 text-center">
-          <h2 className="text-xl tracking-[0.4em] text-slate-800 uppercase">
-            Nuestros Patrocinadores
-          </h2>
+          <h2 className="text-xl tracking-[0.4em] text-slate-800 uppercase">Our Sponsors</h2>
         </div>
 
         {/* Grilla de Patrocinadores */}

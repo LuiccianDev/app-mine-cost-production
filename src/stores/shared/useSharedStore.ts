@@ -12,9 +12,9 @@ interface SharedState extends SharedData {
 export const useSharedStore = create<SharedState>()((set) => ({
   ...defaultSharedValues,
 
-  setProduccionMina: (valor: number) => set({ produccionMina: valor }),
-  setAlturaBanco: (valor: number) => set({ alturaBanco: valor }),
-  setTonelajePerforado: (valor: number) => set({ tonelajePerforado: valor }),
-  setRendimientoBroca: (valor: number) => set({ rendimientoBroca: valor }),
-  setTiempoPerforacion: (valor: number) => set({ tiempoPerforacion: valor }),
+  setProduccionMina: (valor) => set({ produccionMina: valor }),
+  setAlturaBanco: (valor) => set({ alturaBanco: valor }),
+  setTonelajePerforado: (valor) => set({ tonelajePerforado: valor }),
+  setRendimientoBroca: (valor) => set({ rendimientoBroca: valor }),
+  setTiempoPerforacion: (valor) => set({ tiempoPerforacion: valor }),
 }))

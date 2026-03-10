@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import FormField from '../../components/ui/FormField'
-import { useRequerimientoPerforadoraStore } from '@/src/stores/useMalla'
-import { useSharedStore } from '@/src/stores/useSharedStore'
+import { useRequerimientoPerforadoraStore, useSharedStore } from '@/src/stores'
 import { motion, AnimatePresence } from 'motion/react'
 type RequerimientoPerforadoraInputsProps = {
   resultsComponent?: React.ReactNode

@@ -1,7 +1,6 @@
 import FormField from '../../components/ui/FormField'
 import { useState } from 'react'
-import { useLimpiezaStore } from '@/src/stores/useMalla'
-import { useSharedStore } from '@/src/stores/useSharedStore'
+import { useLimpiezaStore, useSharedStore } from '@/src/stores'
 import { motion, AnimatePresence } from 'motion/react'
 type LimpiezaInputsProps = {
   resultsComponent?: React.ReactNode

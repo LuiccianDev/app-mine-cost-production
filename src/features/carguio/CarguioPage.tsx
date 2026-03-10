@@ -1,12 +1,10 @@
 'use client'
 
-import { useCarguioStore } from '@/src/stores/useMalla'
-import { useSharedStore } from '@/src/stores/useSharedStore'
+import { useEffect } from 'react'
 import CarguioInputs from './CarguioInputs'
 import CarguioResults from './CarguioResults'
 import { calcularCarguio } from './carguioCalculations'
-import { usePDFStore } from '@/src/stores/usePDF'
-import { useEffect } from 'react'
+import { useCarguioStore, useSharedStore, usePDFStore } from '@/src/stores'
 
 export default function CarguioPage() {
   const { produccionMina } = useSharedStore()

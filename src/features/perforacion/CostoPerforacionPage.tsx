@@ -4,9 +4,7 @@ import { useEffect } from 'react'
 import CostoPerforacionInputs from './CostoPerforacionInputs'
 import CostoPerforacionResults from './CostoPerforacionResults'
 import { calcularCostoPerforacion } from './costoPerforacionCalculations'
-import { useCostosPerforacionStore } from '@/src/stores/useMalla'
-import { useSharedStore } from '@/src/stores/useSharedStore'
-import { usePDFStore } from '@/src/stores/usePDF'
+import { useCostosPerforacionStore, useSharedStore, usePDFStore } from '@/src/stores'
 
 export default function CostoPerforacionPage() {
   const { costoBrocaAccesorios, costoEquipoPerforacion } = useCostosPerforacionStore()

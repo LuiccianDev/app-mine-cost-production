@@ -4,9 +4,7 @@ import { useEffect } from 'react'
 import CostoVoladuraInputs from './CostoVoladuraInputs'
 import CostoVoladuraResults from './CostoVoladuraResults'
 import { calculateCostoVoladura } from './costoVoladuraCalculations'
-import { useCostosVoladurasStore } from '@/src/stores/useMalla'
-import { useSharedStore } from '@/src/stores/useSharedStore'
-import { usePDFStore } from '@/src/stores/usePDF'
+import { useCostosVoladurasStore, useSharedStore, usePDFStore } from '@/src/stores'
 
 export default function CostoVoladuraPage() {
   const { tonelajePerforado } = useSharedStore()

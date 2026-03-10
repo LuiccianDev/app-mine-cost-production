@@ -1,4 +1,4 @@
-import type { CostoPerforacionResultados } from '@/src/types/costoPerforacion.tyes'
+import type { CostoPerforacionResultados } from '@/src/types/costoPerforacion.types'
 
 type CostoPerforacionResultsProps = {
   resultados: CostoPerforacionResultados

@@ -25,16 +25,29 @@ body {
   font-weight: 300;
 }
 
-/* Ocultar scrollbar en todos los navegadores */
+/* Scrollbar profesional */
 * {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE y Edge */
+  scrollbar-width: thin;
+  scrollbar-color: #01d0ff #ffffff;
 }
 
 *::-webkit-scrollbar {
-  display: none; /* Chrome, Safari y Opera */
-  width: 0;
-  height: 0;
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #fff;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #60a5fa;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
 }
 
 html,

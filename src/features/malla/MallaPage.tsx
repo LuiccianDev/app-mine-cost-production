@@ -4,9 +4,7 @@ import { useEffect } from 'react'
 import MallaForm from './MallaInputs'
 import MallaResultados from './MallaResults'
 import { calcularMalla } from './mallaCalculations'
-import { useMallaStore } from '@/src/stores/useMalla'
-import { useSharedStore } from '@/src/stores/useSharedStore'
-import { usePDFStore } from '@/src/stores/usePDF'
+import { useMallaStore, useSharedStore, usePDFStore } from '@/src/stores'
 
 export default function MallaSection() {
   const { alturaBanco, setTonelajePerforado: setSharedTonelaje } = useSharedStore()

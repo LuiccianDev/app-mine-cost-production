@@ -1,4 +1,4 @@
-import { useRellenoDetriticoStore } from '@/src/stores/useMalla'
+import { useRellenoDetriticoStore } from '@/src/stores'
 import FormField from '../../../components/ui/FormField'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'

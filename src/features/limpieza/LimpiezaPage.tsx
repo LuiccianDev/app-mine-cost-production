@@ -1,12 +1,10 @@
 'use client'
 
-import { useLimpiezaStore } from '@/src/stores/useMalla'
-import { useSharedStore } from '@/src/stores/useSharedStore'
+import { useEffect } from 'react'
 import LimpiezaInputs from './LimpiezaInputs'
 import LimpiezaResults from './LimpiezaResults'
 import { calcularLimpieza } from './limpiezaCalculations'
-import { usePDFStore } from '@/src/stores/usePDF'
-import { useEffect } from 'react'
+import { useLimpiezaStore, useSharedStore, usePDFStore } from '@/src/stores'
 
 export default function LimpiezaPage() {
   const { produccionMina } = useSharedStore()

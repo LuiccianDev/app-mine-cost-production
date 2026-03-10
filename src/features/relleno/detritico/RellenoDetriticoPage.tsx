@@ -4,8 +4,7 @@ import { useEffect } from 'react'
 import RellenoDetriticoInputs from './RellenoDetriticoInputs'
 import RellenoDetriticoResults from './RellenoDetriticoResults'
 import { calcularRellenoDetritico } from './rellenoDetriticoCalculations'
-import { useRellenoDetriticoStore } from '@/src/stores/useMalla'
-import { usePDFStore } from '@/src/stores/usePDF'
+import { useRellenoDetriticoStore, usePDFStore } from '@/src/stores'
 
 export default function RellenoDetriticoPage() {
   const {

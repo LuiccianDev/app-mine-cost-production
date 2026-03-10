@@ -1,6 +1,6 @@
 import FormField from '../../../components/ui/FormField'
 import { useState } from 'react'
-import { useRellenoCementadoStore } from '@/src/stores/useMalla'
+import { useRellenoCementadoStore } from '@/src/stores'
 import { motion, AnimatePresence } from 'motion/react'
 type RellenoCementadoInputsProps = {
   resultsComponent?: React.ReactNode
