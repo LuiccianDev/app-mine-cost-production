@@ -146,7 +146,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="scrollbar-hide overflow-y-scroll">
+    <html lang="en" data-scroll-behavior="smooth" className="scrollbar-hide overflow-y-scroll">
       <head>
         <script
           type="application/ld+json"
