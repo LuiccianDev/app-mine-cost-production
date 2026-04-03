@@ -51,6 +51,7 @@ export default function Hero() {
               src="/img/perfil.webp" //! change img for your photo
               alt="Luiccian Mine"
               fill
+              sizes="(min-width: 768px) 192px, 160px"
               className="object-cover"
               quality={75}
             />
