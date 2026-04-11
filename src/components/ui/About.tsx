@@ -18,8 +18,8 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            I collaborate with businesses of all sizes worldwide, using the latest technologies. My
-            designs have also earned multiple awards.
+            I design and build web systems for the mining industry, applying modern technologies to optimize processes,
+            enhance data management, and support smarter decision-making.
           </motion.p>
         </div>
 
@@ -32,7 +32,7 @@ export default function About() {
               transition={{ duration: 0.6 }}
             >
               <Image
-                src="/img/perfil.webp" //! change img for your photo
+                src="/img/logo.webp" //! change img for your photo
                 alt="About"
                 width={350}
                 height={467}
@@ -49,8 +49,8 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              I&apos;m dedicated to crafting beautiful and highly functional designs that seamlessly
-              align with my clients&apos; unique needs and long-term goals.
+              I focus on developing efficient and practical solutions, 
+              creating systems that improve workflows, data analysis, and real-world problem solving.
             </motion.p>
           </div>
         </div>

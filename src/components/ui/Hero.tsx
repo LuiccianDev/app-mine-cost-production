@@ -48,7 +48,7 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <Image
-              src="/img/perfil.webp" //! change img for your photo
+              src="/img/logo.webp" //! change img for your photo
               alt="Luiccian Mine"
               fill
               sizes="(min-width: 768px) 192px, 160px"
@@ -67,7 +67,7 @@ export default function Hero() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            <span className="text-base">contacto@luiccianmine.com</span>
+            <span className="text-base">contacto@LuiccianDev</span>
             <button className="rounded p-1 transition-colors hover:bg-slate-200">
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
