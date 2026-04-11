@@ -6,7 +6,6 @@ import Products from '@/src/components/ui/Feature'
 import Faq from '@/src/components/ui/Faq'
 import BackToTop from '@/src/components/ui/BackToTop'
 
-
 export default function Home() {
   return (
     <>

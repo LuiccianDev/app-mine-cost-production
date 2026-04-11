@@ -18,8 +18,8 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            I design and build web systems for the mining industry, applying modern technologies to optimize processes,
-            enhance data management, and support smarter decision-making.
+            I design and build web systems for the mining industry, applying modern technologies to
+            optimize processes, enhance data management, and support smarter decision-making.
           </motion.p>
         </div>
 
@@ -49,8 +49,8 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              I focus on developing efficient and practical solutions, 
-              creating systems that improve workflows, data analysis, and real-world problem solving.
+              I focus on developing efficient and practical solutions, creating systems that improve
+              workflows, data analysis, and real-world problem solving.
             </motion.p>
           </div>
         </div>
