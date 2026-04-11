@@ -12,3 +12,17 @@ public/img
 packages.json
 pnpm-lock.yaml
 README.md
+package.json
+package-lock.json
+.prettierrc
+tsconfig.json
+pnpm-workspace.yaml 
+postcss.config.mjs 
+next.config.ts
+eslint.config.mjs
+.vscode/
+
+!src/
+!src/**/*
+!app/
+!app/**/*

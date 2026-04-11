@@ -47,14 +47,14 @@ export default function Footer() {
           >
             Github
           </a>
-          <a
+          {/*           <a
             href="https://luiccian.blogspot.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm font-light transition-colors hover:text-gray-400"
           >
             Blog
-          </a>
+          </a> */}
         </motion.div>
 
         {/* Middle Section - Main Text and CTA */}
